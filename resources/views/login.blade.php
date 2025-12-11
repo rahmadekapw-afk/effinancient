@@ -43,24 +43,25 @@
                     <p class="text-gray-500 text-sm mt-1">Masuk sebagai anggota koperasi</p>
                 </div>
 
-                <form action="#">
+                <form action="{{ url('login_anggota') }}">
+                    @csrf
                     <div class="mb-4">
-                        <label for="username-anggota" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <label for="username-anggota"  class="block text-sm font-medium text-gray-700 mb-1">Username</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <i class="bi bi-person text-gray-400"></i>
                             </span>
-                            <input type="text" id="username-anggota" placeholder="Masukkan username" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                            <input type="text" id="username-anggota" placeholder="Masukkan username" name ="username" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
                         </div>
                     </div>
 
                     <div class="mb-4">
-                        <label for="password-anggota" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <label for="password-anggota"  class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <i class="bi bi-lock text-gray-400"></i>
                             </span>
-                            <input type="password" id="password-anggota" placeholder="Masukkan password" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                            <input type="password" id="password-anggota" placeholder="Masukkan password" name = "password" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
                         </div>
                     </div>
 
@@ -69,7 +70,7 @@
                             <input id="remember-anggota" name="remember" type="checkbox" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600">
                             <label for="remember-anggota" class="ml-2 block text-sm text-gray-900">Ingat saya</label>
                         </div>
-                        <a href="#" class="text-sm text-green-600 hover:underline font-medium">Lupa password?</a>
+                        <button  class="text-sm text-green-600 hover:underline font-medium">Lupa password?</button>
                     </div>
 
                     <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg mt-6 hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
@@ -91,7 +92,8 @@
                     <h2 class="text-2xl font-bold text-gray-900">Login Admin</h2>
                     <p class="text-gray-500 text-sm mt-1">Masuk sebagai admin koperasi</p>
                 </div>
-
+                    <form action="{{ url('login_admin') }}">
+                    @csrf
                 <form action="#">
                     <div class="mb-4">
                         <label for="username-admin" class="block text-sm font-medium text-gray-700 mb-1">Username Admin</label>
@@ -99,7 +101,7 @@
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <i class="bi bi-person text-gray-400"></i>
                             </span>
-                            <input type="text" id="username-admin" placeholder="Masukkan username" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                            <input name="username" type="text" id="username-admin" placeholder="Masukkan username"name="username" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
                         </div>
                     </div>
 
@@ -109,7 +111,7 @@
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <i class="bi bi-lock text-gray-400"></i>
                             </span>
-                            <input type="password" id="password-admin" placeholder="Masukkan password" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                            <input type="password" id="password-admin" placeholder="Masukkan password" name = "password" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
                         </div>
                     </div>
 

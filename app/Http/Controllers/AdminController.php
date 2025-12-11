@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\Pinjaman;
 use Carbon\Carbon;
+use App\Models\Admin;
 
 class AdminController extends Controller
 {
@@ -99,4 +100,32 @@ class AdminController extends Controller
     {
         //
     }
+        public function masuk(Request $request){
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+             // Hash SHA1
+        $passwordHash = sha1($request->password);
+
+        $admin = Admin::where('username', $request->username)
+            ->where('password', $passwordHash)
+            ->first();
+
+        if ($admin) {
+
+            // Simpan session login
+            session([
+                'admin_id' => $admin->admin_id,
+                'username'   => $admin->username,
+                'nama'       => $admin->nama_admin,
+                'login'      => true,
+            ]);
+
+            return redirect('/admin')->with('pesan_sukses', 'Berhasil login');
+        }
+
+        return back()->with('error', 'Username atau password salah');
+    }
 }
+

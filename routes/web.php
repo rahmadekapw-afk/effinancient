@@ -22,7 +22,8 @@ Route::get('/', function() {
 
 // Super Admin
 Route::get('/login', [UserController::class, 'index']);
-
+Route::get('/login_anggota', [UserController::class, 'masuk']);
+Route::get('/login_admin', [AdminController::class, 'masuk']);
 
 Route::get('/anggota', [AnggotaController::class, 'index']);
 Route::get('/anggota/profile', [AnggotaController::class, 'profile']);
