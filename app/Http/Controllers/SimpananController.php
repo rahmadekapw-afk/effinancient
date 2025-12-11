@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pinjaman;
+use App\Models\Anggota;
 
 class SimpananController extends Controller
 {
@@ -15,6 +17,8 @@ class SimpananController extends Controller
     }
     public function transaksi()
     {
+       
+
         return view('anggota.transaksi');
     }
 

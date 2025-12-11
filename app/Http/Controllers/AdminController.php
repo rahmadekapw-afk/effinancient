@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\Pinjaman;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -24,7 +25,31 @@ class AdminController extends Controller
 
     public function transaksi()
     {
-        return view('admin.transaksi');
+       $data ['pinjaman'] = Pinjaman::join('anggotas', 'pinjamen.anggota_id', '=', 'anggotas.anggota_id')
+        ->select('pinjamen.*', 'anggotas.*')
+        ->get();
+
+
+        $data['total_pinjaman_menunggu'] = Pinjaman::where('status_pinjaman', 'menunggu')
+                                        ->sum('nominal');
+
+        $data['transaksi_sekarang'] = Pinjaman::whereDate('tanggal_pengajuan', Carbon::today())->count();
+        
+        $data['pending'] = Pinjaman::where('status_pinjaman', 'menunggu')->count();
+
+        $data ['total_pinjaman_terima'] = Pinjaman::where('status_pinjaman', 'disetujui', Carbon::today())                           
+        ->count();
+        return view('admin.transaksi',$data);
+    }
+
+    public function konfirmasi($idAnggota){
+         $status = request('status'); // diterima / ditolak
+
+        Pinjaman::where('anggota_id', $idAnggota)->update([
+            'status_pinjaman' => $status
+        ]);
+
+        return back()->with('pesan_sukses', 'Status berhasil diperbarui!');
     }
 
     /**

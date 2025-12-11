@@ -42,7 +42,9 @@ Route::post('/admin/manajemen_anggota/tambah',[SuperAdminController::class,'tamb
 Route::get('/admin/manajemen_akses',[SuperAdminController::class,'manajemen_akses']);
 
 Route::get('/admin/transaksi',[AdminController::class,'transaksi']);
-
+Route::get('/admin/transaksi/konfirmasi/{idAnggota}', [AdminController::class, 'konfirmasi'])
+    ->name('admin.transaksi.konfirmasi');
+    
 Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index']);
 
 
