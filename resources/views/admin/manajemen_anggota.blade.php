@@ -370,10 +370,7 @@
         </form>
         </div>
 </div>
-2. Script JavaScript
-Tambahkan kode JavaScript ini di bagian bawah halaman Anda (sebelum tag penutup </body>) untuk menangani fungsi buka/tutup modal.
 
-JavaScript
 
 <script>
     const modal = document.getElementById('anggotaModal');

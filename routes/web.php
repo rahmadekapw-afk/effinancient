@@ -23,6 +23,8 @@ Route::get('/', function() {
 // Super Admin
 Route::get('/login', [UserController::class, 'index']);
 Route::get('/login_anggota', [UserController::class, 'masuk']);
+Route::post('/admin/manajemen_admin/tambah', [SuperAdminController::class, 'store']);
+Route::delete('/admin/manajemen_akses/hapus/{id}', [SuperAdminController::class, 'hapus_admin']);
 
 Route::get('dashboard/anggota', [AnggotaController::class, 'index'])->middleware('anggota_auth');
 Route::get('anggota/logout', [UserController::class, 'logout'])->middleware('anggota_auth');
@@ -74,6 +76,8 @@ Route::resource('simpanan', SimpananController::class);
 
 // Pinjaman
 Route::resource('pinjaman', PinjamanController::class);
+Route::post('dashboard/anggota/pinjaman/store', [PinjamanController::class, 'store']);
+
 
 // Pembayaran
 Route::resource('pembayaran', PembayaranController::class);

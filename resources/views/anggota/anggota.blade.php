@@ -4,12 +4,14 @@
     <div class="p-4 md:p-6 grid grid-cols-1 gap-4 md:gap-6">
 
         <section class="bg-green-800 text-white rounded-lg shadow-lg p-5">
-            <h3 class="text-lg font-semibold">Selamat Datang, sfds!</h3>
+            <h3 class="text-lg font-semibold">Selamat Datang, {{ session('username') }}</h3>
             <p class="text-sm text-green-100">Berikut ringkasan keuangan Anda di koperasi</p>
+        
+
             
             <div class="mt-4 bg-green-900 rounded-lg p-3">
                 <p class="text-xs text-green-200">Total Saldo</p>
-                <p class="text-2xl font-bold">Rp 5.500.000</p>
+                <p class="text-2xl font-bold">{{ number_format(session('saldo'), 0, ',', '.') }}</p>
             </div>
         </section>
 
@@ -62,7 +64,7 @@
                     <p class="text-lg font-bold text-orange-600">Rp 1.500.000</p>
                 </div>
             </div>
-
+<div class="bg-orange-100 text-orange-600 p-1 rounded-lg">
             <div class="mt-3">
                 <div class="flex justify-between items-center mb-1">
                     <p class="text-xs font-medium text-gray-700">Progress Pembayaran</p>
@@ -89,12 +91,14 @@
                     </div>
                     <p class="mt-1 text-xs font-medium text-gray-700">Tarik Simpanan</p>
                 </a>
-                <a href="#" class="text-center p-3 bg-orange-50 rounded-lg hover:shadow-md transition-shadow">
-                    <div class="inline-block p-2 bg-orange-600 text-white rounded-full">
-                        <i class="bi bi-cash-stack text-base"></i>
-                    </div>
-                    <p class="mt-1 text-xs font-medium text-gray-700">Ajukan Pinjaman</p>
-                </a>
+               <a href="#" id="btnPinjaman" class="text-center p-3 bg-orange-50 rounded-lg hover:shadow-md transition-shadow">
+    <div class="inline-block p-2 bg-orange-600 text-white rounded-full">
+        <i class="bi bi-cash-stack text-base"></i>
+    </div>
+    <p class="mt-1 text-xs font-medium text-gray-700">Ajukan Pinjaman</p>
+</a>
+
+
                 <a href="#" class="text-center p-3 bg-purple-50 rounded-lg hover:shadow-md transition-shadow">
                     <div class="inline-block p-2 bg-purple-600 text-white rounded-full">
                         <i class="bi bi-file-earmark-text-fill text-base"></i>
@@ -158,5 +162,133 @@
 
         </section>
 
+
     </div>
+ {{-- modal --}}
+
+ <!-- Modal Ajukan Pinjaman (TANPA BOOTSTRAP) -->
+<div id="modalPinjaman" 
+     class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
+
+    <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-5">
+        <h2 class="text-lg font-semibold mb-3">Ajukan Pinjaman</h2>
+
+       <form method="POST" action="{{ url('dashboard/anggota/pinjaman/store') }}" id="formPinjaman">
+    @csrf
+
+    <div class="mb-3">
+        <label class="text-sm font-medium">Nominal Pinjaman</label>
+        <input type="number" id="nominal" name="nominal"
+               class="w-full border rounded p-2 mt-1" required>
+
+        <p id="errorNominal" class="text-red-500 text-xs mt-1 hidden"></p>
+
+        <p class="text-xs text-gray-700 mt-1">
+            Batas maksimal: <span id="batasNominal"></span>
+        </p>
+    </div>
+
+    <div class="mb-3">
+        <label class="text-sm font-medium">Tanggal Pengajuan</label>
+        <input type="date" id="tgl_pinjam" name="tanggal_pengajuan"
+               class="w-full border rounded p-2 mt-1" required>
+    </div>
+
+    <button type="submit" 
+            class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 rounded mt-3">
+        Ajukan
+    </button>
+</form>
+
+
+        <!-- Tombol Close -->
+        <button id="closeModal" 
+                class="absolute top-3 right-3 text-gray-600 hover:text-black">
+            ✕
+        </button>
+
+    </div>
+</div>
+
+
+
+<script>
+$(document).ready(function () {
+
+    // ==========================
+    // ALGORITMA LIMIT PINJAMAN
+    // ==========================
+    let gaji = 3000000;
+    let faktor = 2;
+    let pinjamanAktif = 1000000;
+
+    let limitPinjaman = (gaji * faktor) - pinjamanAktif;
+
+    $("#batasNominal").text("Rp " + limitPinjaman.toLocaleString());
+
+    // ==========================
+    // BUKA MODAL (Tailwind)
+    // ==========================
+    $("#btnPinjaman").on("click", function (e) {
+        e.preventDefault();
+        $("#modalPinjaman").removeClass("hidden").addClass("flex");
+    });
+
+    // ==========================
+    // TUTUP MODAL
+    // ==========================
+    $("#closeModal").on("click", function () {
+        $("#modalPinjaman").removeClass("flex").addClass("hidden");
+    });
+
+    // klik luar modal = close
+    $("#modalPinjaman").on("click", function (e) {
+        if (e.target === this) {
+            $("#modalPinjaman").removeClass("flex").addClass("hidden");
+        }
+    });
+
+    // ==========================
+    // VALIDASI NOMINAL
+    // ==========================
+    $("#nominal").on("keyup change", function () {
+        let nominal = parseInt($(this).val());
+
+        if (nominal > limitPinjaman) {
+            $("#errorNominal")
+                .removeClass("hidden")
+                .text("Nominal tidak boleh melebihi Rp " + limitPinjaman.toLocaleString());
+        } else {
+            $("#errorNominal").addClass("hidden");
+        }
+    });
+
+    // ==========================
+    // SUBMIT FORM
+    // ==========================
+   // ==========================
+// SUBMIT FORM (REVISI)
+// ==========================
+$("#formPinjaman").on("submit", function (e) {
+
+    let nominal = parseInt($("#nominal").val());
+
+    // Jika nominal lebih dari limit → cegah submit
+    if (nominal > limitPinjaman) {
+        e.preventDefault();
+        $("#errorNominal")
+            .removeClass("hidden")
+            .text("Nominal tidak boleh melebihi Rp " + limitPinjaman.toLocaleString());
+        return;
+    }
+
+    // Jika valid → form akan terkirim otomatis ke action
+});
+
+
+});
+</script>
+
+
+
 @endsection

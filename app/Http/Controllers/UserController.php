@@ -8,6 +8,7 @@ use App\Models\Anggota;
 class UserController extends Controller
 {
     public function index(){
+        
         return view('login');
     }
 
@@ -25,17 +26,17 @@ class UserController extends Controller
         $anggota = Anggota::where('username', $request->username)
             ->where('password', $passwordHash)
             ->first();
-
-        if ($anggota) {
-
-            // Simpan session login
-            session([
-                'anggota_id' => $anggota->anggota_id,
-                'username'   => $anggota->username,
-                'nama'       => $anggota->nama_lengkap,
-                'login'      => true,
-            ]);
-
+            if ($anggota) {
+                
+                // Simpan session login
+                session([
+                    'anggota_id' => $anggota->anggota_id,
+                    'username'   => $anggota->username,
+                    'nama'       => $anggota->nama_lengkap,
+                    
+                    'login'      => true,
+                ]);
+        
             return redirect('dashboard/anggota')->with('pesan_sukses', 'Berhasil login');
         }
 

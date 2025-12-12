@@ -7,6 +7,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -68,7 +69,7 @@
                 <i class="bi bi-person-fill text-xl"></i>
             </div>
             <div>
-                <p class="font-semibold text-base">sfds</p>
+                <p class="font-semibold text-base">{{ session('username') }}</p>
                 <p class="text-xs text-green-200">Anggota Koperasi</p>
             </div>
         </div>
@@ -150,9 +151,7 @@
             @yield('content')
         </main>
         
-        <footer class="bg-white p-3 text-center text-xs text-gray-500 border-t mt-4 md:mt-0 md:ml-64 transition-all duration-300">
-            &copy; 2025 Koperasi Digital. Hak Cipta Dilindungi.
-        </footer>
+       
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

@@ -119,6 +119,7 @@ class AdminController extends Controller
                 'admin_id' => $admin->admin_id,
                 'username'   => $admin->username,
                 'nama'       => $admin->nama_admin,
+                
                 'login'      => true,
             ]);
 
@@ -133,5 +134,6 @@ class AdminController extends Controller
         session()->flush();
         return redirect('/login')->with('pesan_sukses', 'Berhasil logout');
     }
+    
 }
 

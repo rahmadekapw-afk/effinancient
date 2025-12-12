@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Anggota;
 class AnggotaController extends Controller
 {
     /**
@@ -11,11 +11,20 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        return view('anggota.anggota');
+        $data['saldo'] = Anggota::where('anggota_id', session('anggota_id'))->value('saldo');
+
+        return view('anggota.anggota',$data);
     }
     public function profile()
     {
-        return view('anggota.profile');
+        $id = session('anggota_id');   // ambil ID anggota yg login
+
+    // Ambil data anggota berdasarkan ID
+       $anggota = Anggota::find($id);
+
+        return view('anggota.profile', compact('anggota'));
+
+
     }
 
     /**

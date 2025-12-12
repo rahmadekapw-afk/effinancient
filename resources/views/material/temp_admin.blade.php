@@ -126,7 +126,7 @@
                 <i class="bi bi-person-fill text-xl"></i>
             </div>
             <div>
-                <p class="font-semibold text-base">ss</p>
+                <p class="font-semibold text-base">{{ session('username') }}</p>
                 <p class="text-xs text-emerald-200">Administrator</p>
             </div>
         </div>

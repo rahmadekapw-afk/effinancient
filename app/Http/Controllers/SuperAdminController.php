@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule; 
+use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 
 class SuperAdminController extends Controller
@@ -59,7 +61,10 @@ class SuperAdminController extends Controller
 
     public function manajemen_akses()
     {
-        return view('admin.manajemen_akses');
+         $admins = Admin::all();
+
+       
+        return view('admin.manajemen_akses', compact('admins'));
     }
 
     /**
@@ -70,13 +75,7 @@ class SuperAdminController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  
 
     /**
      * Display the specified resource.
@@ -137,4 +136,26 @@ class SuperAdminController extends Controller
     {
         //
     }
+     public function store(Request $request)
+    {
+        
+        // Simpan ke database
+        Admin::create([
+            'username'   => $request->username,
+            'password'   => Hash::make($request->password),
+            'nama_admin' => $request->nama_admin,
+        ]);
+
+        
+         return redirect('admin/manajemen_akses')->with('pesan_sukses','anggota berhasil dihapus');
+    }
+    public function hapus_admin($id)
+    {
+    Admin::where('admin_id', $id)->delete();
+
+    return redirect('admin/manajemen_akses')
+        ->with('pesan_sukses', 'Admin berhasil dihapus');
+    }
+
 }
+
