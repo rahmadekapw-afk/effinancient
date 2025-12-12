@@ -6,6 +6,8 @@
     <title>Dashboard Anggota - Koperasi Digital</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
@@ -122,7 +124,7 @@
             </a>
             
             {{-- Keluar --}}
-            <a href="{{ url('/logout') }}" class="flex items-center gap-3 px-6 py-3 mt-4 text-green-200 hover:text-white hover:bg-green-900 transition-colors">
+            <a href="{{ url('/anggota/logout') }}" class="flex items-center gap-3 px-6 py-3 mt-4 text-green-200 hover:text-white hover:bg-green-900 transition-colors">
                 <i class="bi bi-box-arrow-right text-lg"></i>
                 <span class="font-medium text-sm">Keluar</span>
             </a>

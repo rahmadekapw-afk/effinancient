@@ -25,6 +25,7 @@ Route::get('/login', [UserController::class, 'index']);
 Route::get('/login_anggota', [UserController::class, 'masuk']);
 
 Route::get('dashboard/anggota', [AnggotaController::class, 'index'])->middleware('anggota_auth');
+Route::get('anggota/logout', [UserController::class, 'logout'])->middleware('anggota_auth');
 Route::get('/anggota/profile', [AnggotaController::class, 'profile'])->middleware('anggota_auth');
 
 Route::get('/anggota/simpanan', [SimpananController::class, 'index'])->middleware('anggota_auth');
