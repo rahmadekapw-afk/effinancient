@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Notifikasi;
+use App\Models\Admin;
 class NotifikasiController extends Controller
 {
     /**
@@ -25,10 +26,10 @@ class NotifikasiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+
+    
         //
-    }
+    
 
     /**
      * Display the specified resource.
@@ -61,4 +62,21 @@ class NotifikasiController extends Controller
     {
         //
     }
+    public function store(Request $request)
+    {
+       $admin = Admin::first(); // ambil baris pertama
+        $adminId = $admin->admin_id;
+
+        // Menggunakan Eloquent Model
+        Notifikasi::create([
+            'admin_id'   => $adminId,
+            'anggota_id' => session('anggota_id'),
+            'judul'      => 'kritik saran',
+            'isi'        => $request->kritik,
+            'tanggal'    => now(),
+        ]);
+
+        return redirect()->back()->with('pesan_sukses', 'Notifikasi berhasil dikirim!');
+    }
 }
+

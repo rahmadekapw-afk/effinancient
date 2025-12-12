@@ -30,6 +30,8 @@ Route::get('dashboard/anggota', [AnggotaController::class, 'index'])->middleware
 Route::get('anggota/logout', [UserController::class, 'logout'])->middleware('anggota_auth');
 Route::get('/anggota/profile', [AnggotaController::class, 'profile'])->middleware('anggota_auth');
 
+Route::post('/anggota/profile/kritik', [NotifikasiController::class, 'store']);
+
 Route::get('/anggota/simpanan', [SimpananController::class, 'index'])->middleware('anggota_auth');
 
 Route::get('/anggota/transaksi', [SimpananController::class, 'transaksi'])->middleware('anggota_auth');
@@ -85,6 +87,8 @@ Route::resource('pembayaran', PembayaranController::class);
 // Notifikasi
 Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
 Route::post('/notifikasi', [NotifikasiController::class, 'store'])->name('notifikasi.store');
+
+
 
 // Laporan Keuangan
 Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])->name('laporan.index');

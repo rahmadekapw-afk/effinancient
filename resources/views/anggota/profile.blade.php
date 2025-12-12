@@ -104,7 +104,23 @@
                 </div>
             </div>
             
-           
+          <hr class="my-5">
+    <div>
+    <form action="{{ url('/anggota/profile/kritik') }}" method="post">
+        <label class="text-sm font-medium text-gray-700">Kritik & Saran</label>
+        <textarea name="kritik" rows="3"
+            class="w-full border rounded p-2 mt-1 focus:ring focus:ring-red-200"
+            placeholder="Masukkan kritik Anda"></textarea>
+    </div>
+    @csrf
+    <button type="submit" 
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow text-sm"
+        >
+        Kirim
+    </button>
+</form>
+
+</div>
 
     </div>
 @endsection
