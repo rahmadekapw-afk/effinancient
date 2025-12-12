@@ -47,7 +47,7 @@ Route::post('/admin/manajemen_anggota/tambah',[SuperAdminController::class,'tamb
 Route::get('/admin/manajemen_akses',[SuperAdminController::class,'manajemen_akses'])->middleware('admin_auth');
 
 Route::get('/admin/transaksi',[AdminController::class,'transaksi'])->middleware('admin_auth');
-Route::get('/admin/transaksi/konfirmasi/{idAnggota}', [AdminController::class, 'konfirmasi'])
+Route::get('/admin/transaksi/konfirmasi/{pinjaman_id}', [AdminController::class, 'konfirmasi'])
     ->name('admin.transaksi.konfirmasi')->middleware('admin_auth');
     
 Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index'])->middleware('admin_auth');
@@ -74,8 +74,8 @@ Route::resource('role', RoleController::class);
 // Simpanan
 Route::resource('simpanan', SimpananController::class);
 
-// Pinjaman
-Route::resource('pinjaman', PinjamanController::class);
+// // Pinjaman
+// Route::resource('pinjaman', PinjamanController::class);
 Route::post('dashboard/anggota/pinjaman/store', [PinjamanController::class, 'store']);
 
 

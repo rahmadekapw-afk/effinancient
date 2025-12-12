@@ -62,14 +62,14 @@ class PinjamanController extends Controller
         //
     }
     public function hitungLimitPinjaman($anggotaId)
-    {
-        // Ambil total simpanan anggota
-        $totalSimpanan = Anggota::where('anggota_id', $anggotaId)->sum('saldo');
+     {
+    //     // Ambil total simpanan anggota
+    //     $totalSimpanan = Anggota::where('anggota_id', $anggotaId)->sum('saldo');
 
-        // Algoritma limit (contoh: 30% dari total simpanan)
-        $limit = $totalSimpanan * 0.3;
+    //     // Algoritma limit (contoh: 30% dari total simpanan)
+    //     $limit = $totalSimpanan * 0.3;
 
-        return $limit;
+    //     return $limit;
     }
 
     // Simpan pengajuan pinjaman
@@ -77,13 +77,13 @@ class PinjamanController extends Controller
     {
        
 
-        // Hitung limit
-        $limit = $this->hitungLimitPinjaman($request->anggota_id);
+        // // Hitung limit
+        // $limit = $this->hitungLimitPinjaman($request->session('anggota_id'));
 
         // Jika nominal melebihi limit → Tolak
-        if ($request->nominal > $limit) {
-            return back()->with('error', 'Nominal melebihi batas maksimal pinjaman: Rp ' . number_format($limit, 0, ',', '.'));
-        }
+        // if ($request->nominal > $limit) {
+        //     return back()->with('error', 'Nominal melebihi batas maksimal pinjaman: Rp ' . number_format($limit, 0, ',', '.'));
+        // }
 
         // Buat pinjaman baru
         Pinjaman::create([
@@ -95,9 +95,9 @@ class PinjamanController extends Controller
             'tanggal_pengajuan' => $request->tanggal_pengajuan
         ]);
 
-        dd($request);
-
         return back()->with('pesan_sukses', 'Pengajuan pinjaman berhasil dikirim!');
+
+        
     }
 }
 

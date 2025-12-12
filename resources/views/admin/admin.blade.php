@@ -8,11 +8,11 @@
                 <div class="p-2 bg-blue-100 rounded-lg text-blue-600 mb-2">
                     <i class="bi bi-people-fill text-xl"></i>
                 </div>
-                <p class="text-lg font-bold text-gray-800">1,234</p>
+                <p class="text-lg font-bold text-gray-800">{{ $jumlah_anggota }}</p>
                 <p class="text-xs text-gray-500">Total Anggota</p>
             </div>
             <div class="flex items-center text-sm text-green-600 font-medium">
-                <i class="bi bi-arrow-up-right"></i> +12%
+                <i class="bi bi-arrow-up-right"></i> Anggota
             </div>
         </div>
 
@@ -21,11 +21,11 @@
                 <div class="p-2 bg-green-100 rounded-lg text-green-600 mb-2">
                     <i class="bi bi-wallet-fill text-xl"></i>
                 </div>
-                <p class="text-lg font-bold text-gray-800">Rp 2.4M</p>
+                <p class="text-lg font-bold text-gray-800">Rp {{ number_format($simpanan)  }}</p>
                 <p class="text-xs text-gray-500">Total Simpanan</p>
             </div>
             <div class="flex items-center text-sm text-green-600 font-medium">
-                <i class="bi bi-arrow-up-right"></i> +8%
+                <i class="bi bi-arrow-up-right"></i>
             </div>
         </div>
 
@@ -34,11 +34,11 @@
                 <div class="p-2 bg-purple-100 rounded-lg text-purple-600 mb-2">
                     <i class="bi bi-arrow-down-up text-xl"></i>
                 </div>
-                <p class="text-lg font-bold text-gray-800">856</p>
+                <p class="text-lg font-bold text-gray-800">{{ $total_transaksi }}</p>
                 <p class="text-xs text-gray-500">Transaksi Bulan Ini</p>
             </div>
             <div class="flex items-center text-sm text-green-600 font-medium">
-                <i class="bi bi-arrow-up-right"></i> +15%
+                <i class="bi bi-arrow-up-right"></i> 
             </div>
         </div>
 
@@ -47,25 +47,28 @@
                 <div class="p-2 bg-orange-100 rounded-lg text-orange-600 mb-2">
                     <i class="bi bi-graph-up text-xl"></i>
                 </div>
-                <p class="text-lg font-bold text-gray-800">18.5%</p>
+                <p class="text-lg font-bold text-gray-800">{{ $pertumbuhan }}</p>
                 <p class="text-xs text-gray-500">Pertumbuhan</p>
             </div>
             <div class="flex items-center text-sm text-green-600 font-medium">
-                <i class="bi bi-arrow-up-right"></i> +3%
+                <i class="bi bi-arrow-up-right"></i> {{ number_format($presentase, 2)  }} %
             </div>
         </div>
 
         <div class="lg:col-span-3 grid grid-cols-1 xl:grid-cols-2 gap-6">
-            
+
             <div class="bg-white rounded-lg shadow p-5 h-full">
                 <h3 class="text-base font-semibold text-gray-800 mb-4">Pertumbuhan Bulanan</h3>
                 <div class="relative h-64">
                     <canvas id="growthChartAdmin"></canvas>
                 </div>
                 <div class="flex justify-center gap-4 text-xs mt-4">
-                    <span class="flex items-center gap-1 text-blue-600"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Pinjaman (Juta)</span>
-                    <span class="flex items-center gap-1 text-green-600"><span class="w-2 h-2 rounded-full bg-green-600"></span> Simpanan (Juta)</span>
-                    <span class="flex items-center gap-1 text-orange-500"><span class="w-2 h-2 rounded-full bg-orange-500"></span> Transaksi</span>
+                    <span class="flex items-center gap-1 text-blue-600"><span
+                            class="w-2 h-2 rounded-full bg-blue-600"></span> Pinjaman (Juta)</span>
+                    <span class="flex items-center gap-1 text-green-600"><span
+                            class="w-2 h-2 rounded-full bg-green-600"></span> Simpanan (Juta)</span>
+                    <span class="flex items-center gap-1 text-orange-500"><span
+                            class="w-2 h-2 rounded-full bg-orange-500"></span> Transaksi</span>
                 </div>
             </div>
 
@@ -75,19 +78,23 @@
                     <canvas id="memberCategoryChart"></canvas>
                 </div>
                 <div class="flex justify-center gap-4 text-xs mt-4">
-                    <span class="flex items-center gap-1 text-green-600"><span class="w-2 h-2 rounded-full bg-green-600"></span> Aktif 69%</span>
-                    <span class="flex items-center gap-1 text-orange-500"><span class="w-2 h-2 rounded-full bg-orange-500"></span> Pasif 20%</span>
-                    <span class="flex items-center gap-1 text-blue-500"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Baru 11%</span>
+                    <span class="flex items-center gap-1 text-green-600"><span
+                            class="w-2 h-2 rounded-full bg-green-600"></span> Aktif 69%</span>
+                    <span class="flex items-center gap-1 text-orange-500"><span
+                            class="w-2 h-2 rounded-full bg-orange-500"></span> Pasif 20%</span>
+                    <span class="flex items-center gap-1 text-blue-500"><span
+                            class="w-2 h-2 rounded-full bg-blue-500"></span> Baru 11%</span>
                 </div>
             </div>
-            
+
             <div class="bg-white rounded-lg shadow p-5 xl:col-span-2">
                 <h3 class="text-base font-semibold text-gray-800 mb-4">Distribusi Jenis Transaksi</h3>
                 <div class="relative h-64">
                     <canvas id="transactionBarChart"></canvas>
                 </div>
                 <div class="flex justify-center gap-2 text-xs mt-4">
-                    <span class="flex items-center gap-1 text-green-600"><span class="w-2 h-2 rounded-full bg-green-600"></span> Jumlah Transaksi</span>
+                    <span class="flex items-center gap-1 text-green-600"><span
+                            class="w-2 h-2 rounded-full bg-green-600"></span> Jumlah Transaksi</span>
                 </div>
             </div>
 
@@ -96,7 +103,7 @@
         <div class="lg:col-span-1">
             <div class="bg-white rounded-lg shadow p-5 h-full">
                 <h3 class="text-base font-semibold text-gray-800 mb-4">Aktivitas Terkini</h3>
-                
+
                 <div class="space-y-4">
                     <div class="border-b pb-4">
                         <p class="font-medium text-gray-900">Ahmad Wijaya</p>
@@ -138,11 +145,11 @@
 
     <script>
         // PENTING: Gunakan Vanilla JS DOMContentLoaded untuk keandalan
-        document.addEventListener('DOMContentLoaded', function() {
-            
+        document.addEventListener('DOMContentLoaded', function () {
+
             // Memberi sedikit delay jika diperlukan
-            setTimeout(function() {
-                
+            setTimeout(function () {
+
                 // Data simulasi sesuai gambar
                 const pinjamanData = [100, 110, 130, 150, 170, 190];
                 const simpananData = [170, 180, 200, 220, 240, 260];
@@ -186,7 +193,7 @@
                     labels: ['Aktif 69%', 'Pasif 20%', 'Baru 11%'],
                     datasets: [{
                         data: [69, 20, 11],
-                        backgroundColor: ['#10b981', '#f97316', '#3b82f6'], 
+                        backgroundColor: ['#10b981', '#f97316', '#3b82f6'],
                         hoverOffset: 4
                     }]
                 };
@@ -200,8 +207,8 @@
                     labels: ['Simpanan Pokok', 'Simpanan Wajib', 'Simpanan Sukarela', 'Penarikan', 'Pinjaman'],
                     datasets: [{
                         label: 'Jumlah Transaksi',
-                        data: [100, 360, 180, 80, 100], 
-                        backgroundColor: '#10b981', 
+                        data: [100, 360, 180, 80, 100],
+                        backgroundColor: '#10b981',
                         borderRadius: 4
                     }]
                 };

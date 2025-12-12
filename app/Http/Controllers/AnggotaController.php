@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Anggota;
+use App\Models\Pinjaman;
 class AnggotaController extends Controller
 {
     /**
@@ -12,6 +13,10 @@ class AnggotaController extends Controller
     public function index()
     {
         $data['saldo'] = Anggota::where('anggota_id', session('anggota_id'))->value('saldo');
+        $data['pinjaman'] = Pinjaman::where([
+            'anggota_id' => session('anggota_id'),
+            'status_pinjaman' => 'disetujui'
+        ])->get();
 
         return view('anggota.anggota',$data);
     }
