@@ -122,10 +122,16 @@ class AdminController extends Controller
                 'login'      => true,
             ]);
 
-            return redirect('/admin')->with('pesan_sukses', 'Berhasil login');
+
+            return redirect('/dashboard/admin')->with('pesan_sukses', 'Berhasil login');
         }
 
         return back()->with('pesan_error', 'Username atau password salah');
+    }
+
+    public function logout(){
+        session()->flush();
+        return redirect('/login')->with('pesan_sukses', 'Berhasil logout');
     }
 }
 

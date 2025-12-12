@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuth
+class AnggotaAuth
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,11 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {   
-         // Jika session 'login' tidak ada, arahkan ke halaman login
-            if(!$request->session()->get('admin_id')){
+            if(!$request->session()->get('anggota_id')){
                 return redirect('/login');
             }else{
                 return $next($request);
             }
+       
     }
 }

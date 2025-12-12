@@ -206,7 +206,7 @@
             </a>
         </nav>
         
-        <a href="{{ url('/logout') }}" class="absolute bottom-0 w-full flex items-center gap-3 px-6 py-4 bg-emerald-700 hover:bg-emerald-800 transition-colors">
+        <a href="{{ url('admin/logout') }}" class="absolute bottom-0 w-full flex items-center gap-3 px-6 py-4 bg-emerald-700 hover:bg-emerald-800 transition-colors">
             <i class="bi bi-box-arrow-left text-lg"></i>
             <span class="font-medium text-sm">Keluar</span>
         </a>

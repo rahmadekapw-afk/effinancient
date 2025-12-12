@@ -23,30 +23,31 @@ Route::get('/', function() {
 // Super Admin
 Route::get('/login', [UserController::class, 'index']);
 Route::get('/login_anggota', [UserController::class, 'masuk']);
+
+Route::get('dashboard/anggota', [AnggotaController::class, 'index'])->middleware('anggota_auth');
+Route::get('/anggota/profile', [AnggotaController::class, 'profile'])->middleware('anggota_auth');
+
+Route::get('/anggota/simpanan', [SimpananController::class, 'index'])->middleware('anggota_auth');
+
+Route::get('/anggota/transaksi', [SimpananController::class, 'transaksi'])->middleware('anggota_auth');
+
+
+
 Route::get('/login_admin', [AdminController::class, 'masuk']);
+Route::get('dashboard/admin', [AdminController::class, 'index'])->middleware('admin_auth');
+Route::get('/admin/logout', [AdminController::class, 'logout'])->middleware('admin_auth');
 
-Route::get('/anggota', [AnggotaController::class, 'index']);
-Route::get('/anggota/profile', [AnggotaController::class, 'profile']);
+Route::get('/admin/manajemen_anggota',[SuperAdminController::class,'manajemen_anggota'])->middleware('admin_auth');
+Route::delete('/admin/manajemen_anggota/hapus/{id}',[SuperAdminController::class,'hapus_anggota'])->middleware('admin_auth');
+Route::post('/admin/manajemen_anggota/tambah',[SuperAdminController::class,'tambah_anggota'])->middleware('admin_auth');
 
-Route::get('/anggota/simpanan', [SimpananController::class, 'index']);
+Route::get('/admin/manajemen_akses',[SuperAdminController::class,'manajemen_akses'])->middleware('admin_auth');
 
-Route::get('/anggota/transaksi', [SimpananController::class, 'transaksi']);
-
-
-
-Route::get('/admin', [AdminController::class, 'index'])->middleware('admin_auth');
-
-Route::get('/admin/manajemen_anggota',[SuperAdminController::class,'manajemen_anggota']);
-Route::delete('/admin/manajemen_anggota/hapus/{id}',[SuperAdminController::class,'hapus_anggota']);
-Route::post('/admin/manajemen_anggota/tambah',[SuperAdminController::class,'tambah_anggota']);
-
-Route::get('/admin/manajemen_akses',[SuperAdminController::class,'manajemen_akses']);
-
-Route::get('/admin/transaksi',[AdminController::class,'transaksi']);
+Route::get('/admin/transaksi',[AdminController::class,'transaksi'])->middleware('admin_auth');
 Route::get('/admin/transaksi/konfirmasi/{idAnggota}', [AdminController::class, 'konfirmasi'])
-    ->name('admin.transaksi.konfirmasi');
+    ->name('admin.transaksi.konfirmasi')->middleware('admin_auth');
     
-Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index']);
+Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index'])->middleware('admin_auth');
 
 
 
@@ -61,7 +62,7 @@ Route::delete('/superadmin/{admin}', [SuperAdminController::class, 'destroy'])->
 
 
 // Admin dan Role
-Route::resource('admin', AdminController::class);
+// Route::resource('admin', AdminController::class);
 Route::resource('role', RoleController::class);
 
 // Anggota
