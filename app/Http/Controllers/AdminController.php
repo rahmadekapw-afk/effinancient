@@ -100,7 +100,7 @@ class AdminController extends Controller
     {
         //
     }
-        public function masuk(Request $request){
+    public function masuk(Request $request){
         $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -125,7 +125,7 @@ class AdminController extends Controller
             return redirect('/admin')->with('pesan_sukses', 'Berhasil login');
         }
 
-        return back()->with('error', 'Username atau password salah');
+        return back()->with('pesan_error', 'Username atau password salah');
     }
 }
 

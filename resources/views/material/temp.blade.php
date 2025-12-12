@@ -29,7 +29,32 @@
     </style>
 </head>
 <body class="bg-gray-100">
+    {{-- swit alert notif --}}
+      @if(session('pesan_sukses'))
+            <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session("pesan_sukses") }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            </script>
+            @endif
 
+            @if(session('pesan_error'))
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session("pesan_error") }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+            </script>
+            @endif
+
+            {{-- batas sweat --}}
     <aside id="sidebar" class="bg-green-800 text-white w-64 h-screen fixed top-0 left-0 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
         
         <div class="p-4 text-center">

@@ -34,7 +34,7 @@ Route::get('/anggota/transaksi', [SimpananController::class, 'transaksi']);
 
 
 
-Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin', [AdminController::class, 'index'])->middleware('admin_auth');
 
 Route::get('/admin/manajemen_anggota',[SuperAdminController::class,'manajemen_anggota']);
 Route::delete('/admin/manajemen_anggota/hapus/{id}',[SuperAdminController::class,'hapus_anggota']);

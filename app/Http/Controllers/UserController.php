@@ -39,7 +39,7 @@ class UserController extends Controller
             return redirect('/anggota')->with('pesan_sukses', 'Berhasil login');
         }
 
-        return back()->with('error', 'Username atau password salah');
+        return back()->with('pesan_error', 'Username atau password salah');
     }
     
 }
