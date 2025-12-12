@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,34 +8,40 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     <style>
         body {
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
+
         /* Custom class untuk link aktif Anggota */
         .active-link-anggota {
-            background-color: #065f46; /* green-900 */
-            border-right: 4px solid #d1fae5; /* green-100 */
+            background-color: #065f46;
+            /* green-900 */
+            border-right: 4px solid #d1fae5;
+            /* green-100 */
         }
 
         ::-webkit-scrollbar {
             width: 6px;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 10px;
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
     {{-- swit alert notif --}}
-      @if(session('pesan_sukses'))
-            <script>
+    @if(session('pesan_sukses'))
+        <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
@@ -42,11 +49,11 @@
                 showConfirmButton: false,
                 timer: 2000
             });
-            </script>
-            @endif
+        </script>
+    @endif
 
-            @if(session('pesan_error'))
-            <script>
+    @if(session('pesan_error'))
+        <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal',
@@ -54,12 +61,13 @@
                 showConfirmButton: false,
                 timer: 2000
             });
-            </script>
-            @endif
+        </script>
+    @endif
 
-            {{-- batas sweat --}}
-    <aside id="sidebar" class="bg-green-800 text-white w-64 h-screen fixed top-0 left-0 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
-        
+    {{-- batas sweat --}}
+    <aside id="sidebar"
+        class="bg-green-800 text-white w-64 h-screen fixed top-0 left-0 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
+
         <div class="p-4 text-center">
             <h2 class="text-xl font-bold">Koperasi Digital</h2>
         </div>
@@ -75,10 +83,9 @@
         </div>
 
         <nav class="mt-2">
-            
+
             {{-- Beranda ('/anggota') --}}
-            <a href="{{ url('/anggota') }}" 
-               class="flex items-center gap-3 px-6 py-3 transition-colors 
+            <a href="{{ url('/anggota') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
                       @if(Request::is('anggota') || Request::is('anggota/'))
                           active-link-anggota
                       @else
@@ -87,10 +94,9 @@
                 <i class="bi bi-grid-fill text-lg"></i>
                 <span class="font-medium text-sm">Beranda</span>
             </a>
-            
+
             {{-- Simpanan ('/anggota/simpanan') --}}
-            <a href="{{ url('/anggota/simpanan') }}" 
-               class="flex items-center gap-3 px-6 py-3 transition-colors 
+            <a href="{{ url('/anggota/simpanan') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
                       @if(Request::is('anggota/simpanan'))
                           active-link-anggota
                       @else
@@ -99,10 +105,9 @@
                 <i class="bi bi-wallet2 text-lg"></i>
                 <span class="font-medium text-sm">Simpanan</span>
             </a>
-            
+
             {{-- Transaksi ('/anggota/transaksi') --}}
-            <a href="{{ url('/anggota/transaksi') }}" 
-               class="flex items-center gap-3 px-6 py-3 hover:bg-green-900 transition-colors
+            <a href="{{ url('/anggota/transaksi') }}" class="flex items-center gap-3 px-6 py-3 hover:bg-green-900 transition-colors
                        @if(Request::is('anggota/transaksi'))
                           active-link-anggota
                        @else
@@ -111,10 +116,9 @@
                 <i class="bi bi-arrow-down-up text-lg"></i>
                 <span class="font-medium text-sm">Transaksi</span>
             </a>
-            
+
             {{-- Profil ('/anggota/profile') --}}
-            <a href="{{ url('/anggota/profile') }}" 
-               class="flex items-center gap-3 px-6 py-3 hover:bg-green-900 transition-colors
+            <a href="{{ url('/anggota/profile') }}" class="flex items-center gap-3 px-6 py-3 hover:bg-green-900 transition-colors
                        @if(Request::is('anggota/profile'))
                           active-link-anggota
                        @else
@@ -123,9 +127,10 @@
                 <i class="bi bi-person-fill text-lg"></i>
                 <span class="font-medium text-sm">Profil</span>
             </a>
-            
+
             {{-- Keluar --}}
-            <a href="{{ url('/anggota/logout') }}" class="flex items-center gap-3 px-6 py-3 mt-4 text-green-200 hover:text-white hover:bg-green-900 transition-colors">
+            <a href="{{ url('/anggota/logout') }}"
+                class="flex items-center gap-3 px-6 py-3 mt-4 text-green-200 hover:text-white hover:bg-green-900 transition-colors">
                 <i class="bi bi-box-arrow-right text-lg"></i>
                 <span class="font-medium text-sm">Keluar</span>
             </a>
@@ -135,12 +140,13 @@
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden"></div>
 
     <div id="main-content-wrapper" class="relative transition-all duration-300">
-        
-        <header id="main-header" class="fixed top-0 left-0 right-0 bg-green-800 text-white h-14 flex items-center justify-between px-4 md:px-6 z-20 shadow-md transition-all duration-300">
+
+        <header id="main-header"
+            class="fixed top-0 left-0 right-0 bg-green-800 text-white h-14 flex items-center justify-between px-4 md:px-6 z-20 shadow-md transition-all duration-300">
             <button id="hamburger-btn" class="text-xl">
                 <i class="bi bi-list"></i>
             </button>
-            
+
             <button class="text-xl">
                 <i class="bi bi-bell-fill"></i>
             </button>
@@ -150,14 +156,14 @@
             {{-- CONTENT INJEKSI --}}
             @yield('content')
         </main>
-        
-       
+
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var $sidebar = $('#sidebar');
             var $overlay = $('#sidebar-overlay');
             var $hamburgerBtn = $('#hamburger-btn');
@@ -190,7 +196,7 @@
                 $overlay.addClass('hidden');
             }
 
-            $hamburgerBtn.on('click', function() {
+            $hamburgerBtn.on('click', function () {
                 if ($sidebar.hasClass('-translate-x-full')) {
                     openSidebar();
                 } else {
@@ -198,15 +204,15 @@
                 }
             });
 
-            $overlay.on('click', function() {
-                if (!isDesktop()) { 
+            $overlay.on('click', function () {
+                if (!isDesktop()) {
                     closeSidebar();
                 }
             });
 
-            $(window).on('resize', function() {
+            $(window).on('resize', function () {
                 if (isDesktop()) {
-                    $overlay.addClass('hidden'); 
+                    $overlay.addClass('hidden');
                     if (!$sidebar.hasClass('-translate-x-full')) {
                         openSidebar(); // Memastikan posisi konten benar saat resize ke desktop
                     } else {
@@ -231,8 +237,9 @@
 
         });
     </script>
-    
+
     {{-- SCRIPTS INJEKSI --}}
-    @yield('scripts') 
+    @yield('scripts')
 </body>
+
 </html>

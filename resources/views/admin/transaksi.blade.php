@@ -25,7 +25,8 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-sm text-gray-600 font-medium">Total Pengeluaran</p>
-                        <p class="text-2xl font-bold text-red-500 mt-1">Rp {{ number_format($total_pinjaman_menunggu)  }}</p>
+                        <p class="text-2xl font-bold text-red-500 mt-1">Rp {{ number_format($total_pinjaman_menunggu)  }}
+                        </p>
                     </div>
                     <i class="bi bi-graph-down text-3xl text-red-500"></i>
                 </div>
@@ -171,13 +172,13 @@
                                 <td class="px-3 py-4 flex gap-2">
 
                                     {{-- BUTTON SETUJUI --}}
-                                    <button onclick="approvePinjaman({{ $p->anggota_id }})"
+                                    <button onclick="approvePinjaman({{ $p->pinjaman_id }})"
                                         class="px-3 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 transition">
                                         Setujui
                                     </button>
 
                                     {{-- BUTTON TOLAK --}}
-                                    <button onclick="rejectPinjaman({{ $p->anggota_id }})"
+                                    <button onclick="rejectPinjaman({{ $p->pinjaman_id }})"
                                         class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 transition">
                                         Tolak
                                     </button>
@@ -234,8 +235,7 @@
     </script>
 
     <script>
-        // SETUJUI  
-        function approvePinjaman(idAnggota) {
+        function approvePinjaman(idPinjaman) {
             Swal.fire({
                 title: "Setujui Pengajuan?",
                 text: "Pengajuan pinjaman anggota ini akan disetujui.",
@@ -247,13 +247,12 @@
                 cancelButtonColor: "#6b7280",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "/admin/transaksi/konfirmasi/" + idAnggota + "?status=disetujui";
+                    window.location.href = "/admin/transaksi/konfirmasi/" + idPinjaman + "?status=disetujui";
                 }
             });
         }
 
-        // TOLAK  
-        function rejectPinjaman(idAnggota) {
+        function rejectPinjaman(idPinjaman) {
             Swal.fire({
                 title: "Tolak Pengajuan?",
                 text: "Pengajuan pinjaman anggota ini akan ditolak.",
@@ -265,9 +264,10 @@
                 cancelButtonColor: "#6b7280",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "/admin/transaksi/konfirmasi/" + idAnggota + "?status=menunggu";
+                    window.location.href = "/admin/transaksi/konfirmasi/" + idPinjaman + "?status=menunggu";
                 }
             });
         }
+
     </script>
 @endsection

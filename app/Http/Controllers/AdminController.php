@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\Pinjaman;
+use App\Models\Simpanan;
+use App\Models\Pembayaran;
 use Carbon\Carbon;
 use App\Models\Admin;
 
@@ -15,13 +17,26 @@ class AdminController extends Controller
      */
     public function index()
     {   
-        $data['jumlah_anggota'] = Anggota::count();
-        $data['simpanan'] = Anggota::sum('saldo');
+        $data['jumlah_anggota'] = $jumlah_anggota = Anggota::count();
+        $data['simpanan'] = $saldo = Anggota::sum('saldo');
         $data['anggota_aktif'] = Anggota::where('status_anggota','aktif')->count();
         $data['anggota_nonaktif'] = Anggota::where('status_anggota','nonaktif')->count();
         $data['anggota_nonaktif'] = Anggota::where('status_anggota','nonaktif')->count();
 
-        return view('admin.admin');
+        $simpanan = Simpanan::whereMonth('created_at', now()->month)
+                    ->whereYear('created_at', now()->year)
+                    ->count();
+
+        $pinjaman = Pinjaman::whereMonth('created_at', now()->month)
+                            ->whereYear('created_at', now()->year)
+                            ->count();
+
+        $data['pertumbuhan'] = $pertumbuhan = $simpanan + $pinjaman ;
+        $data ['presentase'] = ($pertumbuhan / $jumlah_anggota ) * 100;
+
+        $data['total_transaksi'] = Pembayaran::count();
+
+        return view('admin.admin',$data);
     }
 
     public function transaksi()
@@ -43,10 +58,10 @@ class AdminController extends Controller
         return view('admin.transaksi',$data);
     }
 
-    public function konfirmasi($idAnggota){
+    public function konfirmasi($pinjaman_id){
          $status = request('status'); // diterima / ditolak
 
-        Pinjaman::where('anggota_id', $idAnggota)->update([
+        Pinjaman::where('pinjaman_id', $pinjaman_id)->update([
             'status_pinjaman' => $status
         ]);
 
