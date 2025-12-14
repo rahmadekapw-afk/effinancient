@@ -13,6 +13,8 @@ class Notifikasi extends Model
         'anggota_id',
         'judul',
         'isi',
-        'tanggal'
+        'tanggal',
+         'created_at',
+        'updated_at'
     ];
 }

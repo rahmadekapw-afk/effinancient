@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
         'admin_auth' => \App\Http\Middleware\AdminAuth::class,
         'anggota_auth' => \App\Http\Middleware\AnggotaAuth::class,
+        'superadmin.auth' => \App\Http\Middleware\SuperAdminAuth::class,
+        'admin.or.super'    => \App\Http\Middleware\AdminOrSuperAdmin::class,
         
     ]);
     })

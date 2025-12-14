@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule; 
 use App\Models\Admin;
+use App\Models\Anggota;
+use App\Models\LaporanKeuangan;
+use App\Models\Notifikasi;
+use App\Models\Pembayaran;
+use App\Models\PembekuanBulanan;
+use App\Models\Pinjaman;
+use App\Models\Simpanan;
+
 use Illuminate\Support\Facades\Hash;
 
 
@@ -17,6 +24,59 @@ class SuperAdminController extends Controller
     public function index()
     {
         //
+    }
+    public function audit()
+    {   
+           $auditTrail = collect();
+
+        $models = [
+            'Admin'             => Admin::class,
+            'Anggota'           => Anggota::class,
+            'Laporan Keuangan'  => LaporanKeuangan::class,
+            'Notifikasi'        => Notifikasi::class,
+            'Pembayaran'        => Pembayaran::class,
+            'Pembekuan Bulanan' => PembekuanBulanan::class,
+            'Pinjaman'          => Pinjaman::class,
+            'Simpanan'          => Simpanan::class,
+        ];
+
+        foreach ($models as $label => $modelClass) {
+
+            $rows = $modelClass::select(
+                $modelClass::query()->getModel()->getKeyName(),
+                'created_at',
+                'updated_at'
+            )->get();
+
+            foreach ($rows as $row) {
+
+                $primaryKey = $row->getKeyName();
+                $id = $row->{$primaryKey};
+
+                if ($row->created_at) {
+                    $auditTrail->push([
+                        'model' => $label,
+                        'id'    => $id,
+                        'aksi'  => 'created',
+                        'waktu' => $row->created_at,
+                    ]);
+                }
+
+                if ($row->updated_at && $row->updated_at != $row->created_at) {
+                    $auditTrail->push([
+                        'model' => $label,
+                        'id'    => $id,
+                        'aksi'  => 'updated',
+                        'waktu' => $row->updated_at,
+                    ]);
+                }
+            }
+        }
+
+        return view('admin.audit_trail', [
+            'auditTrail' => $auditTrail->sortByDesc('waktu')->values()
+        ]);
+
     }
     
     public function tambah_anggota(Request $request)

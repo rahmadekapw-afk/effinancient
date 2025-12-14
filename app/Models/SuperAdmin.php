@@ -12,6 +12,8 @@ class SuperAdmin extends Model
         'username',
         'password',
         'nama_superadmin',
-        'level_akses'
+        'level_akses',
+         'created_at',
+        'updated_at'
     ];
 }

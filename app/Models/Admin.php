@@ -11,6 +11,8 @@ class Admin extends Model
     public $fillable = [
         'username',
         'password',
-        'nama_admin'
+        'nama_admin',
+         'created_at',
+        'updated_at'
     ];
 }

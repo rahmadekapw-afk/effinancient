@@ -7,6 +7,7 @@ use App\Models\Anggota;
 use App\Models\Pinjaman;
 use App\Models\Simpanan;
 use App\Models\Pembayaran;
+use App\Models\SuperAdmin;
 use Carbon\Carbon;
 use App\Models\Admin;
 
@@ -115,40 +116,58 @@ class AdminController extends Controller
     {
         //
     }
-    public function masuk(Request $request){
+   public function masuk(Request $request)
+    {
         $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
-             // Hash SHA1
+
         $passwordHash = sha1($request->password);
 
+        // 1. Cek Admin
         $admin = Admin::where('username', $request->username)
             ->where('password', $passwordHash)
             ->first();
 
         if ($admin) {
-
-            // Simpan session login
             session([
                 'admin_id' => $admin->admin_id,
-                'username'   => $admin->username,
-                'nama'       => $admin->nama_admin,
-                
-                'login'      => true,
+                'username' => $admin->username,
+                'nama'     => $admin->nama_admin,
+                'login'    => true,
             ]);
 
+            return redirect('/dashboard/admin');
+        }
 
-            return redirect('/dashboard/admin')->with('pesan_sukses', 'Berhasil login');
+        // 2. Cek SuperAdmin
+        $superadmin = Superadmin::where('username', $request->username)
+            ->where('password', $passwordHash)
+            ->first();
+
+        if ($superadmin) {
+            session([
+                'superadmin_id' => $superadmin->superadmin_id,
+                'username'      => $superadmin->username,
+                'nama'          => $superadmin->nama_superadmin,
+                'login'         => true,
+            ]);
+
+            return redirect('/dashboard/admin');
         }
 
         return back()->with('pesan_error', 'Username atau password salah');
     }
 
+
+    
+
     public function logout(){
         session()->flush();
         return redirect('/login')->with('pesan_sukses', 'Berhasil logout');
     }
-    
 }
+    
+
 

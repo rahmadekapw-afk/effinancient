@@ -69,66 +69,64 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($admins as $admin)
-        <tr>
-            {{-- ID Admin --}}
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
-                {{ $admin->admin_id }}
-            </td>
+                                <tr>
+                                    {{-- ID Admin --}}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
+                                        {{ $admin->admin_id }}
+                                    </td>
 
-            {{-- Nama + Username --}}
-            <td class="px-6 py-4 whitespace-nowrap">
-                <p class="text-sm font-medium text-gray-900">{{ $admin->nama_admin }}</p>
-                <p class="text-xs text-gray-500">{{ $admin->username }}</p>
-            </td>
+                                    {{-- Nama + Username --}}
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <p class="text-sm font-medium text-gray-900">{{ $admin->nama_admin }}</p>
+                                        <p class="text-xs text-gray-500">{{ $admin->username }}</p>
+                                    </td>
 
-            {{-- Username --}}
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{ $admin->username }}
-            </td>
+                                    {{-- Username --}}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ $admin->username }}
+                                    </td>
 
-            {{-- Role (jika mau tambah manual) --}}
-            <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
-                    Admin
-                </span>
-            </td>
+                                    {{-- Role (jika mau tambah manual) --}}
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
+                                            Admin
+                                        </span>
+                                    </td>
 
-            {{-- Tanggal dibuat --}}
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{ $admin->created_at ? $admin->created_at->format('Y-m-d') : '-' }}
-                <br>
-                {{ $admin->created_at ? $admin->created_at->format('H:i') : '-' }}
-            </td>
+                                    {{-- Tanggal dibuat --}}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ $admin->created_at ? $admin->created_at->format('Y-m-d') : '-' }}
+                                        <br>
+                                        {{ $admin->created_at ? $admin->created_at->format('H:i') : '-' }}
+                                    </td>
 
-            {{-- Status default Aktif (jika belum ada field status) --}}
-            <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                    Aktif
-                </span>
-            </td>
+                                    {{-- Status default Aktif (jika belum ada field status) --}}
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Aktif
+                                        </span>
+                                    </td>
 
-            {{-- Tombol Aksi --}}
-            <td class="px-6 py-4 whitespace-nowrap text-center text-lg space-x-2">
-                <button class="text-blue-500 hover:text-blue-700">
-                    <i class="bi bi-pencil-square"></i>
-                </button>
-                <a href="javascript:void(0);"
-                    onclick="hapus({{ $admin->admin_id }})"
-                    class="text-red-500 hover:text-red-700">
-                        <i class="bi bi-trash"></i>
-                </a>
-                <form id="form-hapus-{{ $admin->admin_id }}"
-                action="{{ url('admin/manajemen_akses/hapus/' . $admin->admin_id) }}"
-                method="POST" class="hidden">
-                @csrf
-                @method('DELETE')
-                </form>
-
-
-            </td>
-        </tr>
-    @endforeach
-                            </tbody>
+                                    {{-- Tombol Aksi --}}
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-lg space-x-2">
+                                        <button class="text-blue-500 hover:text-blue-700">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <a href="javascript:void(0);"
+                                            onclick="hapus({{ $admin->admin_id }})"
+                                            class="text-red-500 hover:text-red-700">
+                                                <i class="bi bi-trash"></i>
+                                        </a>
+                                        <form id="form-hapus-{{ $admin->admin_id }}"
+                                        action="{{ url('admin/manajemen_akses/hapus/' . $admin->admin_id) }}"
+                                        method="POST" class="hidden">
+                                        @csrf
+                                        @method('DELETE')
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                         </tbody>
                     </table>
                 </div>
             </div>

@@ -11,6 +11,8 @@ class PembekuanBulanan extends Model
     public $fillable = [
         'bulan',
         'status',
-        'tanggal_proses'
+        'tanggal_proses',
+         'created_at',
+        'updated_at'
     ];
 }

@@ -14,6 +14,8 @@ class Pinjaman extends Model
         'tenor',
         'bunga',
         'status_pinjaman',
-        'tanggal_pengajuan'
+        'tanggal_pengajuan',
+         'created_at',
+        'updated_at'
     ];
 }

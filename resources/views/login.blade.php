@@ -116,8 +116,8 @@
                     </button>
 
                     <p class="text-center text-sm text-gray-600 mt-6">
-                        Belum punya akun? <a href="#" class="font-medium text-green-600 hover:underline">Daftar
-                            sekarang</a>
+                        Kembali ke <a href="{{ url('/') }}"
+                            class="font-medium text-green-600 hover:underline">Halaman Utama</a>
                     </p>
                 </form>
             </div>

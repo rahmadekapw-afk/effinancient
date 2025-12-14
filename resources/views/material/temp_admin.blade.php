@@ -197,27 +197,30 @@
                 <span class="font-medium text-sm">Laporan Keuangan</span>
             </a>
 
-            {{-- Audit Trail ('/admin/audit_trail') --}}
-            <a href="{{ url('/admin/audit_trail') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
+            @if (session()->has('superadmin_id'))
+                {{-- Audit Trail --}}
+                <a href="{{ url('/admin/audit_trail') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
                     @if(Request::is('admin/audit_trail'))
                         active-link
                     @else
                         hover:bg-emerald-700
                     @endif">
-                <i class="bi bi-search text-lg"></i>
-                <span class="font-medium text-sm">Audit Trail</span>
-            </a>
+                    <i class="bi bi-search text-lg"></i>
+                    <span class="font-medium text-sm">Audit Trail</span>
+                </a>
 
-            {{-- Manajemen Akses ('/admin/manajemen_akses') --}}
-            <a href="{{ url('/admin/manajemen_akses') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
+                {{-- Manajemen Akses --}}
+                <a href="{{ url('/admin/manajemen_akses') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
                     @if(Request::is('admin/manajemen_akses'))
                         active-link
                     @else
                         hover:bg-emerald-700
                     @endif">
-                <i class="bi bi-person-lock text-lg"></i>
-                <span class="font-medium text-sm">Manajemen Akses</span>
-            </a>
+                    <i class="bi bi-person-lock text-lg"></i>
+                    <span class="font-medium text-sm">Manajemen Akses</span>
+                </a>
+            @endif
+
         </nav>
 
         <a href="{{ url('admin/logout') }}"

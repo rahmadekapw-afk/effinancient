@@ -17,6 +17,8 @@ class Anggota extends Model
         'nama_lengkap',
         'email',
         'no_hp',
-        'alamat'
+        'alamat',
+        'created_at',
+        'updated_at'
     ];
 }

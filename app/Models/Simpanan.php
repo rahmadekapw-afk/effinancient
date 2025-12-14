@@ -13,6 +13,8 @@ class Simpanan extends Model
         'jenis_simpanan',
         'nominal',
         'tanggal_setor',
-        'saldo'
+        'saldo',
+         'created_at',
+        'updated_at'
     ];
 }

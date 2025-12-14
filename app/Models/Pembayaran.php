@@ -15,6 +15,8 @@ class Pembayaran extends Model
         'metode',
         'nominal',
         'tanggal_bayar',
-        'status'
+        'status',
+         'created_at',
+        'updated_at'
     ];
 }

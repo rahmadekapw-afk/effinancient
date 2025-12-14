@@ -13,6 +13,9 @@ class LaporanKeuangan extends Model
         'periode',
         'format_file',
         'file_path',
-        'tanggal_buat'
+        'tanggal_buat',
+         'created_at',
+        'updated_at'
+        
     ];
 }
