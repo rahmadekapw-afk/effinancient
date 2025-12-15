@@ -73,8 +73,10 @@ return new class extends Migration
             $table->unsignedBigInteger('anggota_id');
             $table->decimal('nominal', 12, 2);
             $table->integer('tenor');
+            $table->integer('jangka_waktu')->nullable();
             $table->float('bunga');
-            $table->enum('status_pinjaman', ['menunggu', 'disetujui', 'lunas']);
+            $table->enum('status_pinjaman', ['menunggu', 'disetujui', 'lunas','ditolak']);
+            $table->enum('pembayaran', ['potong gaji', 'saldo', 'pembayaran online']);
             $table->date('tanggal_pengajuan');
             $table->timestamps();
 
@@ -92,6 +94,7 @@ return new class extends Migration
             $table->unsignedBigInteger('simpanan_id')->nullable();
             $table->unsignedBigInteger('pinjaman_id')->nullable();
             $table->string('metode', 50);
+            $table->string('jenis', 50)->nullable();;
             $table->decimal('nominal', 12, 2);
             $table->date('tanggal_bayar');
             $table->enum('status', ['berhasil', 'gagal']);
@@ -141,8 +144,8 @@ return new class extends Migration
          */
         Schema::create('notifikasis', function (Blueprint $table) {
             $table->bigIncrements('notifikasi_id');
-            $table->unsignedBigInteger('admin_id');
-            $table->unsignedBigInteger('anggota_id');
+            $table->unsignedBigInteger('admin_id')->nullable();;
+            $table->unsignedBigInteger('anggota_id')->nullable();;
             $table->string('judul', 100);
             $table->text('isi');
             $table->dateTime('tanggal');

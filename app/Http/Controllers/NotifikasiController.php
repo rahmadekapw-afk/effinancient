@@ -65,11 +65,10 @@ class NotifikasiController extends Controller
     public function store(Request $request)
     {
        $admin = Admin::first(); // ambil baris pertama
-        $adminId = $admin->admin_id;
+      
 
         // Menggunakan Eloquent Model
         Notifikasi::create([
-            'admin_id'   => $adminId,
             'anggota_id' => session('anggota_id'),
             'judul'      => 'kritik saran',
             'isi'        => $request->kritik,

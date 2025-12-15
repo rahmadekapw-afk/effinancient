@@ -89,10 +89,11 @@ class PinjamanController extends Controller
         Pinjaman::create([
             'anggota_id'        => $request->anggota_id,
             'nominal'           => $request->nominal,
-            'tenor'             => 2,
-            'bunga'             => 2, // misal bunga flat
+            'tenor'             => 0.7,
+            'bunga'             => 0.7, // misal bunga flat
             'status_pinjaman'   => 'menunggu',
-            'tanggal_pengajuan' => $request->tanggal_pengajuan
+            'tanggal_pengajuan' => $request->tanggal_pengajuan,
+            'jangka_waktu'     => $request->jangka_waktu
         ]);
 
         return back()->with('pesan_sukses', 'Pengajuan pinjaman berhasil dikirim!');

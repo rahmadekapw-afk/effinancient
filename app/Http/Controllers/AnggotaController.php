@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\Pinjaman;
+use App\Models\Simpanan;
+use App\Models\Pembayaran;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
 class AnggotaController extends Controller
 {
     /**
@@ -31,6 +35,8 @@ class AnggotaController extends Controller
 
 
     }
+
+   
 
     /**
      * Show the form for creating a new resource.
@@ -67,9 +73,18 @@ class AnggotaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $anggota = Anggota::where('anggota_id', session('anggota_id'))->first();
+
+        $anggota->update([
+            'nama_lengkap' => $request->nama_lengkap,
+            'email'        => $request->email,
+            'no_hp'        => $request->no_hp,
+            'alamat'       => $request->alamat,
+        ]);
+
+        return redirect()->back()->with('pesan_sukses', 'Profil berhasil diperbarui');
     }
 
     /**
@@ -77,7 +92,7 @@ class AnggotaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+      
     }
 
     }
