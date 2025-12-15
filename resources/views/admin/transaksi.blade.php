@@ -111,85 +111,148 @@
         <section class="bg-white rounded-lg shadow p-5">
             <div class="overflow-x-auto">
                 <table id="transaksi-admin-table" class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-3 py-3 font-semibold">ID TRANSAKSI</th>
-                            <th scope="col" class="px-3 py-3 font-semibold">TANGGAL & WAKTU</th>
-                            <th scope="col" class="px-3 py-3 font-semibold">ANGGOTA</th>
-                            <th scope="col" class="px-3 py-3 font-semibold">JENIS TRANSAKSI</th>
-                            <th scope="col" class="px-3 py-3 font-semibold">NOMINAL</th>
-                            <th scope="col" class="px-3 py-3 font-semibold">STATUS</th>
-                            <th scope="col" class="px-3 py-3 font-semibold">KONFIRMASI</th>
+                            <th class="px-3 py-3 font-semibold">ID</th>
+                            <th class="px-3 py-3 font-semibold">TANGGAL & WAKTU</th>
+                            <th class="px-3 py-3 font-semibold">ANGGOTA</th>
+                            <th class="px-3 py-3 font-semibold">JENIS TRANSAKSI</th>
+                            <th class="px-3 py-3 font-semibold">NOMINAL</th>
+
+                            <!-- TAMBAHAN -->
+                            <th class="px-3 py-3 font-semibold">BUNGA</th>
+                            <th class="px-3 py-3 font-semibold">JANGKA WAKTU</th>
+                            <th class="px-3 py-3 font-semibold">ANGSURAN / BULAN</th>
+
+                            <th class="px-3 py-3 font-semibold">STATUS</th>
+                            <th class="px-3 py-3 font-semibold">METODE</th>
+                            <th class="px-3 py-3 font-semibold">KONFIRMASI</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($pinjaman as $p)
-                            <tr class="bg-white border-b">
+                        @php
+                            $bungaPerBulan = 0.007;
+                            $totalBunga   = $p->nominal * $bungaPerBulan * $p->jangka_waktu;
+                            $totalPinjaman = $p->nominal + $totalBunga;
+                            $angsuran = $p->jangka_waktu > 0 ? $totalPinjaman / $p->jangka_waktu : 0;
+                        @endphp
 
-                                {{-- ID TRANSAKSI --}}
-                                <td class="px-3 py-4 font-medium text-green-600">
-                                    {{ $p->pinjaman_id }}
-                                </td>
+                        <tr class="bg-white border-b">
 
-                                {{-- TANGGAL & WAKTU --}}
-                                <td class="px-3 py-4">
-                                    {{ \Carbon\Carbon::parse($p->tanggal_pengajuan)->format('d/m/Y') }}
-                                    <div class="text-xs text-gray-500">
-                                        {{ \Carbon\Carbon::parse($p->tanggal_pengajuan)->format('H:i') }}
-                                    </div>
-                                </td>
+                            {{-- ID --}}
+                            <td class="px-3 py-4 font-medium text-green-600">
+                                {{ $p->pinjaman_id }}
+                            </td>
 
-                                {{-- ANGGOTA (nama + id) --}}
-                                <td class="px-3 py-4">
-                                    <p class="text-gray-800 font-medium">{{ $p->nama_lengkap }}</p>
-                                    <p class="text-xs text-gray-500">{{ $p->anggota_id }}</p>
-                                </td>
+                            {{-- TANGGAL --}}
+                            <td class="px-3 py-4">
+                                {{ \Carbon\Carbon::parse($p->tanggal_pengajuan)->format('d/m/Y') }}
+                                <div class="text-xs text-gray-500">
+                                    {{ \Carbon\Carbon::parse($p->tanggal_pengajuan)->format('H:i') }}
+                                </div>
+                            </td>
 
-                                {{-- JENIS TRANSAKSI --}}
-                                <td class="px-3 py-4 font-medium text-blue-600">
-                                    Pengajuan Pinjaman
-                                </td>
+                            {{-- ANGGOTA --}}
+                            <td class="px-3 py-4">
+                                <p class="text-gray-800 font-medium">{{ $p->nama_lengkap }}</p>
+                                <p class="text-xs text-gray-500">{{ $p->anggota_id }}</p>
+                            </td>
 
-                                {{-- NOMINAL --}}
-                                <td class="px-3 py-4 font-medium text-green-600">
-                                    Rp {{ number_format($p->nominal, 0, ',', '.') }}
-                                </td>
+                            {{-- JENIS --}}
+                            <td class="px-3 py-4 font-medium text-blue-600">
+                                Pengajuan Pinjaman
+                            </td>
 
-                                {{-- STATUS --}}
-                                <td class="px-3 py-4">
-                                    @if($p->status_pinjaman == 'menunggu')
-                                        <span
-                                            class="text-xs font-medium text-orange-800 bg-orange-100 px-2 py-0.5 rounded">Pending</span>
-                                    @elseif($p->status_pinjaman == 'disetujui')
-                                        <span
-                                            class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Diterima</span>
-                                    @else
-                                        <span class="text-xs font-medium text-red-800 bg-red-100 px-2 py-0.5 rounded">Ditolak</span>
+                            {{-- NOMINAL --}}
+                            <td class="px-3 py-4 font-medium text-green-600">
+                                Rp {{ number_format($p->nominal, 0, ',', '.') }}
+                            </td>
+
+                            {{-- BUNGA --}}
+                            <td class="px-3 py-4 text-gray-700">
+                                0,7% / bulan
+                            </td>
+
+                            {{-- JANGKA WAKTU --}}
+                            <td class="px-3 py-4 text-gray-700">
+                                {{ $p->jangka_waktu }} bulan
+                            </td>
+
+                            {{-- ANGSURAN --}}
+                            <td class="px-3 py-4 font-medium text-green-700">
+                                Rp {{ number_format($angsuran, 0, ',', '.') }}
+                            </td>
+
+                            {{-- STATUS --}}
+                            <td class="px-3 py-4">
+                                @if($p->status_pinjaman == 'menunggu')
+                                    <span class="text-xs font-medium text-orange-800 bg-orange-100 px-2 py-0.5 rounded">
+                                        Pending
+                                    </span>
+                                @elseif($p->status_pinjaman == 'disetujui')
+                                    <span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">
+                                        Diterima
+                                    </span>
+                                @else
+                                    <span class="text-xs font-medium text-red-800 bg-red-100 px-2 py-0.5 rounded">
+                                        Ditolak
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td class="px-3 py-4 text-gray-700">
+                                {{ $p->pembayaran }}
+                            </td>
+
+                            {{-- KONFIRMASI --}}
+                            <td class="px-3 py-4">
+                                    {{-- STATUS MENUNGGU --}}
+                                    @if ($p->status_pinjaman === 'menunggu')
+                                        <div class="flex gap-2">
+                                            <button onclick="approvePinjaman({{ $p->pinjaman_id }})"
+                                                class="px-3 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700">
+                                                Setujui
+                                            </button>
+
+                                            <button onclick="rejectPinjaman({{ $p->pinjaman_id }})"
+                                                class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700">
+                                                Tolak
+                                            </button>
+                                        </div>
+
+                                    {{-- STATUS DISETUJUI --}}
+                                    @elseif ($p->status_pinjaman === 'disetujui')
+                                        <div class="flex flex-col gap-2">
+                                            <span class="text-xs font-semibold text-blue-700">
+                                                Sedang Diproses
+                                            </span>
+
+                                            <button onclick="lunasPinjaman({{ $p->pinjaman_id }})"
+                                                class="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 w-max">
+                                                Tandai Lunas
+                                            </button>
+                                        </div>
+
+                                    {{-- STATUS LUNAS --}}
+                                    @elseif ($p->status_pinjaman === 'lunas')
+                                        <span class="text-xs font-semibold text-green-800 bg-green-100 px-2 py-1 rounded">
+                                            LUNAS ✔
+                                        </span>
+
+                                    {{-- STATUS DITOLAK --}}
+                                    @elseif ($p->status_pinjaman === 'ditolak')
+                                        <span class="text-xs font-semibold text-red-800 bg-red-100 px-2 py-1 rounded">
+                                            DITOLAK
+                                        </span>
                                     @endif
-                                </td>
-
-                                {{-- METODE (contoh masih kosong) --}}
-                                <td class="px-3 py-4 flex gap-2">
-
-                                    {{-- BUTTON SETUJUI --}}
-                                    <button onclick="approvePinjaman({{ $p->pinjaman_id }})"
-                                        class="px-3 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 transition">
-                                        Setujui
-                                    </button>
-
-                                    {{-- BUTTON TOLAK --}}
-                                    <button onclick="rejectPinjaman({{ $p->pinjaman_id }})"
-                                        class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 transition">
-                                        Tolak
-                                    </button>
 
                                 </td>
 
-
-
-                            </tr>
+                        </tr>
                         @endforeach
-                    </tbody>
+                        </tbody>
+
 
                 </table>
             </div>
@@ -205,7 +268,30 @@
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/2.0.2/js/jquery.dataTables.min.js"></script>
 
-    <script>
+   <script>
+       function lunasPinjaman(id) {
+        if (!confirm('Yakin ingin menandai pinjaman ini sebagai LUNAS?')) return;
+
+        fetch(`/admin/pinjaman/${id}/lunas`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload(); // refresh agar status berubah
+            } else {
+                alert('Gagal mengubah status');
+            }
+        })
+        .catch(() => alert('Terjadi kesalahan'));
+    }
+   </script>
+   <script>
+        
         $(document).ready(function () {
             // Inisialisasi Datatables
             var table = $('#transaksi-admin-table').DataTable({
@@ -233,6 +319,51 @@
             $('#transaksi-admin-table_paginate').appendTo('#datatables-transaksi-info');
         });
     </script>
+    <script>
+    function lunasPinjaman(id) {
+        Swal.fire({
+            title: 'Tandai Pinjaman Lunas?',
+            text: 'Status pinjaman akan diubah menjadi LUNAS.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#16a34a', // hijau
+            cancelButtonColor: '#dc2626', // merah
+            confirmButtonText: 'Ya, Lunas',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`/admin/pinjaman/${id}/lunas`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Pinjaman telah ditandai LUNAS.',
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Gagal', data.message ?? 'Tidak dapat mengubah status', 'error');
+                    }
+                })
+                .catch(() => {
+                    Swal.fire('Error', 'Terjadi kesalahan sistem', 'error');
+                });
+            }
+        });
+    }
+</script>
+
 
     <script>
         function approvePinjaman(idPinjaman) {

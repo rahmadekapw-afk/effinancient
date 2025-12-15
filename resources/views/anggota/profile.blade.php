@@ -41,9 +41,12 @@
                         </div>
                     </div>
                 </div>
-                <button class="mt-4 md:mt-0 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors text-sm shadow-md">
+               <button 
+                    onclick="confirmEditProfile()"
+                    class="mt-4 md:mt-0 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors text-sm shadow-md">
                     <i class="bi bi-pencil-square"></i> Edit Profil
                 </button>
+
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-4">
@@ -123,4 +126,55 @@
 </div>
 
     </div>
+
+    {{-- MODAL EDIT PROFIL --}}
+<div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white w-full max-w-lg rounded-lg shadow-lg p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Edit Profil</h3>
+
+        <form action="{{ url('/anggota/profile/update') }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-3">
+                <label class="text-sm font-medium text-gray-700">Nama Lengkap</label>
+                <input type="text" name="nama_lengkap"
+                    value="{{ $anggota->nama_lengkap }}"
+                    class="w-full border rounded p-2 mt-1 focus:ring focus:ring-green-200">
+            </div>
+
+            <div class="mb-3">
+                <label class="text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email"
+                    value="{{ $anggota->email }}"
+                    class="w-full border rounded p-2 mt-1 focus:ring focus:ring-green-200">
+            </div>
+
+            <div class="mb-3">
+                <label class="text-sm font-medium text-gray-700">Nomor Telepon</label>
+                <input type="text" name="no_hp"
+                    value="{{ $anggota->no_hp }}"
+                    class="w-full border rounded p-2 mt-1 focus:ring focus:ring-green-200">
+            </div>
+
+            <div class="mb-4">
+                <label class="text-sm font-medium text-gray-700">Alamat</label>
+                <textarea name="alamat" rows="2"
+                    class="w-full border rounded p-2 mt-1 focus:ring focus:ring-green-200">{{ $anggota->alamat }}</textarea>
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeEditModal()"
+                    class="px-4 py-2 rounded-lg border text-gray-600">
+                    Batal
+                </button>
+                <button type="submit"
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                    Simpan Perubahan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 @endsection

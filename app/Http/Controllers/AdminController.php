@@ -69,6 +69,27 @@ class AdminController extends Controller
         return back()->with('pesan_sukses', 'Status berhasil diperbarui!');
     }
 
+    public function lunas($id)
+{
+    $pinjaman = Pinjaman::where('pinjaman_id', $id)->firstOrFail();
+
+    // keamanan: hanya boleh lunas jika sudah disetujui
+    if ($pinjaman->status_pinjaman !== 'disetujui') {
+        return response()->json([
+            'success' => false,
+            'message' => 'Pinjaman belum disetujui'
+        ], 400);
+    }
+
+    $pinjaman->update([
+        'status_pinjaman' => 'lunas'
+    ]);
+
+    return response()->json([
+        'success' => true
+    ]);
+}
+
     /**
      * Show the form for creating a new resource.
      */

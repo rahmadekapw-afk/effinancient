@@ -64,6 +64,33 @@
         </script>
     @endif
 
+    {{-- Alert edit anggota  --}}
+    <script>
+    function confirmEditProfile() {
+        Swal.fire({
+            title: 'Yakin ingin mengedit profil?',
+            text: 'Pastikan data yang Anda ubah sudah benar.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Edit',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#16a34a',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('editProfileModal').classList.remove('hidden');
+                document.getElementById('editProfileModal').classList.add('flex');
+            }
+        });
+    }
+
+    function closeEditModal() {
+        document.getElementById('editProfileModal').classList.add('hidden');
+        document.getElementById('editProfileModal').classList.remove('flex');
+    }
+    </script>
+
+
     {{-- batas sweat --}}
     <aside id="sidebar"
         class="bg-green-800 text-white w-64 h-screen fixed top-0 left-0 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">

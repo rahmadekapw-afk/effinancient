@@ -15,6 +15,8 @@ class Pinjaman extends Model
         'bunga',
         'status_pinjaman',
         'tanggal_pengajuan',
+        'pembayaran',
+        'jangka_waktu',
          'created_at',
         'updated_at'
     ];

@@ -32,6 +32,8 @@ Route::get('/anggota/profile', [AnggotaController::class, 'profile'])->middlewar
 Route::post('/anggota/profile/kritik', [NotifikasiController::class, 'store']);
 Route::get('/anggota/simpanan', [SimpananController::class, 'index'])->middleware('anggota_auth');
 Route::get('/anggota/transaksi', [SimpananController::class, 'transaksi'])->middleware('anggota_auth');
+Route::post('/anggota/setor', [PembayaranController::class, 'setor'])->middleware('anggota_auth');
+Route::put('/anggota/profile/update', [AnggotaController::class, 'update'])->middleware('anggota_auth');
 
 
 
@@ -48,12 +50,15 @@ Route::get('/admin/manajemen_akses',[SuperAdminController::class,'manajemen_akse
 Route::get('/admin/transaksi',[AdminController::class,'transaksi'])->middleware('admin.or.super');
 Route::get('/admin/transaksi/konfirmasi/{pinjaman_id}', [AdminController::class, 'konfirmasi'])
     ->name('admin.transaksi.konfirmasi')->middleware('admin.or.super');
+    Route::post('/admin/pinjaman/{id}/lunas', [AdminController::class, 'lunas'])
+    ->name('pinjaman.lunas')->middleware('admin.or.super');
+
     
 Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index'])->middleware('admin.or.super');
 
 
 
-Route::resource('anggota', AnggotaController::class);
+// Route::resource('anggota', AnggotaController::class);
 
 
 Route::get('/superadmin', [SuperAdminController::class, 'index'])->name('superadmin.index');

@@ -11,7 +11,7 @@
 
             <div class="mt-4 bg-green-900 rounded-lg p-3">
                 <p class="text-xs text-green-200">Total Saldo</p>
-                <p class="text-2xl font-bold">{{ number_format(session('saldo'), 0, ',', '.') }}</p>
+                <p class="text-2xl font-bold">Rp. {{ number_format($saldo)}}</p>
             </div>
         </section>
 
@@ -79,19 +79,21 @@
         <section class="bg-white rounded-lg shadow p-5">
             <h4 class="text-base font-semibold text-gray-800 mb-3">Aksi Cepat</h4>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <a href="#" class="text-center p-3 bg-green-50 rounded-lg hover:shadow-md transition-shadow">
+                <a href="#" id="openModal"
+                    class="text-center p-3 bg-green-50 rounded-lg hover:shadow-md transition-shadow block">
                     <div class="inline-block p-2 bg-green-800 text-white rounded-full">
                         <i class="bi bi-arrow-down-left text-base"></i>
                     </div>
                     <p class="mt-1 text-xs font-medium text-gray-700">Setor Simpanan</p>
                 </a>
+
                 <a id="btnBayarPinjaman"
                     class="cursor-pointer text-center p-3 bg-blue-50 rounded-lg hover:shadow-md transition-shadow w-full">
-                        <div class="inline-block p-2 bg-blue-600 text-white rounded-full">
-                            <i class="bi bi-arrow-up-right text-base"></i>
-                        </div>
-                        <p class="mt-1 text-xs font-medium text-gray-700">Bayar Pinjaman</p>
-                    </a>
+                    <div class="inline-block p-2 bg-blue-600 text-white rounded-full">
+                        <i class="bi bi-arrow-up-right text-base"></i>
+                    </div>
+                    <p class="mt-1 text-xs font-medium text-gray-700">Bayar Pinjaman</p>
+                </a>
 
                 <a href="#" id="btnPinjaman"
                     class="text-center p-3 bg-orange-50 rounded-lg hover:shadow-md transition-shadow">
@@ -111,7 +113,7 @@
             </div>
         </section>
 
-        <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <section class="grid grid-cols-1 lg:grid-cols-1 gap-4">
 
             <div class="bg-white rounded-lg shadow p-5 lg:col-span-2">
                 <div class="flex justify-between items-center mb-3">
@@ -147,32 +149,19 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow p-5">
-                <div class="flex items-center gap-2 mb-3">
-                    <i class="bi bi-bell text-gray-600 text-base"></i>
-                    <h4 class="text-base font-semibold text-gray-800">Notifikasi</h4>
-                </div>
-
-                <div class="space-y-3">
-                    <div class="bg-orange-50 border-l-4 border-orange-500 p-2 rounded-r-lg">
-                        <p class="text-xs text-gray-700">Jatuh tempo angsuran pinjaman 10 Nov 2024</p>
-                    </div>
-                    <div class="bg-green-50 border-l-4 border-green-500 p-2 rounded-r-lg">
-                        <p class="text-xs text-gray-700">Simpanan wajib bulan ini sudah lunas</p>
-                    </div>
-                </div>
-            </div>
+     
 
         </section>
 
-    
+
         <!-- Modal Bayar Pinjaman -->
         <div id="modalBayarPinjaman" class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
 
             <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-5 relative">
 
                 <!-- Tombol Close -->
-                <button id="closeModalBayar" class="absolute top-3 right-3 text-gray-600 hover:text-black text-xl">✕</button>
+                <button id="closeModalBayar"
+                    class="absolute top-3 right-3 text-gray-600 hover:text-black text-xl">✕</button>
 
                 <h2 class="text-lg font-semibold mb-4">Pembayaran Pinjaman</h2>
 
@@ -181,16 +170,15 @@
                     @forelse($pinjaman as $item)
                         <div class="border p-3 rounded-lg mb-3">
                             <p class="text-sm">
-                                <b>Nominal:</b>  
+                                <b>Nominal:</b>
                                 Rp {{ number_format($item->nominal, 0, ',', '.') }}
                             </p>
                             <p class="text-xs text-gray-600">
                                 Tanggal Pinjam: {{ $item->created_at->format('d M Y') }}
                             </p>
 
-                            <a href="{{ url('dashboard/anggota/pinjaman/bayar/'.$item->id) }}"
-                            class="mt-2 inline-block bg-green-600 hover:bg-green-700 text-white 
-                                    text-xs px-3 py-1 rounded">
+                            <a href="{{ url('dashboard/anggota/pinjaman/bayar/' . $item->id) }}" class="mt-2 inline-block bg-green-600 hover:bg-green-700 text-white 
+                                                                            text-xs px-3 py-1 rounded">
                                 Bayar Sekarang
                             </a>
                         </div>
@@ -206,125 +194,327 @@
     </div>
     {{-- modal --}}
 
-    <!-- Modal Ajukan Pinjaman (TANPA BOOTSTRAP) -->
+    <!-- Modal Ajukan Pinjaman  -->
+   <!-- MODAL PINJAMAN -->
     <div id="modalPinjaman" class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
 
         <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-5 relative">
-            <!-- Tombol Close -->
-            <button id="closeModal" class="absolute top-3 right-3 text-gray-600 hover:text-black text-xl">
+
+            <button id="closeModal"
+                class="absolute top-3 right-3 text-gray-600 hover:text-black text-xl">
                 ✕
             </button>
 
-            <h2 class="text-lg font-semibold mb-3">Ajukan Pinjaman</h2>
+            <h2 class="text-lg font-semibold mb-4">Ajukan Pinjaman</h2>
 
-            <form method="POST" action="{{ url('dashboard/anggota/pinjaman/store') }}" id="formPinjaman">
+            <form method="POST"
+                action="{{ url('dashboard/anggota/pinjaman/store') }}"
+                id="formPinjaman">
                 @csrf
-                <input type="hidden" name="anggota_id" value="{{ session('anggota_id') }}">
 
+                <input type="hidden" name="anggota_id" value="{{ session('anggota_id') }}">
+                <input type="hidden" name="angsuran_bulanan" id="angsuranHidden">
+
+                <!-- Nominal -->
                 <div class="mb-3">
                     <label class="text-sm font-medium">Nominal Pinjaman</label>
-                    <input type="number" id="nominal" name="nominal" class="w-full border rounded p-2 mt-1" required>
+                    <input type="number" id="nominal" name="nominal"
+                        class="w-full border rounded p-2 mt-1"
+                        placeholder="Maksimal 150000000" required>
 
                     <p id="errorNominal" class="text-red-500 text-xs mt-1 hidden"></p>
+                </div>
 
-                    <p class="text-xs text-gray-700 mt-1">
-                        Batas maksimal: <span id="batasNominal"></span>
+                <!-- Jangka Waktu -->
+                <div class="mb-3">
+                    <label class="text-sm font-medium">Jangka Waktu (Bulan)</label>
+                    <input type="number" id="jangka_waktu" name="jangka_waktu"
+                        class="w-full border rounded p-2 mt-1"
+                        placeholder="Maksimal 180 bulan" required>
+
+                    <p id="errorTenor" class="text-red-500 text-xs mt-1 hidden"></p>
+                </div>
+
+                <!-- Metode Pembayaran -->
+                <div class="mb-3">
+                    <label class="text-sm font-medium">Metode Pembayaran</label>
+                    <select name="pembayaran"
+                        class="w-full border rounded p-2 mt-1" required>
+                        <option value="">-- Pilih Metode --</option>
+                        <option value="potong gaji">Potong Gaji</option>
+                        <option value="saldo">Saldo</option>
+                        <option value="pembayaran online">Pembayaran Online</option>
+                    </select>
+                </div>
+
+                <!-- INFO ANGSURAN -->
+                <div id="boxAngsuran"
+                    class="hidden bg-gray-50 border rounded p-3 text-sm mt-3">
+
+                    <div class="flex justify-between mb-1">
+                        <span>Total Bunga</span>
+                        <span id="totalBunga" class="font-medium"></span>
+                    </div>
+
+                    <div class="flex justify-between mb-1">
+                        <span>Total Pinjaman</span>
+                        <span id="totalPinjaman" class="font-medium"></span>
+                    </div>
+
+                    <hr class="my-2">
+
+                    <div class="flex justify-between font-semibold text-green-700">
+                        <span>Angsuran / Bulan</span>
+                        <span id="angsuranBulanan"></span>
+                    </div>
+
+                    <p class="text-xs text-gray-500 mt-1">
+                        * Bunga tetap 0,7% per bulan
                     </p>
                 </div>
 
-                <div class="mb-3">
+                <!-- Tanggal -->
+                <div class="mt-3">
                     <label class="text-sm font-medium">Tanggal Pengajuan</label>
-                    <input type="date" id="tgl_pinjam" name="tanggal_pengajuan" class="w-full border rounded p-2 mt-1"
-                        required>
+                    <input type="date" name="tanggal_pengajuan"
+                        class="w-full border rounded p-2 mt-1" required>
                 </div>
 
-                <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 rounded mt-3">
-                    Ajukan
+                <button type="submit"
+                    class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 rounded mt-4">
+                    Ajukan Pinjaman
                 </button>
-            </form>
 
+            </form>
         </div>
     </div>
 
-    {{-- modal pembayaran --}}
-    
 
-    <script>
-        $(document).ready(function () {
+    {{-- modal setor --}}
 
-            let gaji = 3000000;
-            let faktor = 2;
-            let pinjamanAktif = 1000000;
+    <div id="modalSetor"
+     class="fixed inset-0 hidden z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
 
-            let limitPinjaman = (gaji * faktor) - pinjamanAktif;
+<div class="bg-white w-full max-w-md rounded-xl shadow-lg p-6">
+    <h2 class="text-lg font-semibold text-gray-700 mb-4">
+        Form Transaksi
+    </h2>
 
-            $("#batasNominal").text("Rp " + Number(limitPinjaman).toLocaleString());
+    <form action="{{ url('anggota/setor') }}" method="POST">
+        @csrf
 
-            // Buka modal
-            $(document).on("click", "#btnPinjaman", function (e) {
-                e.preventDefault();
-                $("#modalPinjaman").removeClass("hidden").addClass("flex");
-            });
+        <!-- Jenis -->
+        <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-600">Jenis</label>
+            <select id="jenis" name="jenis"
+                class="w-full mt-1 rounded-lg border-gray-300 focus:ring-green-500 focus:border-green-500">
+                <option value="">-- Pilih Jenis --</option>
+                <option value="qurban">Pembayaran Qurban</option>
+                <option value="zakat">Zakat</option>
+                <option value="wajib">Wajib</option>
+                <option value="simpanan">Setor Simpanan</option>
+            </select>
+        </div>
 
-            // Tutup modal
-            $("#closeModal").on("click", function () {
-                $("#modalPinjaman").removeClass("flex").addClass("hidden");
-            });
+        <!-- Metode -->
+        <div class="mb-3" id="metode-wrapper">
+            <label class="block text-sm font-medium text-gray-600">Metode</label>
+            <select id="metode" name="metode"
+                class="w-full mt-1 rounded-lg border-gray-300">
+                <option value="">-- Pilih Metode --</option>
+                <option value="saldo">Saldo</option>
+                <option value="gaji">Pengurangan Gaji</option>
+            </select>
+        </div>
 
-            // Validasi nominal
-            $("#nominal").on("keyup change", function () {
-                let nominal = Number($(this).val());
+        <!-- Nominal -->
+        <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-600">Nominal</label>
+            <input type="number" name="nominal"
+                class="w-full mt-1 rounded-lg border-gray-300 focus:ring-green-500 focus:border-green-500"
+                placeholder="Masukkan nominal">
+        </div>
 
-                if (nominal > limitPinjaman) {
-                    $("#errorNominal")
-                        .removeClass("hidden")
-                        .text("Nominal tidak boleh melebihi Rp " + limitPinjaman.toLocaleString());
-                } else {
-                    $("#errorNominal").addClass("hidden");
-                }
-            });
+        <!-- Action -->
+        <div class="flex justify-end gap-2">
+            <button type="button" id="closeModal"
+                class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">
+                Batal
+            </button>
+            <button type="submit"
+                class="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700">
+                Simpan
+            </button>
+        </div>
+    </form>
+</div>
+</div>
 
-            // Submit form
-            $("#formPinjaman").on("submit", function (e) {
 
-                let nominal = Number($("#nominal").val());
 
-                if (nominal > limitPinjaman) {
-                    e.preventDefault();
-                    $("#errorNominal")
-                        .removeClass("hidden")
-                        .text("Nominal tidak boleh melebihi Rp " + limitPinjaman.toLocaleString());
-                    return false;
-                }
-
-                return true;  // sangat penting
-            });
-
-        });
-    </script>
-    {{-- jquery pembayaran --}}
+    {{-- peminjaman --}}
     <script>
     $(document).ready(function () {
 
-        // Buka modal bayar pinjaman
-        $("#btnBayarPinjaman").on("click", function (e) {
+        const MAX_PINJAMAN = 150000000; // 150 juta
+        const MAX_TENOR = 180;          // 180 bulan
+        const BUNGA = 0.007;            // 0.7%
+
+        // buka modal
+        $("#btnPinjaman").on("click", function (e) {
             e.preventDefault();
-            $("#modalBayarPinjaman").removeClass("hidden").addClass("flex");
+            $("#modalPinjaman").removeClass("hidden").addClass("flex");
         });
 
-        // Tutup modal
-        $("#closeModalBayar").on("click", function () {
-            $("#modalBayarPinjaman").removeClass("flex").addClass("hidden");
+        // tutup modal
+        $("#closeModal").on("click", function () {
+            $("#modalPinjaman").addClass("hidden").removeClass("flex");
         });
 
-        // Klik luar modal = tutup
-        $("#modalBayarPinjaman").on("click", function (e) {
-            if (e.target === this) {
-                $("#modalBayarPinjaman").removeClass("flex").addClass("hidden");
+        function hitungAngsuran() {
+            let nominal = Number($("#nominal").val());
+            let bulan   = Number($("#jangka_waktu").val());
+
+            if (nominal > 0 && bulan > 0 && nominal <= MAX_PINJAMAN && bulan <= MAX_TENOR) {
+
+                let totalBunga = nominal * BUNGA * bulan;
+                let totalPinjaman = nominal + totalBunga;
+                let angsuran = totalPinjaman / bulan;
+
+                $("#totalBunga").text("Rp " + Math.round(totalBunga).toLocaleString());
+                $("#totalPinjaman").text("Rp " + Math.round(totalPinjaman).toLocaleString());
+                $("#angsuranBulanan").text("Rp " + Math.round(angsuran).toLocaleString());
+
+                $("#angsuranHidden").val(Math.round(angsuran));
+
+                $("#boxAngsuran").removeClass("hidden");
+            } else {
+                $("#boxAngsuran").addClass("hidden");
+            }
+        }
+
+        $("#nominal").on("keyup change", function () {
+            let nominal = Number($(this).val());
+
+            if (nominal > MAX_PINJAMAN) {
+                $("#errorNominal").removeClass("hidden")
+                    .text("Pinjaman maksimal Rp 150.000.000");
+            } else {
+                $("#errorNominal").addClass("hidden");
+            }
+
+            hitungAngsuran();
+        });
+
+        $("#jangka_waktu").on("keyup change", function () {
+            let bulan = Number($(this).val());
+
+            if (bulan < 1 || bulan > MAX_TENOR) {
+                $("#errorTenor").removeClass("hidden")
+                    .text("Jangka waktu 1 – 180 bulan");
+            } else {
+                $("#errorTenor").addClass("hidden");
+            }
+
+            hitungAngsuran();
+        });
+
+        $("#formPinjaman").on("submit", function (e) {
+            let nominal = Number($("#nominal").val());
+            let bulan   = Number($("#jangka_waktu").val());
+
+            if (nominal > MAX_PINJAMAN || bulan < 1 || bulan > MAX_TENOR) {
+                e.preventDefault();
+                alert("Periksa kembali nominal atau jangka waktu pinjaman");
+                return false;
             }
         });
 
     });
+    </script>
+
+    {{-- jquery pembayaran --}}
+    <script>
+        $(document).ready(function () {
+
+            // Buka modal bayar pinjaman
+            $("#btnBayarPinjaman").on("click", function (e) {
+                e.preventDefault();
+                $("#modalBayarPinjaman").removeClass("hidden").addClass("flex");
+            });
+
+            // Tutup modal
+            $("#closeModalBayar").on("click", function () {
+                $("#modalBayarPinjaman").removeClass("flex").addClass("hidden");
+            });
+
+            // Klik luar modal = tutup
+            $("#modalBayarPinjaman").on("click", function (e) {
+                if (e.target === this) {
+                    $("#modalBayarPinjaman").removeClass("flex").addClass("hidden");
+                }
+            });
+
+        });
+    </script>
+    <script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+   <script>
+    $(function () {
+
+        // =====================
+        // BUKA MODAL
+        // =====================
+        $(document).on('click', '#openModal', function (e) {
+            e.preventDefault();
+            $('#modalSetor')
+                .removeClass('hidden')
+                .addClass('flex');
+        });
+
+        // =====================
+        // TUTUP MODAL (BATAL)
+        // =====================
+        $(document).on('click', '#closeModal', function () {
+            $('#modalSetor')
+                .addClass('hidden')
+                .removeClass('flex');
+        });
+
+        // =====================
+        // KLIK BACKDROP
+        // =====================
+        $(document).on('click', '#modalSetor', function (e) {
+            if ($(e.target).is('#modalSetor')) {
+                $(this)
+                    .addClass('hidden')
+                    .removeClass('flex');
+            }
+        });
+        $(document).ready(function () {
+
+    $('#jenis').on('change', function () {
+        let jenis = $(this).val();
+
+        if (jenis === 'simpanan') {
+            // sembunyikan metode
+            $('#metode-wrapper').slideUp();
+            $('#metode').val('').prop('required', false);
+        } else {
+            // tampilkan metode
+            $('#metode-wrapper').slideDown();
+            $('#metode').prop('required', true);
+        }
+    });
+
+});
+
+    });
+    
+    </script>
+
+
     </script>
 
 
