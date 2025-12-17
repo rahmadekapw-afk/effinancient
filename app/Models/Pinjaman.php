@@ -17,6 +17,8 @@ class Pinjaman extends Model
         'tanggal_pengajuan',
         'pembayaran',
         'jangka_waktu',
+        'angsuran_per_bulan',
+        'jumlah_dibayar',
          'created_at',
         'updated_at'
     ];
