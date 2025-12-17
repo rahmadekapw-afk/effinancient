@@ -15,8 +15,12 @@ class Pembayaran extends Model
         'metode',
         'nominal',
         'tanggal_bayar',
-        'status',
-         'created_at',
-        'updated_at'
+                'status',
+                'midtrans_order_id',
+                'midtrans_transaction_id',
+                'midtrans_status',
+                'midtrans_response',
+                'created_at',
+                'updated_at'
     ];
 }

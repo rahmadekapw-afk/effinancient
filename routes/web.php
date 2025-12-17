@@ -76,13 +76,6 @@ Route::get('/admin/audit_trail',[SuperAdminController::class, 'audit'])->name('s
 
 
 
-
-
-
-
-
-
-
 // Admin dan Role
 // Route::resource('admin', AdminController::class);
 Route::resource('role', RoleController::class);
@@ -100,6 +93,27 @@ Route::post('dashboard/anggota/pinjaman/store', [PinjamanController::class, 'sto
 
 // Pembayaran
 Route::resource('pembayaran', PembayaranController::class);
+
+// Quick pay: langsung inisiasi Midtrans untuk pinjaman anggota
+// Alias route: arahkan ke pinjaman pertama anggota jika user membuka URL tanpa id
+Route::get('dashboard/anggota/pinjaman/bayar', function () {
+    $anggotaId = session('anggota_id');
+    $pinjaman = \App\Models\Pinjaman::where('anggota_id', $anggotaId)->first();
+    if (! $pinjaman) {
+        return redirect()->back()->withErrors('Tidak ada pinjaman ditemukan');
+    }
+    return redirect("dashboard/anggota/pinjaman/bayar-now/{$pinjaman->pinjaman_id}");
+})->middleware('anggota_auth');
+
+// Quick pay: langsung inisiasi Midtrans untuk pinjaman anggota
+Route::get('dashboard/anggota/pinjaman/bayar-now/{pinjaman}', [PembayaranController::class, 'bayarNow'])->middleware('anggota_auth');
+
+// Midtrans notification (server-to-server)
+Route::post('midtrans/notification', [PembayaranController::class, 'midtransNotification']);
+// Midtrans return (user redirected back after payment)
+Route::get('midtrans/return', [PembayaranController::class, 'midtransReturn']);
+
+// Pembayaran
 
 // Notifikasi
 Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');

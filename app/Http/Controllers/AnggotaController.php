@@ -17,10 +17,10 @@ class AnggotaController extends Controller
     public function index()
     {
         $data['saldo'] = Anggota::where('anggota_id', session('anggota_id'))->value('saldo');
-        $data['pinjaman'] = Pinjaman::where([
-            'anggota_id' => session('anggota_id'),
-            'status_pinjaman' => 'disetujui'
-        ])->get();
+        // Ambil pinjaman yang belum lunas (exclude yang 'lunas')
+        $data['pinjaman'] = Pinjaman::where('anggota_id', session('anggota_id'))
+            ->where('status_pinjaman', '!=', 'lunas')
+            ->get();
 
         return view('anggota.anggota',$data);
     }
