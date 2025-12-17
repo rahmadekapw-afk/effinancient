@@ -78,6 +78,8 @@ return new class extends Migration
             $table->enum('status_pinjaman', ['menunggu', 'disetujui', 'lunas','ditolak']);
             $table->enum('pembayaran', ['potong gaji', 'saldo', 'pembayaran online']);
             $table->date('tanggal_pengajuan');
+            $table->decimal('angsuran_per_bulan', 12, 2)->nullable();
+            $table->integer('jumlah_dibayar')->default(0);
             $table->timestamps();
 
             $table->foreign('anggota_id')
