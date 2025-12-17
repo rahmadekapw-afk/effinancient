@@ -58,7 +58,7 @@ Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index'])
 
 
 
-Route::resource('anggota', AnggotaController::class);
+// Route::resource('anggota', AnggotaController::class);
 
 
 Route::get('/superadmin', [SuperAdminController::class, 'index'])->name('superadmin.index');
