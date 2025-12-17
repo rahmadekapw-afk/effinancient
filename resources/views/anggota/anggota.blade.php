@@ -87,6 +87,7 @@
                         <p class="mt-1 text-xs font-medium text-gray-700">Setor Simpanan</p>
                     </a>
 
+<<<<<<< HEAD
                     <a id="btnBayarPinjaman"
                         class="cursor-pointer text-center p-3 bg-blue-50 rounded-lg hover:shadow-md transition-shadow w-full">
                         <div class="inline-block p-2 bg-blue-600 text-white rounded-full">
@@ -94,6 +95,25 @@
                         </div>
                         <p class="mt-1 text-xs font-medium text-gray-700">Bayar Pinjaman</p>
                     </a>
+=======
+                @if(isset($pinjaman) && count($pinjaman) > 0)
+                <a id="btnBayarPinjaman"
+                    href="#"
+                    class="cursor-pointer text-center p-3 bg-blue-50 rounded-lg hover:shadow-md transition-shadow w-full">
+                    <div class="inline-block p-2 bg-blue-600 text-white rounded-full">
+                        <i class="bi bi-arrow-up-right text-base"></i>
+                    </div>
+                    <p class="mt-1 text-xs font-medium text-gray-700">Bayar Pinjaman</p>
+                </a>
+                @else
+                <div class="text-center p-3 bg-gray-100 rounded-lg w-full">
+                    <div class="inline-block p-2 bg-gray-300 text-white rounded-full">
+                        <i class="bi bi-check2-all text-base"></i>
+                    </div>
+                    <p class="mt-1 text-xs font-medium text-gray-500">Tidak ada tagihan</p>
+                </div>
+                @endif
+>>>>>>> 08bd4ae6de2d1cb59cfafea10582663fdb00438f
 
                     <a href="#" id="btnPinjaman"
                         class="text-center p-3 bg-orange-50 rounded-lg hover:shadow-md transition-shadow">
@@ -175,7 +195,15 @@
 
                 <!-- List Pinjaman -->
                 <div id="listPinjaman">
-                    @forelse($pinjaman as $item)
+                    @php
+                        $unpaid = collect($pinjaman)->filter(function($p) {
+                            $paidAmount = (float) ($p->pembayaran ?? 0);
+                            $total = (float) ($p->nominal ?? 0);
+                            return ($p->status_pinjaman ?? '') !== 'lunas' && $paidAmount < $total;
+                        });
+                    @endphp
+
+                    @forelse($unpaid as $item)
                         <div class="border p-3 rounded-lg mb-3">
                             <p class="text-sm">
                                 <b>Nominal:</b>
@@ -185,12 +213,17 @@
                                 Tanggal Pinjam: {{ $item->created_at->format('d M Y') }}
                             </p>
 
+<<<<<<< HEAD
                             <button
                                 onclick="bayarPinjaman(this)"
                                 data-angsuran="{{ $item->angsuran_per_bulan }}"
                                 data-jangka="{{ $item->jangka_waktu }}"
                                 data-dibayar="{{ $item->jumlah_dibayar }}"
                                 class="mt-2 bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1 rounded">
+=======
+                            <a href="{{ url('dashboard/anggota/pinjaman/bayar-now/' . $item->pinjaman_id) }}" class="mt-2 inline-block bg-green-600 hover:bg-green-700 text-white 
+                                                                            text-xs px-3 py-1 rounded">
+>>>>>>> 08bd4ae6de2d1cb59cfafea10582663fdb00438f
                                 Bayar Sekarang
                             </button>
                         </div>

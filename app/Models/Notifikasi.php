@@ -14,7 +14,7 @@ class Notifikasi extends Model
         'judul',
         'isi',
         'tanggal',
-         'created_at',
+        'created_at',
         'updated_at'
     ];
 }
