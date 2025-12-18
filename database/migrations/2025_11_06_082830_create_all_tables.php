@@ -79,7 +79,7 @@ return new class extends Migration
             $table->enum('pembayaran', ['potong gaji', 'saldo', 'pembayaran online']);
             $table->date('tanggal_pengajuan');
             $table->decimal('angsuran_per_bulan', 12, 2)->nullable();
-            $table->integer('jumlah_dibayar')->default(0);
+            // $table->integer('jumlah_dibayar')->default(0);
             $table->timestamps();
 
             $table->foreign('anggota_id')
@@ -90,28 +90,45 @@ return new class extends Migration
         /**
          * 6. Tabel Pembayaran
          */
-        Schema::create('pembayarans', function (Blueprint $table) {
+       Schema::create('pembayarans', function (Blueprint $table) {
             $table->bigIncrements('pembayaran_id');
+
+            // Foreign keys
             $table->unsignedBigInteger('anggota_id');
             $table->unsignedBigInteger('simpanan_id')->nullable();
             $table->unsignedBigInteger('pinjaman_id')->nullable();
+
+            // Midtrans columns
+            // $table->string('midtrans_order_id', 255)->nullable();
+            // $table->string('midtrans_transaction_id')->nullable()->after('midtrans_order_id');
+            // $table->string('midtrans_status')->nullable()->after('midtrans_transaction_id');
+            // $table->longText('midtrans_response')->nullable();
+
+            // Payment details
             $table->string('metode', 50);
-            $table->string('jenis', 50)->nullable();;
+            $table->string('jenis', 50)->nullable();
             $table->decimal('nominal', 12, 2);
             $table->date('tanggal_bayar');
-            $table->enum('status', ['berhasil', 'gagal']);
+            // $table->integer('angsuran_ke');
+
+            // Status with default
+            $table->enum('status', ['berhasil', 'gagal', 'pending'])->default('gagal');
+
+            // Timestamps
             $table->timestamps();
 
+            // Foreign key constraints
             $table->foreign('anggota_id')
-                  ->references('anggota_id')->on('anggotas')
-                  ->onDelete('cascade');
+                ->references('anggota_id')->on('anggotas')
+                ->onDelete('cascade');
             $table->foreign('simpanan_id')
-                  ->references('simpanan_id')->on('simpanans')
-                  ->onDelete('set null');
+                ->references('simpanan_id')->on('simpanans')
+                ->onDelete('set null');
             $table->foreign('pinjaman_id')
-                  ->references('pinjaman_id')->on('pinjamen')
-                  ->onDelete('set null');
+                ->references('pinjaman_id')->on('pinjamen')
+                ->onDelete('set null');
         });
+
 
         /**
          * 7. Tabel Laporan Keuangan

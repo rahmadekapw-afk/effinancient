@@ -19,9 +19,11 @@ class AnggotaController extends Controller
         $data['saldo'] = Anggota::where('anggota_id', session('anggota_id'))->value('saldo');
         // Ambil pinjaman yang masih memiliki sisa pembayaran (jumlah_dibayar < nominal)
         // ini lebih tahan terhadap kondisi di mana status_pinjaman mungkin belum sinkron
-        $data['pinjaman'] = Pinjaman::where('anggota_id', session('anggota_id'))
-            ->whereRaw('COALESCE(jumlah_dibayar, 0) < nominal')
+       $data['pinjaman'] = Pinjaman::where('anggota_id', session('anggota_id'))
+            ->where('status_pinjaman', 'disetujui') // filter status disetujui
+            ->whereRaw('COALESCE(jumlah_dibayar, 0) < nominal') // belum lunas
             ->get();
+
 
         return view('anggota.anggota',$data);
     }

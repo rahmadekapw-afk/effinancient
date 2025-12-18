@@ -13,6 +13,8 @@
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('services.midtrans.client_key') }}"></script>
 
     <style>
         body {
@@ -64,30 +66,30 @@
         </script>
     @endif
 
-    {{-- Alert edit anggota  --}}
+    {{-- Alert edit anggota --}}
     <script>
-    function confirmEditProfile() {
-        Swal.fire({
-            title: 'Yakin ingin mengedit profil?',
-            text: 'Pastikan data yang Anda ubah sudah benar.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Ya, Edit',
-            cancelButtonText: 'Batal',
-            confirmButtonColor: '#16a34a',
-            cancelButtonColor: '#d33'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('editProfileModal').classList.remove('hidden');
-                document.getElementById('editProfileModal').classList.add('flex');
-            }
-        });
-    }
+        function confirmEditProfile() {
+            Swal.fire({
+                title: 'Yakin ingin mengedit profil?',
+                text: 'Pastikan data yang Anda ubah sudah benar.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Edit',
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#16a34a',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('editProfileModal').classList.remove('hidden');
+                    document.getElementById('editProfileModal').classList.add('flex');
+                }
+            });
+        }
 
-    function closeEditModal() {
-        document.getElementById('editProfileModal').classList.add('hidden');
-        document.getElementById('editProfileModal').classList.remove('flex');
-    }
+        function closeEditModal() {
+            document.getElementById('editProfileModal').classList.add('hidden');
+            document.getElementById('editProfileModal').classList.remove('flex');
+        }
     </script>
 
 
