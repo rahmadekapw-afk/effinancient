@@ -107,11 +107,17 @@ Route::get('dashboard/anggota/pinjaman/bayar', function () {
 
 // Quick pay: langsung inisiasi Midtrans untuk pinjaman anggota
 Route::get('dashboard/anggota/pinjaman/bayar-now/{pinjaman}', [PembayaranController::class, 'bayarNow'])->middleware('anggota_auth');
+// Bayar angsuran via redirect (full-page) — per angsuran
+Route::get('dashboard/anggota/pinjaman/bayar-now-angsuran/{pinjaman}/{angsuran}/{nominal}', [PembayaranController::class, 'bayarNowAngsuran'])->middleware('anggota_auth');
 
 // Midtrans notification (server-to-server)
 Route::post('midtrans/notification', [PembayaranController::class, 'midtransNotification']);
 // Midtrans return (user redirected back after payment)
 Route::get('midtrans/return', [PembayaranController::class, 'midtransReturn']);
+// Midtrans bayar angsuran (AJAX)
+Route::post('midtrans/bayar-angsuran', [PembayaranController::class, 'bayarAngsuran'])->middleware('anggota_auth');
+// Midtrans: cek status pinjaman (dipanggil dari frontend setelah pembayaran)
+Route::get('midtrans/pinjaman-status/{pinjaman}', [PembayaranController::class, 'pinjamanStatus'])->middleware('anggota_auth');
 
 // Pembayaran
 

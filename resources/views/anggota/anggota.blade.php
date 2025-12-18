@@ -87,14 +87,7 @@
                             <p class="mt-1 text-xs font-medium text-gray-700">Setor Simpanan</p>
                         </a>
 
-                        {{-- <a id="btnBayarPinjaman"
-                            class="cursor-pointer text-center p-3 bg-blue-50 rounded-lg hover:shadow-md transition-shadow w-full">
-                            <div class="inline-block p-2 bg-blue-600 text-white rounded-full">
-                                <i class="bi bi-arrow-up-right text-base"></i>
-                            </div>
-                            <p class="mt-1 text-xs font-medium text-gray-700">Bayar Pinjaman</p>
-                        </a>
-    ======= --}}
+
                     @if(isset($pinjaman) && count($pinjaman) > 0)
                         <a id="btnBayarPinjaman"
                             href="#"
@@ -132,57 +125,47 @@
                     </div>
                 </section>
 
-                <section class="grid grid-cols-1 lg:grid-cols-1 gap-4">
+                <div class="space-y-3">
 
-                    <div class="bg-white rounded-lg shadow p-5 lg:col-span-2">
-                        <div class="flex justify-between items-center mb-3">
-                            <h4 class="text-base font-semibold text-gray-800">Transaksi Terakhir</h4>
-                            <a href="#" class="text-xs font-medium text-green-800 hover:underline">Lihat Semua</a>
-                        </div>
-
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="bg-green-100 text-green-800 p-2 rounded-full">
-                                        <i class="bi bi-arrow-down-left text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-sm text-gray-900">Setor Simpanan</p>
-                                        <p class="text-xs text-gray-500">05 Nov 2024</p>
-                                    </div>
-                                </div>
-                                <p class="font-medium text-sm text-green-800">+Rp 100.000</p>
+                    <!-- Setor Simpanan -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-green-100 text-green-800 p-2 rounded-full">
+                                <i class="bi bi-arrow-down-left text-sm"></i>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="bg-red-100 text-red-600 p-2 rounded-full">
-                                        <i class="bi bi-arrow-up-right text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-sm text-gray-900">Angsuran Pinjaman</p>
-                                        <p class="text-xs text-gray-500">01 Nov 2024</p>
-                                    </div>
-                                </div>
-                                <p class="font-medium text-sm text-red-600">-Rp 50.000</p>
+                            <div>
+                                <p class="font-medium text-sm text-gray-900">Setor Simpanan</p>
+                                <p class="text-xs text-gray-500">05 Nov 2024</p>
                             </div>
                         </div>
+                        <p class="font-medium text-sm text-green-800">+Rp 100.000</p>
                     </div>
 
+                    <!-- Angsuran Pinjaman -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-red-100 text-red-600 p-2 rounded-full">
+                                <i class="bi bi-arrow-up-right text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm text-gray-900">Angsuran Pinjaman</p>
+                                <p class="text-xs text-gray-500">01 Nov 2024</p>
+                            </div>
+                        </div>
+                        <p class="font-medium text-sm text-red-600">-Rp 50.000</p>
+                    </div>
 
-
-                </section>
+                </div>
 
 
                 <!-- Modal Bayar Pinjaman -->
-                <div id="modalBayarPinjaman"
-            class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
+                <div id="modalBayarPinjaman" class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
 
-            <div class="bg-white w-full max-w-md rounded-lg shadow-lg relative flex flex-col">
+                    <div class="bg-white w-full max-w-md rounded-lg shadow-lg relative flex flex-col">
 
                 <!-- HEADER (STICKY) -->
                 <div class="sticky top-0 bg-white z-10 border-b px-5 py-3 flex justify-between items-center">
                     <h2 class="text-lg font-semibold">Pembayaran Pinjaman</h2>
-
                     <button id="closeModalBayar"
                         class="text-gray-600 hover:text-black text-xl font-bold">
                         ✕
@@ -203,7 +186,7 @@
                         @endphp
 
                         @forelse($unpaid as $item)
-                            <div class="border p-3 rounded-lg mb-3">
+                            <div id="pinjaman-{{ $item->pinjaman_id }}" class="border p-3 rounded-lg mb-3">
                                 <p class="text-sm">
                                     <b>Nominal:</b>
                                     Rp {{ number_format($item->nominal, 0, ',', '.') }}
@@ -213,16 +196,17 @@
                                 </p>
 
 
-                                <button
-                                    onclick="bayarPinjaman(this)"
-                                    data-angsuran="{{ $item->angsuran_per_bulan }}"
-                                    data-jangka="{{ $item->jangka_waktu }}"
-                                    data-dibayar="{{ $item->jumlah_dibayar }}"
-                                    class="mt-2 bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1 rounded">
-                                {{-- <a href="" class="mt-2 inline-block bg-green-600 hover:bg-green-700 text-white 
-                                                      text-xs px-3 py-1 rounded"></a> --}}
-                                    Bayar Sekarang
-                                </button>
+                                <div class="mt-2">
+                                    <button
+                                        onclick="bayarPinjaman(this)"
+                                        data-pinjaman="{{ $item->pinjaman_id }}"
+                                        data-angsuran="{{ $item->angsuran_per_bulan }}"
+                                        data-jangka="{{ $item->jangka_waktu }}"
+                                        data-dibayar="{{ $item->jumlah_dibayar }}"
+                                        class="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1 rounded">
+                                        Bayar Sekarang
+                                    </button>
+                                </div>
                             </div>
                         @empty
                             <p class="text-center text-gray-500 text-sm">
@@ -508,8 +492,7 @@
 
                 });
             </script>
-            <script>
-                <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
            <script>
             $(function () {
@@ -586,12 +569,16 @@
             detail.classList.remove('hidden');
 
             for (let i = 1; i <= sisa; i++) {
+                // buat tombol bayar yang langsung redirect ke alur full-page (sama tab)
                 list.innerHTML += `
-                    <div class="border rounded p-3 flex justify-between">
-                        <span class="text-sm">Angsuran ke-${dibayar + i}</span>
-                        <span class="font-semibold text-sm">
-                            Rp ${angsuran.toLocaleString('id-ID')}
-                        </span>
+                    <div class="border rounded p-3 flex justify-between items-center gap-4">
+                        <div>
+                            <span class="text-sm">Angsuran ke-${dibayar + i}</span>
+                            <div class="text-sm text-gray-500">Rp ${angsuran.toLocaleString('id-ID')}</div>
+                        </div>
+                        <div>
+                            <a href="/dashboard/anggota/pinjaman/bayar-now-angsuran/${btn.dataset.pinjaman}/${dibayar + i}/${angsuran}" class="bg-blue-600 text-white text-xs px-3 py-1 rounded">Bayar</a>
+                        </div>
                     </div>
                 `;
             }
@@ -609,16 +596,69 @@
         });
         </script>
 
-
         <script>
-        document.getElementById('closeModalBayar').addEventListener('click', () => {
-            const modalBox = document.querySelector('#modalBayarPinjaman > div');
-            modalBox.classList.remove('max-w-2xl');
-            modalBox.classList.add('max-w-md');
+    // sisipkan anggota id dari session
+    const ANGGOTA_ID = {!! json_encode(session('anggota_id')) !!};
 
-            document.getElementById('detailAngsuran').classList.add('hidden');
+    function payAngsuran(pinjamanId, angsuranKe, nominal) {
+        fetch('/midtrans/bayar-angsuran', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                anggota_id: ANGGOTA_ID,
+                pinjaman_id: pinjamanId,
+                angsuran_ke: angsuranKe,
+                metode: 'pembayaran online',
+                jenis: 'angsuran',
+                nominal: nominal,
+                tanggal_bayar: new Date().toISOString(),
+                status: 'pending'
+            })
+        })
+        .then(res => {
+            if (!res.ok) return res.text().then(t => { throw new Error(t); });
+            return res.json();
+        })
+        .then(data => {
+            if (data.token && window.snap && typeof window.snap.pay === 'function') {
+                window.snap.pay(data.token, {
+                    onSuccess: function(result){
+                        // refresh atau redirect sesuai kebutuhan
+                        window.location.reload();
+                    },
+                    onError: function(err){
+                        console.error(err);
+                        alert('Terjadi kesalahan saat pembayaran.');
+                    },
+                    onClose: function(){
+                        // pengguna menutup popup pembayaran
+                    }
+                });
+            } else {
+                console.error('Token tidak diterima:', data);
+                alert('Gagal memulai proses pembayaran.');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Gagal terhubung ke server.');
         });
-        </script>
+    }
 
+    // penutup modal sederhana
+    const closeBtn = document.getElementById('closeModalBayar');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            const modal = document.getElementById('modalBayarPinjaman');
+            if (modal) modal.classList.add('hidden');
+            const detail = document.getElementById('detailAngsuran');
+            if (detail) detail.classList.add('hidden');
+        });
+    }
+</script>
 
 @endsection

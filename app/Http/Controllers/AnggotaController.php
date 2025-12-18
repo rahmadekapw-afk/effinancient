@@ -17,9 +17,10 @@ class AnggotaController extends Controller
     public function index()
     {
         $data['saldo'] = Anggota::where('anggota_id', session('anggota_id'))->value('saldo');
-        // Ambil pinjaman yang belum lunas (exclude yang 'lunas')
+        // Ambil pinjaman yang masih memiliki sisa pembayaran (jumlah_dibayar < nominal)
+        // ini lebih tahan terhadap kondisi di mana status_pinjaman mungkin belum sinkron
         $data['pinjaman'] = Pinjaman::where('anggota_id', session('anggota_id'))
-            ->where('status_pinjaman', '!=', 'lunas')
+            ->whereRaw('COALESCE(jumlah_dibayar, 0) < nominal')
             ->get();
 
         return view('anggota.anggota',$data);

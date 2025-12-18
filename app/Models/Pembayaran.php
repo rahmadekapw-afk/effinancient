@@ -12,6 +12,7 @@ class Pembayaran extends Model
         'anggota_id',
         'simpanan_id',
         'pinjaman_id',
+        'angsuran_ke',
         'metode',
         'nominal',
         'tanggal_bayar',

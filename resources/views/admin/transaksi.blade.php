@@ -191,8 +191,12 @@
                                         Pending
                                     </span>
                                 @elseif($p->status_pinjaman == 'disetujui')
-                                    <span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">
+                                    <span class="text-xs font-medium text-black bg-yellow-100 px-2 py-0.5 rounded">
                                         Diterima
+                                    </span>
+                                @elseif($p->status_pinjaman == 'lunas')
+                                    <span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">
+                                        Lunas
                                     </span>
                                 @else
                                     <span class="text-xs font-medium text-red-800 bg-red-100 px-2 py-0.5 rounded">
