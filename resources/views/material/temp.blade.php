@@ -114,8 +114,8 @@
         <nav class="mt-2">
 
             {{-- Beranda ('/anggota') --}}
-            <a href="{{ url('/anggota') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
-                      @if(Request::is('anggota') || Request::is('anggota/'))
+            <a href="{{ url('dashboard/anggota') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
+                      @if(Request::is('dashboard/anggota') || Request::is('dashboard/anggota'))
                           active-link-anggota
                       @else
                           hover:bg-green-900

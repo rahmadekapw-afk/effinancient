@@ -10,6 +10,7 @@ use App\Http\Controllers\{
     PinjamanController,
     PembayaranController,
     NotifikasiController,
+    WaGatewayController,
     LaporanKeuanganController,
     UserController
 };
@@ -125,7 +126,121 @@ Route::get('midtrans/pinjaman-status/{pinjaman}', [PembayaranController::class, 
 Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
 Route::post('/notifikasi', [NotifikasiController::class, 'store'])->name('notifikasi.store');
 
+// WA gateway: send a Stored Notifikasi to anggota via Fonnte
+Route::post('/wa/send-notifikasi/{notifikasi}', [WaGatewayController::class, 'sendNotifikasi']);
 
+// Test endpoint (stateless) to send arbitrary phone+message to WA gateway without DB/session
+Route::post('/wa/test-send', [WaGatewayController::class, 'testSend'])->middleware('api');
+// Allow GET for quick testing from browser/PowerShell without CSRF token
+Route::get('/wa/test-send', [WaGatewayController::class, 'testSend']);
+// Test endpoint: gunakan nomor dari tabel anggota atau notifikasi
+Route::post('/wa/test-send-member', [WaGatewayController::class, 'testSendMember'])->middleware('api');
+Route::get('/wa/test-send-member', [WaGatewayController::class, 'testSendMember']);
+
+
+
+// Quick multipart test for Fonnte (mirrors curl multipart example)
+Route::get('/wa/test-send-multipart', function () {
+    $service = app(\App\Services\FonnteService::class);
+
+    $fields = [
+        'target' => '08123456789|Fonnte|Admin,08123456789|Lili|User',
+        'message' => 'test message to {name} as {var1}',
+        'url' => 'https://md.fonnte.com/images/wa-logo.png',
+        'filename' => 'filename',
+        'schedule' => 0,
+        'typing' => false,
+        'delay' => '2',
+        'countryCode' => '62',
+        'location' => '-7.983908, 112.621391',
+        'followup' => 0,
+    ];
+
+    try {
+        $res = $service->sendMultipart($fields);
+        return response()->json(['success' => true, 'response' => $res]);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+    }
+});
+
+// Multipart test sending to anggota from DB (optional anggota id)
+Route::get('/wa/test-send-multipart-member/{anggota?}', function ($anggota = 1) {
+    $service = app(\App\Services\FonnteService::class);
+    $anggotaModel = \App\Models\Anggota::find($anggota);
+    if (! $anggotaModel) {
+        return response()->json(['success' => false, 'error' => 'Anggota not found: ' . $anggota], 404);
+    }
+    // choose notifikasi: prefer query param notifikasi_id, else latest for anggota
+    $req = request();
+    $notifikasiId = $req->query('notifikasi_id');
+    $notif = null;
+    if ($notifikasiId) {
+        $notif = \App\Models\Notifikasi::where('notifikasi_id', $notifikasiId)->first();
+    }
+    if (! $notif) {
+        $notif = \App\Models\Notifikasi::where('anggota_id', $anggota)->latest('created_at')->first();
+    }
+
+    if (! $notif) {
+        return response()->json(['success' => false, 'error' => 'Notifikasi tidak ditemukan untuk anggota ini'], 404);
+    }
+
+    // normalize phone: keep digits, replace leading 0 with 62
+    $raw = preg_replace('/[^0-9]/', '', $anggotaModel->no_hp ?? '');
+    if (substr($raw, 0, 1) === '0') {
+        $raw = '62' . substr($raw, 1);
+    }
+
+    $fields = [
+        'target' => $raw,
+        'message' => trim(($notif->judul ?? '') . "\n\n" . ($notif->isi ?? '')),
+        'countryCode' => '62',
+    ];
+
+    try {
+        $res = $service->sendMultipart($fields);
+        return response()->json(['success' => true, 'response' => $res]);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+    }
+});
+
+// TEMP: create a Notifikasi record for anggota and trigger store-send flow
+Route::get('/wa/test-create-notifikasi/{anggota?}', function ($anggota = 1) {
+    $anggotaModel = \App\Models\Anggota::find($anggota);
+    if (! $anggotaModel) {
+        return response()->json(['success' => false, 'error' => 'Anggota not found']);
+    }
+
+    $judul = 'Ping otomatis';
+    $isi = 'Ini pesan otomatis setelah penyimpanan notifikasi pada ' . now();
+
+    $notifikasi = \App\Models\Notifikasi::create([
+        'anggota_id' => $anggotaModel->anggota_id,
+        'judul' => $judul,
+        'isi' => $isi,
+        'tanggal' => now(),
+    ]);
+
+    // trigger the same sending logic as store() by calling the controller logic
+    try {
+        $service = app(\App\Services\FonnteService::class);
+        $normalized = preg_replace('/[^0-9]/', '', $anggotaModel->no_hp ?? '');
+        if (substr($normalized, 0, 1) === '0') {
+            $normalized = '62' . substr($normalized, 1);
+        }
+        $fields = [
+            'target' => $normalized,
+            'message' => trim($notifikasi->judul . "\n\n" . $notifikasi->isi),
+            'countryCode' => '62',
+        ];
+        $resp = $service->sendMultipart($fields);
+        return response()->json(['success' => true, 'notifikasi' => $notifikasi, 'response' => $resp]);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+    }
+});
 
 // Laporan Keuangan
 Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])->name('laporan.index');

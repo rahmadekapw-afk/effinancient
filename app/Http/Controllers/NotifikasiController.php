@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notifikasi;
-use App\Models\Admin;
 use App\Models\Anggota; // ADDED
-use Illuminate\Support\Facades\DB; // ADDED
+use App\Services\FonnteService;
 class NotifikasiController extends Controller
 {
     /**
@@ -14,7 +13,25 @@ class NotifikasiController extends Controller
      */
     public function index()
     {
-        //
+        // Jika request ingin JSON (API) kembalikan JSON, kalau tidak render view
+        $query = \App\Models\Notifikasi::query()->orderByDesc('tanggal');
+
+        // support optional filter by anggota_id
+        if (request()->has('anggota_id')) {
+            $query->where('anggota_id', request('anggota_id'));
+        }
+
+        if (request()->wantsJson()) {
+            return response()->json($query->paginate(20));
+        }
+
+        $notifikasis = $query->paginate(20);
+        // jika tidak ada view, kembalikan JSON untuk memudahkan testing
+        if (! view()->exists('notifikasi.index')) {
+            return response()->json($notifikasis);
+        }
+
+        return view('notifikasi.index', compact('notifikasis'));
     }
 
     /**
@@ -88,15 +105,26 @@ class NotifikasiController extends Controller
         // siapkan pesan untuk WA gateway — ambil nomor hp dari anggota (coba beberapa nama kolom)
         $phone = $anggota->no_hp ?? $anggota->phone ?? $anggota->telepon ?? null;
         if ($phone) {
-            // masukkan ke tabel naratif (gateway queue). Sesuaikan nama tabel/kolom jika berbeda.
-            DB::table('naratif')->insert([
-                'to'         => $phone,
-                'title'      => $judul,
-                'message'    => $isi,
-                'status'     => 'pending',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // Normalisasi nomor: hapus non-digit, ubah leading 0 -> 62
+            $normalized = preg_replace('/[^0-9]/', '', $phone);
+            if (substr($normalized, 0, 1) === '0') {
+                $normalized = '62' . substr($normalized, 1);
+            }
+
+            // Kirim langsung via Fonnte (synchronous multipart). Jika ingin queue, ubah ke job.
+            try {
+                $fonnte = app(FonnteService::class);
+                $message = trim(($judul ?? '') . "\n\n" . ($isi ?? ''));
+                $fields = [
+                    'target' => $normalized,
+                    'message' => $message,
+                    'countryCode' => '62',
+                ];
+                $resp = $fonnte->sendMultipart($fields);
+                \Illuminate\Support\Facades\Log::info('WA sent (multipart)', ['to' => $normalized, 'response' => $resp]);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::warning('WA send multipart failed: ' . $e->getMessage(), ['to' => $phone]);
+            }
         }
 
         return redirect()->back()->with('pesan_sukses', 'Notifikasi berhasil dikirim!');
