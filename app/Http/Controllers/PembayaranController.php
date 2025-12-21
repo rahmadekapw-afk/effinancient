@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth; // ADDED
+use Illuminate\Support\Facades\Cache;
 
 class PembayaranController extends Controller
 {
@@ -21,7 +22,7 @@ class PembayaranController extends Controller
      * BAYAR PINJAMAN VIA MIDTRANS
      * =============================
      */
-    public function bayarNow($pinjamanId)
+    public function bayarPinjaman(Request $request, $pinjamanId)
     {
         $anggota = $this->getAuthenticatedAnggota();
         if (! $anggota) {
@@ -552,6 +553,18 @@ class PembayaranController extends Controller
             'tanggal'    => now(),
         ]);
 
+        // kirim WA otomatis ke anggota
+        try {
+            $not = \App\Models\Notifikasi::where('anggota_id', $pembayaran->anggota_id)
+                ->orderByDesc('created_at')
+                ->first();
+            if ($not) {
+                $this->sendNotificationToAnggota($not);
+            }
+        } catch (\Exception $e) {
+            Log::warning('Auto WA send failed: ' . $e->getMessage());
+        }
+
         // Jika lunas, buat notifikasi dan tandai pembayaran pending lain sebagai gagal
         if ($pinjaman->status_pinjaman === 'lunas') {
             Notifikasi::create([
@@ -560,6 +573,18 @@ class PembayaranController extends Controller
                 'isi'        => 'Pembayaran pinjaman #' . $pinjaman->pinjaman_id . ' telah lunas. Terima kasih.',
                 'tanggal'    => now(),
             ]);
+
+            // kirim WA untuk notifikasi lunas
+            try {
+                $not2 = \App\Models\Notifikasi::where('anggota_id', $pembayaran->anggota_id)
+                    ->orderByDesc('created_at')
+                    ->first();
+                if ($not2) {
+                    $this->sendNotificationToAnggota($not2);
+                }
+            } catch (\Exception $e) {
+                Log::warning('Auto WA send failed (lunas): ' . $e->getMessage());
+            }
 
             // Tandai semua pembayaran lain yang masih 'pending' untuk pinjaman ini sebagai 'gagal'
             Pembayaran::where('pinjaman_id', $pinjaman->pinjaman_id)
@@ -570,6 +595,46 @@ class PembayaranController extends Controller
                     'midtrans_status' => 'cancelled_by_system',
                     'midtrans_response' => json_encode(['message' => 'Dibatalkan karena pinjaman sudah lunas oleh pembayaran lain.']),
                 ]);
+        }
+    }
+
+    /**
+     * Kirim notifikasi WA ke anggota berdasarkan record Notifikasi.
+     */
+    protected function sendNotificationToAnggota(\App\Models\Notifikasi $notifikasi)
+    {
+        $anggota = Anggota::where('anggota_id', $notifikasi->anggota_id)->first();
+        if (! $anggota || empty($anggota->no_hp)) {
+            return;
+        }
+
+        $cacheKey = 'notifikasi_sent_' . $notifikasi->notifikasi_id;
+        if (! Cache::add($cacheKey, true, now()->addMinutes(10))) {
+            Log::info('WA send skipped (already sent)', ['notifikasi_id' => $notifikasi->notifikasi_id]);
+            return;
+        }
+
+        $phone = $anggota->no_hp;
+        $normalized = preg_replace('/[^0-9]/', '', $phone);
+        if (substr($normalized, 0, 1) === '0') {
+            $normalized = '62' . substr($normalized, 1);
+        }
+
+        $title = $notifikasi->judul ?? '';
+        $body  = $notifikasi->isi ?? '';
+        $message = trim($title . "\n\n" . $body);
+
+        try {
+            $service = app(\App\Services\FonnteService::class);
+            $fields = [
+                'target' => $normalized,
+                'message' => $message,
+                'countryCode' => '62',
+            ];
+            $resp = $service->sendMultipart($fields);
+            Log::info('WA sent', ['anggota_id' => $anggota->anggota_id, 'to' => $normalized, 'response' => $resp]);
+        } catch (\Exception $e) {
+            Log::warning('Fonnte send error: ' . $e->getMessage(), ['anggota_id' => $anggota->anggota_id]);
         }
     }
 }

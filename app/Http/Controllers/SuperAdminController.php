@@ -94,6 +94,8 @@ class SuperAdminController extends Controller
             'alamat'         => $request->alamat ?? null,
         ]);
 
+        // Tidak membuat notifikasi pada saat create — notifikasi hanya akan dibuat ketika data anggota diupdate
+
         // 3. Redirect sukses
         return redirect()->back()->with('pesan_sukses', 'Anggota berhasil ditambahkan.');
     }
@@ -182,6 +184,19 @@ class SuperAdminController extends Controller
             'saldo'          => $request->saldo,
             'status_anggota' => $request->status_anggota,
         ]);
+
+        // Buat notifikasi hanya ketika update anggota (sesuai permintaan)
+        try {
+            Notifikasi::create([
+                'admin_id' => session('admin_id') ?? null,
+                'anggota_id' => $anggota->anggota_id,
+                'judul' => 'Anggota Diperbarui',
+                'isi' => 'Data anggota ' . ($anggota->nama_lengkap ?? $anggota->username) . ' telah diperbarui.',
+                'tanggal' => now(),
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning('Create update anggota notifikasi failed: ' . $e->getMessage());
+        }
 
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Data anggota berhasil diperbarui.');

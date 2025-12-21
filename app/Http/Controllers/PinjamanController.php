@@ -100,7 +100,7 @@ $pokok = $nominal / $jangka;
 
 // 3. Total Angsuran per bulan
 $angsuran = $pokok + $bunga;
-        Pinjaman::create([
+        $p = Pinjaman::create([
             'anggota_id'        => $request->anggota_id,
             'nominal'           => $request->nominal,
             'tenor'             => 0.7,
@@ -111,6 +111,22 @@ $angsuran = $pokok + $bunga;
             'jumlah_dibayar' => 0,
             'jangka_waktu'     => $request->jangka_waktu
         ]);
+
+        // Buat notifikasi untuk admin bahwa ada pengajuan pinjaman baru (tanpa mengirim WA ke anggota)
+        try {
+            \App\Models\Notifikasi::create([
+                'admin_id' => null,
+                'anggota_id' => null,
+                'judul' => 'Pengajuan Pinjaman',
+                'isi' => 'Pinjaman #' . $p->pinjaman_id . ' oleh anggota ' . $p->anggota_id . ' mengajukan nominal Rp ' . number_format($p->nominal,0,',','.'),
+                'tanggal' => now(),
+                'is_admin_read' => false,
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning('Create pengajuan notifikasi failed: ' . $e->getMessage());
+        }
+
+        // Tidak membuat notifikasi pada saat create — notifikasi hanya dibuat ketika ada update
 
         return back()->with('pesan_sukses', 'Pengajuan pinjaman berhasil dikirim!');
 

@@ -266,7 +266,6 @@
                     <select name="pembayaran" class="w-full border rounded p-2 mt-1" required>
                         <option value="">-- Pilih Metode --</option>
                         <option value="potong gaji">Potong Gaji</option>
-                        <option value="saldo">Saldo</option>
                         <option value="pembayaran online">Pembayaran Online</option>
                     </select>
                 </div>
