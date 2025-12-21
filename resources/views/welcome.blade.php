@@ -310,6 +310,73 @@
         </div>
     </section>
 
+<!-- ================== STANDAR LAYANAN (DI ATAS FOOTER) ================== -->
+ <section class="bg-gray-50 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header -->
+        <div class="bg-kemenag-green rounded-2xl px-8 py-10 text-white mb-12 shadow-xl" data-aos="fade-down">
+            <h2 class="text-4xl font-extrabold mb-3">Standar Layanan</h2>
+            <p class="text-sm opacity-90 max-w-3xl">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div>
+
+        <!-- Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1 bg-white rounded-2xl shadow-lg p-6 h-fit" data-aos="fade-right">
+                <ul class="space-y-2 text-sm font-medium">
+                    <li>
+                        <a href="#" class="block px-4 py-3 rounded-lg bg-kemenag-green text-white">
+                            Ketentuan Umum
+                        </a>
+                    </li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Standar Layanan & Maklumat</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Hak & Kewajiban Pemohon</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Hak & Kewajiban Badan Publik</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Jalur & Waktu Layanan</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Standar Biaya</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Permohonan Informasi</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Keberatan & Sengketa</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pengelolaan Website</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pengajuan Konsekuensi</a></li>
+                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pelayanan Khusus</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3 bg-white rounded-2xl shadow-lg p-8" data-aos="fade-left">
+                <h3 class="text-2xl font-extrabold text-kemenag-green mb-6">
+                    Ketentuan Umum
+                </h3>
+
+                <div class="space-y-5 text-sm text-gray-700 leading-relaxed text-justify">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+                    </p>
+
+                    <p>
+                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi.
+                    </p>
+
+                    <p>
+                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                    </p>
+
+                    <p>
+                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- End Standar Layanan -->
+
+
     <footer id="kontak" class="bg-gray-800 py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
             <div class="grid md:grid-cols-4 gap-8">
