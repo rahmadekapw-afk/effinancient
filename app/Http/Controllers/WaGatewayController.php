@@ -78,12 +78,7 @@ class WaGatewayController extends Controller
 
         try {
             $fonnte = app(FonnteService::class);
-            $fields = [
-                'target' => $normalized,
-                'message' => $message,
-                'countryCode' => '62',
-            ];
-            $resp = $fonnte->sendMultipart($fields);
+            $resp = $fonnte->send($normalized, $message, '62');
             \Illuminate\Support\Facades\Log::info('WA test sent', ['to' => $normalized, 'response' => $resp]);
             return response()->json(['success' => true, 'response' => $resp]);
         } catch (\Exception $e) {
@@ -136,12 +131,7 @@ class WaGatewayController extends Controller
 
         try {
             $fonnte = app(FonnteService::class);
-            $fields = [
-                'target' => $normalized,
-                'message' => $message,
-                'countryCode' => '62',
-            ];
-            $resp = $fonnte->sendMultipart($fields);
+            $resp = $fonnte->send($normalized, $message, '62');
             \Illuminate\Support\Facades\Log::info('WA test member sent', ['to' => $normalized, 'response' => $resp]);
             return response()->json(['success' => true, 'response' => $resp]);
         } catch (\Exception $e) {

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard Admin - Koperasi Digital</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -241,9 +242,16 @@
             </button>
             <h1 class="text-lg font-semibold text-gray-800 hidden sm:block">Dashboard</h1>
 
-            <div class="flex items-center gap-2 text-green-600 font-medium text-sm">
-                <i class="bi bi-check-circle-fill"></i>
-                <span>Sistem Aktif</span>
+            <div class="flex items-center gap-3">
+                <button id="notif-btn" class="relative text-gray-700" title="Notifikasi Pinjaman">
+                    <i class="bi bi-bell-fill text-xl"></i>
+                    <span id="notif-badge" class="hidden absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
+                </button>
+
+                <div class="flex items-center gap-2 text-green-600 font-medium text-sm">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Sistem Aktif</span>
+                </div>
             </div>
         </header>
 
@@ -296,6 +304,37 @@
                     $body.removeClass('sidebar-closed');
                 }
             }).trigger('resize');
+        });
+
+        // Polling untuk notifikasi pinjaman (lonceng)
+        $(document).ready(function () {
+            function updateNotifBadge() {
+                $.getJSON('/admin/pinjaman/notifications')
+                    .done(function (res) {
+                        var count = res.count || 0;
+                        var $badge = $('#notif-badge');
+                        if (count > 0) {
+                            $badge.text(count > 99 ? '99+' : count);
+                            $badge.removeClass('hidden');
+                            $badge.addClass('animate-pulse');
+                        } else {
+                            $badge.addClass('hidden');
+                            $badge.removeClass('animate-pulse');
+                        }
+                    })
+                    .fail(function () {
+                        // ignore errors silently
+                    });
+            }
+
+            // update immediately and every 8 seconds
+            updateNotifBadge();
+            setInterval(updateNotifBadge, 8000);
+
+            // klik bell: buka halaman transaksi admin
+            $('#notif-btn').on('click', function () {
+                window.location.href = '/admin/transaksi';
+            });
         });
 
     </script>

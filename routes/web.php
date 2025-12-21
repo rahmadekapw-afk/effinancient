@@ -49,6 +49,10 @@ Route::post('/admin/manajemen_anggota/tambah',[SuperAdminController::class,'tamb
 Route::get('/admin/manajemen_akses',[SuperAdminController::class,'manajemen_akses'])->middleware('superadmin.auth');
 
 Route::get('/admin/transaksi',[AdminController::class,'transaksi'])->middleware('admin.or.super');
+// AJAX endpoint: jumlah pinjaman menunggu untuk lonceng notifikasi (admin)
+Route::get('/admin/pinjaman/notifications', [AdminController::class, 'pinjamanNotifications'])->middleware('admin.or.super');
+// Admin view: daftar notifikasi pengajuan pinjaman
+Route::get('/admin/notifikasi/pengajuan', [AdminController::class, 'pengajuanNotificationsView'])->middleware('admin.or.super');
 Route::get('/admin/transaksi/konfirmasi/{pinjaman_id}', [AdminController::class, 'konfirmasi'])
     ->name('admin.transaksi.konfirmasi')->middleware('admin.or.super');
     Route::post('/admin/pinjaman/{id}/lunas', [AdminController::class, 'lunas'])
@@ -125,6 +129,10 @@ Route::get('midtrans/pinjaman-status/{pinjaman}', [PembayaranController::class, 
 // Notifikasi
 Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
 Route::post('/notifikasi', [NotifikasiController::class, 'store'])->name('notifikasi.store');
+// Endpoint untuk lonceng anggota: kembalikan jumlah notifikasi pinjaman untuk anggota yang login
+Route::get('/anggota/notifications', [NotifikasiController::class, 'anggotaNotifications']);
+Route::post('/notifikasi/mark-read', [NotifikasiController::class, 'markRead']);
+Route::post('/notifikasi/delete', [NotifikasiController::class, 'delete']);
 
 // WA gateway: send a Stored Notifikasi to anggota via Fonnte
 Route::post('/wa/send-notifikasi/{notifikasi}', [WaGatewayController::class, 'sendNotifikasi']);

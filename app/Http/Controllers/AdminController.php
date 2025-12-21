@@ -10,6 +10,7 @@ use App\Models\Pembayaran;
 use App\Models\SuperAdmin;
 use Carbon\Carbon;
 use App\Models\Admin;
+use App\Models\Notifikasi;
 
 class AdminController extends Controller
 {
@@ -59,12 +60,77 @@ class AdminController extends Controller
         return view('admin.transaksi',$data);
     }
 
+    /**
+     * Return JSON count of pinjaman yang perlu perhatian (status "menunggu").
+     * Dipanggil oleh frontend untuk menyalakan/buramkan lonceng notifikasi.
+     */
+    public function pinjamanNotifications()
+    {
+        // Hitung notifikasi yang relevan untuk admin: Pinjaman Disetujui atau Pinjaman Lunas
+            // Hitung notifikasi pengajuan pinjaman yang belum dibaca oleh admin
+            $query = \App\Models\Notifikasi::where('judul', 'like', '%Pengajuan Pinjaman%')
+                    ->where('is_admin_read', false);
+
+            $count = $query->count();
+
+            $latest = $query->orderByDesc('created_at')
+                    ->limit(5)
+                    ->get(['notifikasi_id', 'judul', 'isi', 'tanggal', 'created_at']);
+
+            return response()->json(['count' => $count, 'latest' => $latest]);
+    }
+
+    /**
+     * Tampilkan halaman admin yang berisi daftar notifikasi pengajuan pinjaman (admin-only)
+     */
+    public function pengajuanNotificationsView()
+    {
+        $req = request();
+
+        // default: hanya tampilkan yang belum dibaca oleh admin
+        $showAll = $req->query('show') === 'all';
+
+        $query = \App\Models\Notifikasi::where('judul', 'like', '%Pengajuan Pinjaman%');
+        if (! $showAll) {
+            $query = $query->where('is_admin_read', false);
+        }
+
+        $query = $query->orderByDesc('created_at');
+
+        $notifikasis = $query->paginate(20)->appends(['show' => $showAll ? 'all' : 'unread']);
+
+        return view('admin.pengajuan_notifikasi', compact('notifikasis', 'showAll'));
+    }
+
     public function konfirmasi($pinjaman_id){
          $status = request('status'); // diterima / ditolak
 
         Pinjaman::where('pinjaman_id', $pinjaman_id)->update([
             'status_pinjaman' => $status
         ]);
+
+        // Jika status disetujui, buat entri Notifikasi (gunakan kolom yang ada)
+        if ($status === 'disetujui') {
+            $p = Pinjaman::where('pinjaman_id', $pinjaman_id)->first();
+            if ($p) {
+                Notifikasi::create([
+                    'admin_id' => session('admin_id') ?? null,
+                    'anggota_id' => $p->anggota_id,
+                    'judul' => 'Pinjaman Disetujui',
+                    'isi' => 'Pinjaman #' . $p->pinjaman_id . ' untuk anggota ' . $p->anggota_id . ' telah disetujui.',
+                    'tanggal' => now(),
+                ]);
+                // Hapus notifikasi pengajuan yang terkait dengan pinjaman ini
+                try {
+                    \App\Models\Notifikasi::where('judul', 'like', '%Pengajuan Pinjaman%')
+                        ->where('isi', 'like', '%Pinjaman #'. $p->pinjaman_id .'%')
+                        ->delete();
+                } catch (\Exception $e) {
+                    // log jika gagal, tapi jangan ganggu alur
+                    \Illuminate\Support\Facades\Log::warning('Failed to delete pengajuan notifikasi: '.$e->getMessage());
+                }
+            }
+        }
 
         return back()->with('pesan_sukses', 'Status berhasil diperbarui!');
     }
@@ -83,6 +149,15 @@ class AdminController extends Controller
 
     $pinjaman->update([
         'status_pinjaman' => 'lunas'
+    ]);
+
+    // Buat notifikasi untuk admin bahwa pinjaman telah dilunasi
+    Notifikasi::create([
+        'admin_id' => session('admin_id') ?? null,
+        'anggota_id' => $pinjaman->anggota_id,
+        'judul' => 'Pinjaman Lunas',
+        'isi' => 'Pinjaman #' . $pinjaman->pinjaman_id . ' telah dilunasi oleh anggota ' . $pinjaman->anggota_id . '.',
+        'tanggal' => now(),
     ]);
 
     return response()->json([

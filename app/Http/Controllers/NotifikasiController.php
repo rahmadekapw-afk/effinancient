@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notifikasi;
+use App\Models\Admin;
 use App\Models\Anggota; // ADDED
 use App\Services\FonnteService;
 class NotifikasiController extends Controller
@@ -128,6 +129,81 @@ class NotifikasiController extends Controller
         }
 
         return redirect()->back()->with('pesan_sukses', 'Notifikasi berhasil dikirim!');
+    }
+
+    /**
+     * Return notifications for the logged-in anggota (count + latest)
+     * Only include entries related to pinjaman (disetujui / lunas)
+     */
+    public function anggotaNotifications(Request $request)
+    {
+        $anggotaId = session('anggota_id') ?? $request->query('anggota_id');
+        if (! $anggotaId) {
+            return response()->json(['count' => 0, 'latest' => []]);
+        }
+
+        $query = Notifikasi::where('anggota_id', $anggotaId)
+            ->where(function($q) {
+                $q->where('judul', 'like', '%Disetujui%')
+                  ->orWhere('judul', 'like', '%Lunas%')
+                  ->orWhere('judul', 'like', '%disetujui%')
+                  ->orWhere('judul', 'like', '%lunas%');
+            });
+
+        $count = $query->count();
+        $latest = $query->orderByDesc('created_at')->limit(5)->get(['notifikasi_id','judul','isi','tanggal','created_at']);
+
+        return response()->json(['count' => $count, 'latest' => $latest]);
+    }
+
+    /**
+     * Tandai satu atau banyak notifikasi sebagai dibaca (anggota/admin)
+     */
+    public function markRead(Request $request)
+    {
+        $ids = $request->input('id');
+        if (! $ids) {
+            return response()->json(['ok' => false, 'message' => 'No id provided'], 400);
+        }
+
+        $ids = is_array($ids) ? $ids : [$ids];
+
+        // jika anggota login, batasi hanya milik anggota itu
+        if (session('anggota_id')) {
+            // untuk anggota: menganggap "tandai dibaca" berarti menghilangkan notifikasi dari daftar
+            $deleted = Notifikasi::whereIn('notifikasi_id', $ids)
+                ->where('anggota_id', session('anggota_id'))
+                ->delete();
+            $updated = $deleted;
+        } else {
+            // admin atau sistem: tetap gunakan flag is_admin_read
+            $updated = Notifikasi::whereIn('notifikasi_id', $ids)->update(['is_admin_read' => true]);
+        }
+
+        return response()->json(['ok' => true, 'updated' => $updated]);
+    }
+
+    /**
+     * Hapus notifikasi (anggota hanya bisa menghapus miliknya)
+     */
+    public function delete(Request $request)
+    {
+        $ids = $request->input('id');
+        if (! $ids) {
+            return response()->json(['ok' => false, 'message' => 'No id provided'], 400);
+        }
+        $ids = is_array($ids) ? $ids : [$ids];
+
+        if (session('anggota_id')) {
+            $deleted = Notifikasi::whereIn('notifikasi_id', $ids)
+                ->where('anggota_id', session('anggota_id'))
+                ->delete();
+        } else {
+            // admin/system may delete any
+            $deleted = Notifikasi::whereIn('notifikasi_id', $ids)->delete();
+        }
+
+        return response()->json(['ok' => true, 'deleted' => $deleted]);
     }
 }
 
