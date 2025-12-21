@@ -75,34 +75,25 @@ class PinjamanController extends Controller
     // Simpan pengajuan pinjaman
     public function store(Request $request)
     {
-       
+        $jangka = $request->jangka_waktu; // misal: 12 (bulan)
+        $nominal = $request->nominal;      // misal: 10.000.000
+        $persen_bunga = 0.7;               // asumsi 0.7% per bulan
 
-        // // Hitung limit
-        // $limit = $this->hitungLimitPinjaman($request->session('anggota_id'));
+        // 1. Hitung Bunga per bulan
+        // Rumus: (Total Pinjaman * Persentase Bunga) / 100
+        $bunga = ($nominal * $persen_bunga) / 100;
 
-        // Jika nominal melebihi limit → Tolak
-        // if ($request->nominal > $limit) {
-        //     return back()->with('error', 'Nominal melebihi batas maksimal pinjaman: Rp ' . number_format($limit, 0, ',', '.'));
-        // }
+        // 2. Hitung Cicilan Pokok per bulan
+        // Rumus: Total Pinjaman / Jangka Waktu
+        $pokok = $nominal / $jangka;
 
-        // Buat pinjaman baru
-       $jangka = $request->jangka_waktu; // misal: 12 (bulan)
-$nominal = $request->nominal;      // misal: 10.000.000
-$persen_bunga = 0.7;               // asumsi 0.7% per bulan
+        // 3. Total Angsuran per bulan
+        $angsuran = $pokok + $bunga;
 
-// 1. Hitung Bunga per bulan
-// Rumus: (Total Pinjaman * Persentase Bunga) / 100
-$bunga = ($nominal * $persen_bunga) / 100;
-
-// 2. Hitung Cicilan Pokok per bulan
-// Rumus: Total Pinjaman / Jangka Waktu
-$pokok = $nominal / $jangka;
-
-// 3. Total Angsuran per bulan
-$angsuran = $pokok + $bunga;
+        $total_nominal = ( $nominal * $persen_bunga ) + $nominal ;
         Pinjaman::create([
             'anggota_id'        => $request->anggota_id,
-            'nominal'           => $request->nominal,
+            'nominal'           => $total_nominal,
             'tenor'             => 0.7,
             'bunga'             => 0.7, // misal bunga flat
             'status_pinjaman'   => 'menunggu',

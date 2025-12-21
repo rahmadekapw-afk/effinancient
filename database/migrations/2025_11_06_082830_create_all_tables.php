@@ -177,6 +177,21 @@ return new class extends Migration
                   ->references('anggota_id')->on('anggotas')
                   ->onDelete('cascade');
         });
+
+         Schema::create('keuangan', function (Blueprint $table) {
+            $table->id();
+            $table->date('date');
+
+            $table->decimal('open', 15, 2);
+            $table->decimal('high', 15, 2);
+            $table->decimal('low', 15, 5);
+            $table->decimal('close', 15, 5);
+            $table->decimal('price', 15, 5);
+
+            $table->enum('trend_keuangan', ['Naik', 'Turun', 'Stabil']);
+
+            $table->timestamps();
+        });
     }
 
     public function down(): void
@@ -192,5 +207,6 @@ return new class extends Migration
         Schema::dropIfExists('admins');
         Schema::dropIfExists('anggotas');
         Schema::enableForeignKeyConstraints();
+        Schema::dropIfExists('keuangan');
     }
 };

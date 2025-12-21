@@ -14,6 +14,6 @@ return new class extends Migration
     public function down(): void
     {
         // Revert to previous enum (remove 'pending')
-        DB::statement("ALTER TABLE `pembayarans` MODIFY `status` ENUM('berhasil','gagal') NOT NULL DEFAULT 'gagal'");
+        DB::statement("ALTER TABLE `pembayarans` MODIFY `status` ENUM('berhasil','gagal','pending') NOT NULL DEFAULT 'gagal'");
     }
 };
