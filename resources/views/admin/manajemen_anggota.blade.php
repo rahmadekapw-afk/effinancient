@@ -8,10 +8,31 @@
                 <h2 class="text-xl font-bold text-gray-800">Manajemen Anggota</h2>
                 <p class="text-sm text-gray-600">Kelola data anggota koperasi</p>
             </div>
-         <button id="openModalButton"
-            class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
-            <i class="bi bi-plus-circle-fill text-lg"></i> Tambah Anggota
-        </button>
+            
+        <div class="flex gap-2 mb-4">
+    <!-- Tambah Anggota -->
+    <button id="openModalButton"
+        class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
+        <i class="bi bi-plus-circle-fill text-lg"></i> Tambah Anggota
+    </button>
+
+    <!-- Download Template Excel -->
+    <a href="{{ url('admin/manajemen_anggota/template_excel') }}" 
+        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
+        <i class="bi bi-file-earmark-arrow-down-fill text-lg"></i> Download Template Excel
+    </a>
+
+    <!-- Upload / Masukkan Data Excel -->
+    <label for="uploadExcel"
+        class="bg-sky-500 hover:bg-sky-600 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md cursor-pointer">
+        <i class="bi bi-file-earmark-plus-fill text-lg"></i> Masukkan Data Excel
+    </label>
+    <form id="formUploadExcel" action="{{ url('admin/manajemen_anggota/import_excel') }}" method="POST" enctype="multipart/form-data" class="hidden">
+        @csrf
+        <input type="file" id="uploadExcel" name="excel_file" accept=".xls,.xlsx" onchange="document.getElementById('formUploadExcel').submit()">
+    </form>
+</div>
+
         </div>
 
         <div class="bg-white rounded-lg shadow p-5">
@@ -75,63 +96,47 @@
                 <table id="anggota-table" class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
-                            </th>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA
-                            </th>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                KONTAK</th>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL
-                                SIMPANAN</th>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                STATUS</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA </th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KONTAK</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL  SIMPANAN</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STATUS</th>
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AKSI
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($anggota as $value)
+                      @foreach ($anggota as $value)
                             <tr id="row-display-{{ $value['anggota_id'] }}">
+                                <!-- Kolom Data Anggota -->
                                 <td class="px-3 py-4 text-sm font-medium text-green-600">{{ $value['nomor_anggota'] }}</td>
                                 <td class="px-3 py-4">
                                     <p class="text-sm font-medium text-gray-900">{{ $value['nama_lengkap'] }}</p>
                                     <p class="text-xs text-gray-500">{{ $value['email'] }}</p>
                                 </td>
                                 <td class="px-3 py-4 text-sm text-gray-900">{{ $value['no_hp'] }}</td>
-                                <td class="px-3 py-4 text-sm text-gray-900">
-                                    <p>{{ $value['saldo'] }}</p>
-                                    <p class="text-xs text-gray-500">Pinjaman: - </p>
-                                </td>
-
+                                <td class="px-3 py-4 text-sm text-gray-900">{{ $value['saldo'] }}</td>
                                 <td class="px-3 py-4">
                                     <span
                                         class="px-2 inline-flex text-xs font-semibold rounded-full 
-                                                {{ $value['status_anggota'] == 'aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                        {{ $value['status_anggota'] == 'aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                         {{ $value['status_anggota'] }}
                                     </span>
                                 </td>
-
                                 <td class="px-3 py-4 text-sm font-medium">
                                     <div class="flex items-center gap-2 text-lg">
-                                        {{-- Ubah tombol edit --}}
-
-                                        {{-- Tombol View --}}
                                         <button onclick="openDetail({{ $value['anggota_id'] }})"
                                             class="text-blue-500 hover:text-blue-700" title="Lihat">
                                             <i class="bi bi-eye"></i>
                                         </button>
-
-                                        {{-- Tombol Edit --}}
                                         <button onclick="toggleEdit({{ $value['anggota_id'] }})"
                                             class="text-green-500 hover:text-green-700" title="Edit">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
-
                                         <a href="#" onclick="hapus({{ $value['anggota_id'] }})"
                                             class="text-red-500 hover:text-red-700" title="Hapus">
                                             <i class="bi bi-trash"></i>
                                         </a>
-
                                         <form id="form-hapus-{{ $value['anggota_id'] }}"
                                             action="{{ url('admin/manajemen_anggota/hapus/' . $value['anggota_id']) }}"
                                             method="POST" class="hidden">
@@ -142,63 +147,71 @@
                                 </td>
                             </tr>
 
-
-                            {{-- FORM EDIT MODE --}}
-                            <tr id="row-edit-{{ $value['anggota_id'] }}" class="hidden bg-gray-50">
-                                <form action="{{ url('admin/manajemen_anggota/update/' . $value['anggota_id']) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('PUT')
-
-                                    <td class="px-3 py-4">
-                                        <input type="text" name="nomor_anggota" value="{{ $value['nomor_anggota'] }}"
-                                            class="w-full border rounded px-2 py-1 text-sm">
-                                    </td>
-
-                                    <td class="px-3 py-4">
-                                        <input type="text" name="nama_lengkap" value="{{ $value['nama_lengkap'] }}"
-                                            class="w-full border rounded px-2 py-1 text-sm mb-1">
-                                        <input type="email" name="email" value="{{ $value['email'] }}"
-                                            class="w-full border rounded px-2 py-1 text-xs">
-                                    </td>
-
-                                    <td class="px-3 py-4">
-                                        <input type="text" name="no_hp" value="{{ $value['no_hp'] }}"
-                                            class="w-full border rounded px-2 py-1 text-sm">
-                                    </td>
-
-                                    <td class="px-3 py-4">
-                                        <input hidden type="number" name="saldo" value="{{ $value['saldo'] }}"
-                                            class="w-full border rounded px-2 py-1 text-sm">
-                                        <input readonly disabled type="number" name="saldo" value="{{ $value['saldo'] }}"
-                                            class="w-full border rounded px-2 py-1 text-sm">
-                                    </td>
-
-                                    <td class="px-3 py-4">
-                                        <select name="status_anggota" class="border rounded px-2 py-1 text-sm w-full">
-                                            <option value="aktif" {{ $value['status_anggota'] == 'aktif' ? 'selected' : '' }}>Aktif
-                                            </option>
-                                            <option value="nonaktif" {{ $value['status_anggota'] == 'nonaktif' ? 'selected' : '' }}>Tidak Aktif</option>
-                                        </select>
-                                    </td>
-
-                                    <td class="px-3 py-4">
-                                        <div class="flex items-center gap-2">
-                                            <button type="submit"
-                                                class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
-                                                Simpan
-                                            </button>
-
-                                            <button type="button" onclick="toggleEdit({{ $value['anggota_id'] }})"
-                                                class="bg-gray-400 text-white px-3 py-1 rounded text-sm hover:bg-gray-500">
-                                                Batal
-                                            </button>
-                                        </div>
-                                    </td>
-                                </form>
+                            {{-- Row Tambah Simpanan --}}
+                            <tr class="bg-gray-100">
+                                <td colspan="2" class="px-3 py-4 text-center ">Tambah Simpanan Anggota </td>
+                                <td colspan="5" class="px-3 py-4">
+                                    <div class="flex flex-row gap-2 justify-center">
+                                        <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'qurban')"
+                                            class="bg-yellow-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1  hover:bg-yellow-500">
+                                            <i class="bi bi-cash-coin"></i> Qurban
+                                        </button>
+                                        <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'wajib')"
+                                            class="bg-blue-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-blue-500">
+                                            <i class="bi bi-wallet2"></i> Wajib
+                                        </button>
+                                        <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'sehat')"
+                                            class="bg-green-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-green-500">
+                                            <i class="bi bi-heart-pulse"></i> Sehat
+                                        </button>
+                                        <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'pokok')"
+                                            class="bg-purple-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-purple-500">
+                                            <i class="bi bi-bank"></i> Pokok
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
+                            @endforeach
 
-                        @endforeach
+                            <!-- Modal Simpanan -->
+                            <div id="modalSimpanan" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center">
+                                <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-5 relative">
+                                    <!-- Tombol Close -->
+                                    <button onclick="closeSimpananModal()"
+                                        class="absolute top-3 right-3 text-gray-600 hover:text-gray-800 text-xl font-bold">&times;</button>
+
+                                    <h3 class="text-lg font-semibold mb-3" id="modalSimpananTitle">Tambah Simpanan</h3>
+                                    <form id="formSimpanan" method="POST" action="">
+                                        @csrf
+                                        <input type="hidden" name="anggota_id" id="anggota_id">
+                                        <div class="mb-3">
+                                            <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah (Rp)</label>
+                                            <input type="number" name="jumlah" id="jumlah" class="w-full border rounded px-2 py-1">
+                                        </div>
+                                        <button type="submit"
+                                            class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">Simpan</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <script>
+                            function openSimpananModal(id, jenis) {
+                                document.getElementById('modalSimpanan').classList.remove('hidden');
+                                document.getElementById('anggota_id').value = id;
+                                const titleMap = {
+                                    qurban: "Simpanan Qurban",
+                                    wajib: "Simpanan Wajib",
+                                    sehat: "Simpanan Sehat",
+                                    pokok: "Simpanan Pokok"
+                                };
+                                document.getElementById('modalSimpananTitle').innerText = "Tambah " + titleMap[jenis];
+                                document.getElementById('formSimpanan').action = "/admin/simpanan/tambah/" + jenis + "/" + id;
+                            }
+
+                            function closeSimpananModal() {
+                                document.getElementById('modalSimpanan').classList.add('hidden');
+                            }
+                            </script>
 
                     </tbody>
                 </table>
@@ -315,17 +328,18 @@
                             <option value="nonaktif">Nonaktif</option>
                         </select>
                     </div>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Kontak & Lainnya</h4>
-                    
-                    <div class="mb-4">
+                     <div class="mb-4">
                         <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
                         <input type="text" id="nama_lengkap" name="nama_lengkap" required
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
                             placeholder="Nama sesuai KTP">
                     </div>
+                    
+                   
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Kontak & Lainnya</h4>
                     
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -340,16 +354,33 @@
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
                             placeholder="Contoh: 0812xxxxxx">
                     </div>
-
                     <div class="mb-4">
-                        <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Saldo Awal</label>
-                        <input type="number" id="saldo" name="saldo" min="0" step="1000" value="0"
+                        <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Wajib</label>
+                        <input type="number" id="saldo" name="wajib" min="0" step="1000" value="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                            placeholder="Masukkan saldo awal (opsional)">
+                    </div>
+                    <div class="mb-4">
+                        <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Hari Raya</label>
+                        <input type="number" id="saldo" name="hari_raya" min="0" step="1000" value="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                            placeholder="Masukkan saldo awal (opsional)">
+                    </div>
+                    <div class="mb-4">
+                        <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Pokok</label>
+                        <input type="number" id="saldo" name="pokok" min="0" step="1000" value="0"
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
                             placeholder="Masukkan saldo awal (opsional)">
                     </div>
                 </div>
             </div>
-
+            
+            <div class="mt-4">
+                <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Sehat</label>
+                 <input type="number" id="saldo" name="saldo" min="0" step="1000" value="0"
+                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                    placeholder="Masukkan saldo awal (opsional)">
+            </div>
             <div class="mt-4">
                 <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
                 <textarea id="alamat" name="alamat" rows="3"

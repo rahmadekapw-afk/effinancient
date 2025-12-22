@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('nomor_anggota', 20);
             $table->enum('status_anggota', ['aktif', 'nonaktif']);
             $table->decimal('saldo', 12, 2)->default(0);
+            $table->decimal('simpanan_hari_raya', 12, 2)->default(0);
+            $table->decimal('simpanan_wajib', 12, 2)->default(0);
+            $table->decimal('simpanan_pokok', 12, 2)->default(0);
             $table->string('username', 50)->unique();
             $table->string('password', 255);
             $table->string('nama_lengkap', 100);

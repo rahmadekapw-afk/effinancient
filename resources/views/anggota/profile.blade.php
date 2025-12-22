@@ -48,25 +48,6 @@
                 </button>
 
             </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mt-4">
-                <div>
-                    <p class="text-xs text-gray-500">Total Simpanan</p>
-                    <p class="text-lg font-bold text-gray-900">Rp {{ number_format($anggota->saldo, 2, ',', '.') }}</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-500">Pinjaman Aktif</p>
-                    <p class="text-lg font-bold text-gray-900">belum dikerjakan</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-500">Total Transaksi</p>
-                    <p class="text-lg font-bold text-gray-900">belum dikerjakan</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-500">Poin Loyalitas</p>
-                    <p class="text-lg font-bold text-gray-900">belum dikerjakan</p>
-                </div>
-            </div>
         </section>
         
         <section class="bg-white rounded-lg shadow p-5">

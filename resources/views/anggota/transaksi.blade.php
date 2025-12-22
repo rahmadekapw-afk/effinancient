@@ -10,7 +10,7 @@
             
             <div class="bg-white rounded-lg shadow p-5 border-l-4 border-red-500">
                 <p class="text-sm text-gray-600 font-medium">Total Pemasukan</p>
-                <p class="text-2xl font-bold text-green-700 mt-1">Rp 3.100.000</p>
+                <p class="text-2xl font-bold text-green-700 mt-1">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</p>
                 <p class="text-xs text-green-500 mt-1">
                     <i class="bi bi-arrow-up-right"></i> Simpanan & Pinjaman
                 </p>
@@ -18,7 +18,7 @@
 
             <div class="bg-white rounded-lg shadow p-5 border-l-4 border-red-500">
                 <p class="text-sm text-gray-600 font-medium">Total Pengeluaran</p>
-                <p class="text-2xl font-bold text-red-500 mt-1">Rp 250.000</p>
+                <p class="text-2xl font-bold text-red-500 mt-1">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</p>
                 <p class="text-xs text-red-500 mt-1">
                     <i class="bi bi-arrow-down-left"></i> Penarikan & Angsuran
                 </p>
@@ -26,7 +26,7 @@
 
             <div class="bg-white rounded-lg shadow p-5 border-l-4 border-blue-500">
                 <p class="text-sm text-gray-600 font-medium">Total Transaksi</p>
-                <p class="text-2xl font-bold text-gray-800 mt-1">8</p>
+                <p class="text-2xl font-bold text-gray-800 mt-1">{{ $totalTransaksi }} Transaksi</p>
                 <p class="text-xs text-blue-500 mt-1">Semua periode</p>
             </div>
         </section>
@@ -74,72 +74,69 @@
                             <th scope="col" class="px-4 py-3 font-semibold">STATUS</th>
                         </tr>
                     </thead>
-                    <tbody>
+                   <tbody>
+                        @forelse($transaksi as $index => $row)
                         <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-800">TRX001</td>
-                            <td class="px-4 py-3">05 Nov 2024<div class="text-xs text-gray-500">09:30</div></td>
-                            <td class="px-4 py-3 flex items-center gap-2 text-green-700"><i class="bi bi-arrow-up-right"></i> Setor Simpanan Wajib</td>
-                            <td class="px-4 py-3 font-medium text-green-600">+Rp 100.000</td>
-                            <td class="px-4 py-3">Transfer Bank</td>
-                            <td class="px-4 py-3"><span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Berhasil</span></td>
+
+                            {{-- ID --}}
+                            <td class="px-4 py-3 font-medium text-gray-800">
+                                TRX{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}
+                            </td>
+
+                            {{-- TANGGAL & WAKTU --}}
+                            <td class="px-4 py-3">
+                                {{ \Carbon\Carbon::parse($row['tanggal'])->format('d M Y') }}
+                                <div class="text-xs text-gray-500">
+                                    {{ \Carbon\Carbon::parse($row['tanggal'])->format('H:i') }}
+                                </div>
+                            </td>
+
+                            {{-- JENIS TRANSAKSI --}}
+                            <td class="px-4 py-3 flex items-center gap-2
+                                {{ $row['jenis'] === 'Pinjaman' ? 'text-green-700' : 'text-red-700' }}">
+
+                                @if($row['jenis'] === 'Pinjaman')
+                                    <i class="bi bi-arrow-up-right"></i>
+                                    {{ $row['jenis'] }}
+                                @else
+                                    <i class="bi bi-arrow-down-left"></i>
+                                    {{ $row['jenis'] }}
+                                @endif
+                            </td>
+
+                            {{-- NOMINAL --}}
+                            <td class="px-4 py-3 font-medium
+                                {{ $row['jenis'] === 'Pinjaman' ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $row['jenis'] === 'Pinjaman' ? '+' : '-' }}
+                                Rp {{ number_format($row['jumlah'], 0, ',', '.') }}
+                            </td>
+
+                            {{-- METODE --}}
+                            <td class="px-4 py-3">
+                                {{ $row['metode'] }}
+                            </td>
+
+                            {{-- STATUS --}}
+                            <td class="px-4 py-3">
+                                <span class="text-xs font-medium px-2 py-0.5 rounded
+                                    {{ in_array($row['status'], ['berhasil', 'disetujui'])
+                                        ? 'bg-green-100 text-green-800'
+                                        : 'bg-yellow-100 text-yellow-800' }}">
+                                    {{ ucfirst($row['status']) }}
+                                </span>
+                            </td>
+
                         </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-800">TRX002</td>
-                            <td class="px-4 py-3">01 Nov 2024<div class="text-xs text-gray-500">14:15</div></td>
-                            <td class="px-4 py-3 flex items-center gap-2 text-red-600"><i class="bi bi-arrow-down-left"></i> Angsuran Pinjaman</td>
-                            <td class="px-4 py-3 font-medium text-red-600">-Rp 50.000</td>
-                            <td class="px-4 py-3">Auto Debit</td>
-                            <td class="px-4 py-3"><span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Berhasil</span></td>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-gray-500">
+                                Belum ada transaksi
+                            </td>
                         </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-800">TRX003</td>
-                            <td class="px-4 py-3">28 Okt 2024<div class="text-xs text-gray-500">11:20</div></td>
-                            <td class="px-4 py-3 flex items-center gap-2 text-green-700"><i class="bi bi-arrow-up-right"></i> Setor Simpanan Sukarela</td>
-                            <td class="px-4 py-3 font-medium text-green-600">+Rp 500.000</td>
-                            <td class="px-4 py-3">Transfer Bank</td>
-                            <td class="px-4 py-3"><span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Berhasil</span></td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-800">TRX004</td>
-                            <td class="px-4 py-3">25 Okt 2024<div class="text-xs text-gray-500">16:45</div></td>
-                            <td class="px-4 py-3 flex items-center gap-2 text-red-600"><i class="bi bi-arrow-down-left"></i> Penarikan Simpanan</td>
-                            <td class="px-4 py-3 font-medium text-red-600">-Rp 200.000</td>
-                            <td class="px-4 py-3">Transfer Bank</td>
-                            <td class="px-4 py-3"><span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Berhasil</span></td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-800">TRX005</td>
-                            <td class="px-4 py-3">20 Okt 2024<div class="text-xs text-gray-500">10:00</div></td>
-                            <td class="px-4 py-3 flex items-center gap-2 text-green-700"><i class="bi bi-arrow-up-right"></i> Pencairan Pinjaman</td>
-                            <td class="px-4 py-3 font-medium text-green-600">+Rp 2.000.000</td>
-                            <td class="px-4 py-3">Transfer Bank</td>
-                            <td class="px-4 py-3"><span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Berhasil</span></td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-800">TRX006</td>
-                            <td class="px-4 py-3">05 Okt 2024<div class="text-xs text-gray-500">09:30</div></td>
-                            <td class="px-4 py-3 flex items-center gap-2 text-green-700"><i class="bi bi-arrow-up-right"></i> Setor Simpanan Wajib</td>
-                            <td class="px-4 py-3 font-medium text-green-600">+Rp 100.000</td>
-                            <td class="px-4 py-3">Tunai</td>
-                            <td class="px-4 py-3"><span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Berhasil</span></td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-800">TRX007</td>
-                            <td class="px-4 py-3">20 Sep 2024<div class="text-xs text-gray-500">13:15</div></td>
-                            <td class="px-4 py-3 flex items-center gap-2 text-green-700"><i class="bi bi-arrow-up-right"></i> Setor Simpanan Sukarela</td>
-                            <td class="px-4 py-3 font-medium text-green-600">+Rp 300.000</td>
-                            <td class="px-4 py-3">Transfer Bank</td>
-                            <td class="px-4 py-3"><span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Berhasil</span></td>
-                        </tr>
-                        <tr class="bg-white">
-                            <td class="px-4 py-3 font-medium text-gray-800">TRX008</td>
-                            <td class="px-4 py-3">05 Sep 2024<div class="text-xs text-gray-500">09:30</div></td>
-                            <td class="px-4 py-3 flex items-center gap-2 text-green-700"><i class="bi bi-arrow-up-right"></i> Setor Simpanan Wajib</td>
-                            <td class="px-4 py-3 font-medium text-green-600">+Rp 100.000</td>
-                            <td class="px-4 py-3">Transfer Bank</td>
-                            <td class="px-4 py-3"><span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded">Berhasil</span></td>
-                        </tr>
-                    </tbody>
+                        @endforelse
+                        </tbody>
+
+
                 </table>
             </div>
         </section>

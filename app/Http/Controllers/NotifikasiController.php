@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Notifikasi;
 use App\Models\Admin;
 use App\Models\Anggota; // ADDED
-use Illuminate\Support\Facades\DB; // ADDED
+use App\Services\FonnteService;
 class NotifikasiController extends Controller
 {
     /**
@@ -14,7 +14,25 @@ class NotifikasiController extends Controller
      */
     public function index()
     {
-        //
+        // Jika request ingin JSON (API) kembalikan JSON, kalau tidak render view
+        $query = \App\Models\Notifikasi::query()->orderByDesc('tanggal');
+
+        // support optional filter by anggota_id
+        if (request()->has('anggota_id')) {
+            $query->where('anggota_id', request('anggota_id'));
+        }
+
+        if (request()->wantsJson()) {
+            return response()->json($query->paginate(20));
+        }
+
+        $notifikasis = $query->paginate(20);
+        // jika tidak ada view, kembalikan JSON untuk memudahkan testing
+        if (! view()->exists('notifikasi.index')) {
+            return response()->json($notifikasis);
+        }
+
+        return view('notifikasi.index', compact('notifikasis'));
     }
 
     /**
@@ -88,18 +106,104 @@ class NotifikasiController extends Controller
         // siapkan pesan untuk WA gateway — ambil nomor hp dari anggota (coba beberapa nama kolom)
         $phone = $anggota->no_hp ?? $anggota->phone ?? $anggota->telepon ?? null;
         if ($phone) {
-            // masukkan ke tabel naratif (gateway queue). Sesuaikan nama tabel/kolom jika berbeda.
-            DB::table('naratif')->insert([
-                'to'         => $phone,
-                'title'      => $judul,
-                'message'    => $isi,
-                'status'     => 'pending',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // Normalisasi nomor: hapus non-digit, ubah leading 0 -> 62
+            $normalized = preg_replace('/[^0-9]/', '', $phone);
+            if (substr($normalized, 0, 1) === '0') {
+                $normalized = '62' . substr($normalized, 1);
+            }
+
+            // Kirim langsung via Fonnte (synchronous multipart). Jika ingin queue, ubah ke job.
+            try {
+                $fonnte = app(FonnteService::class);
+                $message = trim(($judul ?? '') . "\n\n" . ($isi ?? ''));
+                $fields = [
+                    'target' => $normalized,
+                    'message' => $message,
+                    'countryCode' => '62',
+                ];
+                $resp = $fonnte->sendMultipart($fields);
+                \Illuminate\Support\Facades\Log::info('WA sent (multipart)', ['to' => $normalized, 'response' => $resp]);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::warning('WA send multipart failed: ' . $e->getMessage(), ['to' => $phone]);
+            }
         }
 
         return redirect()->back()->with('pesan_sukses', 'Notifikasi berhasil dikirim!');
+    }
+
+    /**
+     * Return notifications for the logged-in anggota (count + latest)
+     * Only include entries related to pinjaman (disetujui / lunas)
+     */
+    public function anggotaNotifications(Request $request)
+    {
+        $anggotaId = session('anggota_id') ?? $request->query('anggota_id');
+        if (! $anggotaId) {
+            return response()->json(['count' => 0, 'latest' => []]);
+        }
+
+        $query = Notifikasi::where('anggota_id', $anggotaId)
+            ->where(function($q) {
+                $q->where('judul', 'like', '%Disetujui%')
+                  ->orWhere('judul', 'like', '%Lunas%')
+                  ->orWhere('judul', 'like', '%disetujui%')
+                  ->orWhere('judul', 'like', '%lunas%');
+            });
+
+        $count = $query->count();
+        $latest = $query->orderByDesc('created_at')->limit(5)->get(['notifikasi_id','judul','isi','tanggal','created_at']);
+
+        return response()->json(['count' => $count, 'latest' => $latest]);
+    }
+
+    /**
+     * Tandai satu atau banyak notifikasi sebagai dibaca (anggota/admin)
+     */
+    public function markRead(Request $request)
+    {
+        $ids = $request->input('id');
+        if (! $ids) {
+            return response()->json(['ok' => false, 'message' => 'No id provided'], 400);
+        }
+
+        $ids = is_array($ids) ? $ids : [$ids];
+
+        // jika anggota login, batasi hanya milik anggota itu
+        if (session('anggota_id')) {
+            // untuk anggota: menganggap "tandai dibaca" berarti menghilangkan notifikasi dari daftar
+            $deleted = Notifikasi::whereIn('notifikasi_id', $ids)
+                ->where('anggota_id', session('anggota_id'))
+                ->delete();
+            $updated = $deleted;
+        } else {
+            // admin atau sistem: tetap gunakan flag is_admin_read
+            $updated = Notifikasi::whereIn('notifikasi_id', $ids)->update(['is_admin_read' => true]);
+        }
+
+        return response()->json(['ok' => true, 'updated' => $updated]);
+    }
+
+    /**
+     * Hapus notifikasi (anggota hanya bisa menghapus miliknya)
+     */
+    public function delete(Request $request)
+    {
+        $ids = $request->input('id');
+        if (! $ids) {
+            return response()->json(['ok' => false, 'message' => 'No id provided'], 400);
+        }
+        $ids = is_array($ids) ? $ids : [$ids];
+
+        if (session('anggota_id')) {
+            $deleted = Notifikasi::whereIn('notifikasi_id', $ids)
+                ->where('anggota_id', session('anggota_id'))
+                ->delete();
+        } else {
+            // admin/system may delete any
+            $deleted = Notifikasi::whereIn('notifikasi_id', $ids)->delete();
+        }
+
+        return response()->json(['ok' => true, 'deleted' => $deleted]);
     }
 }
 

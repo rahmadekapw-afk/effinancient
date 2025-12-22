@@ -114,8 +114,8 @@
         <nav class="mt-2">
 
             {{-- Beranda ('/anggota') --}}
-            <a href="{{ url('/anggota') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
-                      @if(Request::is('anggota') || Request::is('anggota/'))
+            <a href="{{ url('dashboard/anggota') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
+                      @if(Request::is('dashboard/anggota') || Request::is('dashboard/anggota'))
                           active-link-anggota
                       @else
                           hover:bg-green-900
@@ -176,8 +176,9 @@
                 <i class="bi bi-list"></i>
             </button>
 
-            <button class="text-xl">
+            <button id="anggota-notif-btn" class="text-xl relative" title="Notifikasi">
                 <i class="bi bi-bell-fill"></i>
+                <span id="anggota-notif-badge" class="hidden absolute -top-1 -right-2 bg-red-600 text-white text-xs rounded-full px-1">0</span>
             </button>
         </header>
 
@@ -256,6 +257,35 @@
                     }
                 }
             }).trigger('resize');
+
+            // Polling notifikasi untuk anggota (lonceng anggota)
+            function updateAnggotaNotif() {
+                $.getJSON('/anggota/notifications')
+                    .done(function(res) {
+                        var count = res.count || 0;
+                        var $badge = $('#anggota-notif-badge');
+                        if (count > 0) {
+                            $badge.text(count > 99 ? '99+' : count);
+                            $badge.removeClass('hidden');
+                            $badge.addClass('animate-pulse');
+                        } else {
+                            $badge.addClass('hidden');
+                            $badge.removeClass('animate-pulse');
+                        }
+                    })
+                    .fail(function() {
+                        // ignore
+                    });
+            }
+
+            // start polling setiap 8 detik
+            updateAnggotaNotif();
+            setInterval(updateAnggotaNotif, 8000);
+
+            // klik bell anggota: buka halaman notifikasi anggota
+            $('#anggota-notif-btn').on('click', function () {
+                window.location.href = '/notifikasi';
+            });
 
             // Default state on load
             if (isDesktop()) {

@@ -11,72 +11,11 @@
 
             <div class="mt-4 bg-green-900 rounded-lg p-3">
                 <p class="text-xs text-green-200">Total Saldo</p>
-                <p class="text-2xl font-bold">Rp. {{ number_format($saldo)}}</p>
+                <p class="text-2xl font-bold">Rp {{ number_format($total_saldo, 0, ',', '.') }}</p>
             </div>
         </section>
 
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <div class="bg-green-100 text-green-800 p-1 rounded-lg">
-                            <i class="bi bi-wallet-fill text-base"></i>
-                        </div>
-                        <h4 class="text-base font-semibold text-gray-800">Simpanan Wajib</h4>
-                    </div>
-                    <p class="text-xl font-bold text-gray-900 mt-3">Rp 2.400.000</p>
-                </div>
-                <span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded-full">Aktif</span>
-            </div>
-
-            <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <div class="bg-blue-100 text-blue-600 p-1 rounded-lg">
-                            <i class="bi bi-graph-up-arrow text-base"></i>
-                        </div>
-                        <h4 class="text-base font-semibold text-gray-800">Simpanan Sukarela</h4>
-                    </div>
-                    <p class="text-xl font-bold text-gray-900 mt-3">Rp 3.100.000</p>
-                </div>
-                <span class="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">Aktif</span>
-            </div>
-        </section>
-
-        <section class="bg-white rounded-lg shadow p-5">
-            <div class="flex items-center gap-2">
-                <div class="bg-orange-100 text-orange-600 p-1 rounded-lg">
-                    <i class="bi bi-journal-text text-base"></i>
-                </div>
-                <div>
-                    <h4 class="text-base font-semibold text-gray-800">Pinjaman Aktif</h4>
-                    <p class="text-xs text-gray-500">Status: <span class="text-yellow-600 font-medium">Berjalan</span></p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mt-4">
-                <div>
-                    <p class="text-xs text-gray-500">Total Pinjaman</p>
-                    <p class="text-lg font-bold text-gray-900">Rp 2.000.000</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-500">Sisa Pinjaman</p>
-                    <p class="text-lg font-bold text-orange-600">Rp 1.500.000</p>
-                </div>
-            </div>
-            <div class="bg-orange-100 text-orange-600 p-1 rounded-lg">
-                <div class="mt-3">
-                    <div class="flex justify-between items-center mb-1">
-                        <p class="text-xs font-medium text-gray-700">Progress Pembayaran</p>
-                        <p class="text-xs font-bold text-green-800">25%</p>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-green-800 h-2 rounded-full" style="width: 25%"></div>
-                    </div>
-                </div>
-        </section>
-
-        <section class="bg-white rounded-lg shadow p-5">
+           <section class="bg-white rounded-lg shadow p-5">
             <h4 class="text-base font-semibold text-gray-800 mb-3">Aksi Cepat</h4>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <a href="#" id="openModal"
@@ -124,37 +63,106 @@
             </div>
         </section>
 
-        <div class="space-y-3">
-
-            <!-- Setor Simpanan -->
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="bg-green-100 text-green-800 p-2 rounded-full">
-                        <i class="bi bi-arrow-down-left text-sm"></i>
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Simpanan Wajib -->
+        <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
+            <div>
+                <div class="flex items-center gap-2">
+                    <div class="bg-green-100 text-green-800 p-1 rounded-lg">
+                        <i class="bi bi-wallet-fill text-base"></i>
                     </div>
-                    <div>
-                        <p class="font-medium text-sm text-gray-900">Setor Simpanan</p>
-                        <p class="text-xs text-gray-500">05 Nov 2024</p>
-                    </div>
+                    <h4 class="text-base font-semibold text-gray-800">Simpanan Sehat</h4>
                 </div>
-                <p class="font-medium text-sm text-green-800">+Rp 100.000</p>
+                <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($saldo, 0, ',', '.') }}
+</p>
             </div>
-
-            <!-- Angsuran Pinjaman -->
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="bg-red-100 text-red-600 p-2 rounded-full">
-                        <i class="bi bi-arrow-up-right text-sm"></i>
-                    </div>
-                    <div>
-                        <p class="font-medium text-sm text-gray-900">Angsuran Pinjaman</p>
-                        <p class="text-xs text-gray-500">01 Nov 2024</p>
-                    </div>
-                </div>
-                <p class="font-medium text-sm text-red-600">-Rp 50.000</p>
-            </div>
-
+            <span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded-full">
+                Aktif
+            </span>
         </div>
+
+        <!-- Simpanan Hari Raya -->
+        <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
+            <div>
+                <div class="flex items-center gap-2">
+                    <div class="bg-blue-100 text-blue-600 p-1 rounded-lg">
+                        <i class="bi bi-graph-up-arrow text-base"></i>
+                    </div>
+                    <h4 class="text-base font-semibold text-gray-800">Simpanan Hari Raya</h4>
+                </div>
+                <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($hari_raya, 0, ',', '.') }}</p>
+            </div>
+            <span class="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
+                Aktif
+            </span>
+        </div>
+
+        <!-- Simpanan Pendidikan -->
+        <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
+            <div>
+                <div class="flex items-center gap-2">
+                    <div class="bg-purple-100 text-purple-700 p-1 rounded-lg">
+                        <i class="bi bi-mortarboard-fill text-base"></i>
+                    </div>
+                    <h4 class="text-base font-semibold text-gray-800">Simpanan wajib</h4>
+                </div>
+                <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($wajib, 0, ',', '.') }}</p>
+            </div>
+            <span class="text-xs font-medium text-purple-700 bg-purple-100 px-2 py-0.5 rounded-full">
+                Aktif
+            </span>
+        </div>
+
+        <!-- Simpanan Pokok -->
+        <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
+            <div>
+                <div class="flex items-center gap-2">
+                    <div class="bg-orange-100 text-orange-700 p-1 rounded-lg">
+                        <i class="bi bi-piggy-bank-fill text-base"></i>
+                    </div>
+                    <h4 class="text-base font-semibold text-gray-800">Simpanan Pokok</h4>
+                </div>
+                <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($pokok, 0, ',', '.') }}</p>
+            </div>
+            <span class="text-xs font-medium text-orange-700 bg-orange-100 px-2 py-0.5 rounded-full">
+                Aktif
+            </span>
+        </div>
+    </section>
+
+        <section class="bg-white rounded-lg shadow p-5">
+            <div class="flex items-center gap-2">
+                <div class="bg-orange-100 text-orange-600 p-1 rounded-lg">
+                    <i class="bi bi-journal-text text-base"></i>
+                </div>
+                <div>
+                    <h4 class="text-base font-semibold text-gray-800">Pinjaman Aktif</h4>
+                    <p class="text-xs text-gray-500">Status: <span class="text-yellow-600 font-medium">Berjalan</span></p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div>
+                    <p class="text-xs text-gray-500">Total Pinjaman</p>
+                    <p class="text-lg font-bold text-gray-900">Rp {{ number_format($total_nominal) }}</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500">Sisa Pinjaman</p>
+                    <p class="text-lg font-bold text-orange-600">Rp {{ number_format($sisa_pinjaman) }}</p>
+                </div>
+            </div>
+            <div class="bg-orange-100 text-orange-600 p-1 rounded-lg">
+                <div class="mt-3">
+                    <div class="flex justify-between items-center mb-1">
+                        <p class="text-xs font-medium text-gray-700">Progress Pembayaran</p>
+                        <p class="text-xs font-bold text-green-800">{{ $progres_pinjaman }} % </p>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-green-800 h-2 rounded-full" style="width: {{ $progres_pinjaman }}% "></div>
+                    </div>
+                </div>
+        </section>
+
 
 
         <!-- Modal Bayar Pinjaman -->
@@ -266,7 +274,6 @@
                     <select name="pembayaran" class="w-full border rounded p-2 mt-1" required>
                         <option value="">-- Pilih Metode --</option>
                         <option value="potong gaji">Potong Gaji</option>
-                        <option value="saldo">Saldo</option>
                         <option value="pembayaran online">Pembayaran Online</option>
                     </select>
                 </div>

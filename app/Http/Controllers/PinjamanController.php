@@ -73,39 +73,57 @@ class PinjamanController extends Controller
     }
 
     // Simpan pengajuan pinjaman
+   
+
     public function store(Request $request)
-    {
-        $jangka = $request->jangka_waktu; // misal: 12 (bulan)
-        $nominal = $request->nominal;      // misal: 10.000.000
-        $persen_bunga = 0.7;               // asumsi 0.7% per bulan
+{
+    $jangka = $request->jangka_waktu; // bulan
+    $nominal = $request->nominal;
+    $persen_bunga = 0.7; // 0.7% per bulan
 
-        // 1. Hitung Bunga per bulan
-        // Rumus: (Total Pinjaman * Persentase Bunga) / 100
-        $bunga = ($nominal * $persen_bunga) / 100;
+    // 1. Bunga per bulan
+    $bunga_per_bulan = ($nominal * $persen_bunga) / 100;
 
-        // 2. Hitung Cicilan Pokok per bulan
-        // Rumus: Total Pinjaman / Jangka Waktu
-        $pokok = $nominal / $jangka;
+    // 2. Pokok per bulan
+    $pokok_per_bulan = $nominal / $jangka;
 
-        // 3. Total Angsuran per bulan
-        $angsuran = $pokok + $bunga;
+    // 3. Angsuran per bulan
+    $angsuran_per_bulan = $pokok_per_bulan + $bunga_per_bulan;
 
-        $total_nominal = ( $nominal * $persen_bunga ) + $nominal ;
-        Pinjaman::create([
-            'anggota_id'        => $request->anggota_id,
-            'nominal'           => $total_nominal,
-            'tenor'             => 0.7,
-            'bunga'             => 0.7, // misal bunga flat
-            'status_pinjaman'   => 'menunggu',
-            'tanggal_pengajuan' => $request->tanggal_pengajuan,
-            'angsuran_per_bulan' => $angsuran,
-            'jumlah_dibayar' => 0,
-            'jangka_waktu'     => $request->jangka_waktu
+    // 4. Total pinjaman + bunga
+    $total_nominal = $nominal + ($bunga_per_bulan * $jangka);
+
+    // Simpan ke database
+    $p = Pinjaman::create([
+        'anggota_id'          => $request->anggota_id,
+        'nominal'             => $total_nominal,
+        'tenor'               => $jangka,
+        'bunga'               => $persen_bunga,
+        'status_pinjaman'     => 'menunggu',
+        'tanggal_pengajuan'   => $request->tanggal_pengajuan,
+        'angsuran_per_bulan'  => $angsuran_per_bulan,
+        'jumlah_dibayar'      => 0,
+        'jangka_waktu'        => $jangka
+    ]);
+
+    // Notifikasi admin
+    try {
+        \App\Models\Notifikasi::create([
+            'admin_id' => null,
+            'anggota_id' => null,
+            'judul' => 'Pengajuan Pinjaman',
+            'isi' => 'Pinjaman #' . $p->pinjaman_id .
+                     ' oleh anggota ' . $p->anggota_id .
+                     ' mengajukan nominal Rp ' . number_format($p->nominal, 0, ',', '.'),
+            'tanggal' => now(),
+            'is_admin_read' => false,
         ]);
-
-        return back()->with('pesan_sukses', 'Pengajuan pinjaman berhasil dikirim!');
-
-        
+    } catch (\Exception $e) {
+      \Illuminate\Support\Facades\Log::warning('Create pengajuan notifikasi failed: ' . $e->getMessage());
     }
+
+    return back()->with('pesan_sukses', 'Pengajuan pinjaman berhasil dikirim!');
 }
+}
+    
 

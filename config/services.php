@@ -38,6 +38,11 @@ return [
         'url' => env('WA_API_URL'),
     ],
 
+    'fonnte' => [
+        'url'   => env('WA_API_URL', 'https://api.fonnte.com/send'),
+        'token' => env('FONNTE_TOKEN'),
+    ],
+
     'midtrans' => [
         'merchant_id' => env('MIDTRANS_MERCHANT_ID'),
         'server_key' => env('MIDTRANS_SERVER_KEY'),

@@ -104,39 +104,30 @@
             <div class="bg-white rounded-lg shadow p-5 h-full">
                 <h3 class="text-base font-semibold text-gray-800 mb-4">Aktivitas Terkini</h3>
 
-                <div class="space-y-4">
-                    <div class="border-b pb-4">
-                        <p class="font-medium text-gray-900">Ahmad Wijaya</p>
-                        <div class="flex justify-between items-center text-sm">
-                            <p class="text-gray-600">Setor Simpanan Wajib</p>
-                            <p class="text-xs text-gray-500">5 menit lalu</p>
-                        </div>
-                        <p class="font-bold text-green-600 text-sm">Rp 100.000</p>
+            @foreach ($notifikasi as $notif)
+                <div class="border-b pb-4">
+                    <!-- Username dari anggota -->
+                    <p class="font-medium text-gray-900">{{ $notif->username ?? 'Admin' }}</p>
+
+                    <!-- Judul & waktu -->
+                    <div class="flex justify-between items-center text-sm">
+                        <p class="text-gray-600">{{ $notif->judul }}</p>
+                        <p class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($notif->tanggal)->diffForHumans() }}</p>
                     </div>
-                    <div class="border-b pb-4">
-                        <p class="font-medium text-gray-900">Siti Nurhaliza</p>
-                        <div class="flex justify-between items-center text-sm">
-                            <p class="text-gray-600">Pengajuan Pinjaman</p>
-                            <p class="text-xs text-gray-500">15 menit lalu</p>
+
+                    <!-- Isi notifikasi / jumlah nominal -->
+                    @if (preg_match('/\d+/', $notif->isi, $matches))
+                        <p class=" text-green-600 text-sm">{{ $notif->isi }}</p>
+                    @else
+                        <p class="text-gray-700 text-sm">{{ $notif->isi }}</p>
+                    @endif
+                </div>
+            @endforeach
                         </div>
-                        <p class="font-bold text-red-500 text-sm">Rp 5.000.000</p>
-                    </div>
-                    <div class="pb-4">
-                        <p class="font-medium text-gray-900">Budi Santoso</p>
-                        <div class="flex justify-between items-center text-sm">
-                            <p class="text-gray-600">Setor Simpanan Sukarela</p>
-                            <p class="text-xs text-gray-500">32 menit lalu</p>
-                        </div>
-                        <p class="font-bold text-green-600 text-sm">Rp 500.000</p>
-                    </div>
-                    <div class="text-sm text-gray-500 italic">
-                        Dewi Lestari (dll...)
                     </div>
                 </div>
-            </div>
-        </div>
 
-    </div>
+            </div>
 @endsection
 
 @section('scripts')
