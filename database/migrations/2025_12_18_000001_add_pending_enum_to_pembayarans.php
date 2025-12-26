@@ -14,6 +14,7 @@ return new class extends Migration
     public function down(): void
     {
         // Revert to previous enum (remove 'pending')
+<<<<<<< HEAD
 
         DB::statement("ALTER TABLE `pembayarans` MODIFY `status` ENUM('berhasil','gagal','pending') NOT NULL DEFAULT 'gagal'");
 
@@ -21,5 +22,10 @@ return new class extends Migration
         DB::statement("UPDATE `pembayarans` SET `status` = 'gagal' WHERE `status` NOT IN ('berhasil','gagal')");
         DB::statement("ALTER TABLE `pembayarans` MODIFY `status` ENUM('berhasil','gagal') NOT NULL DEFAULT 'gagal'");
 
+=======
+        // Ensure existing rows don't have values outside the target enum
+        DB::statement("UPDATE `pembayarans` SET `status` = 'gagal' WHERE `status` NOT IN ('berhasil','gagal')");
+        DB::statement("ALTER TABLE `pembayarans` MODIFY `status` ENUM('berhasil','gagal') NOT NULL DEFAULT 'gagal'");
+>>>>>>> 47db357789555e8378d83c54829f0994cff01029
     }
 };
