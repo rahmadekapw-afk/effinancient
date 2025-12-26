@@ -191,6 +191,78 @@ class SuperAdminController extends Controller
         return redirect()->back()->with('success', 'Data anggota berhasil diperbarui.');
     }
 
+    /**
+     * Tambah simpanan untuk anggota (admin action)
+     * jenis: qurban | wajib | sehat | pokok
+     */
+    public function tambahSimpanan(Request $request, $jenis, $id)
+    {
+        $request->validate([
+            'jumlah' => 'required|numeric|min:1'
+        ]);
+
+        $jumlah = (float) $request->input('jumlah');
+
+        $anggota = Anggota::findOrFail($id);
+
+        // Map jenis ke kolom pada tabel anggotas
+        $map = [
+            'qurban' => 'simpanan_hari_raya',
+            'wajib'  => 'simpanan_wajib',
+            'sehat'  => 'saldo',
+            'pokok'  => 'simpanan_pokok',
+        ];
+
+        if (! isset($map[$jenis])) {
+            return redirect()->back()->withErrors('Jenis simpanan tidak dikenal');
+        }
+
+        $kolom = $map[$jenis];
+
+        // Tambahkan nilai (increment)
+        $nilaiBaru = ($anggota->{$kolom} ?? 0) + $jumlah;
+        $anggota->update([$kolom => $nilaiBaru]);
+
+            // Buat notifikasi untuk anggota
+            try {
+                $notif = Notifikasi::create([
+                    'admin_id' => session('admin_id') ?? null,
+                    'anggota_id' => $anggota->anggota_id,
+                    'judul' => 'Penambahan Simpanan',
+                    'isi' => 'Penambahan ' . ucfirst($jenis) . ' sebesar Rp ' . number_format($jumlah, 0, ',', '.') . ' telah ditambahkan ke akun Anda.',
+                    'tanggal' => now(),
+                ]);
+
+                // Kirim via WA gateway langsung juga (panggilan ke service)
+                try {
+                    $phone = $anggota->no_hp ?? null;
+                    if ($phone) {
+                        $normalized = preg_replace('/[^0-9]/', '', $phone);
+                        if (substr($normalized, 0, 1) === '0') {
+                            $normalized = '62' . substr($normalized, 1);
+                        }
+
+                        $message = trim(($notif->judul ?? '') . "\n\n" . ($notif->isi ?? ''));
+                        $service = app(\App\Services\FonnteService::class);
+                        $fields = [
+                            'target' => $normalized,
+                            'message' => $message,
+                            'countryCode' => '62',
+                        ];
+                        $resp = $service->sendMultipart($fields);
+                        \Illuminate\Support\Facades\Log::info('WA send from tambahSimpanan', ['to' => $normalized, 'response' => $resp]);
+                    }
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::warning('WA send from tambahSimpanan failed: ' . $e->getMessage());
+                }
+
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::warning('Create simpanan notifikasi failed: ' . $e->getMessage());
+            }
+
+        return redirect()->back()->with('pesan_sukses', 'Simpanan berhasil ditambahkan.');
+    }
+
     
 
     /**

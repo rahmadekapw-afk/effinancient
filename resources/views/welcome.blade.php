@@ -259,7 +259,15 @@
                         Layanan
                     </a>
                 
-                    <!-- DROPDOWN DATA & INFORMASI (CLICK) -->
+                   
+                    <a href="#berita" class="hover:text-kemenag-green transition">
+                        Berita
+                    </a>
+                
+                    <a href="#kontak" class="hover:text-kemenag-green transition">
+                        Kontak
+                    </a>
+                 <!-- DROPDOWN DATA & INFORMASI (CLICK) -->
                     <div class="relative">
                 
                         <button aria-haspopup="true" aria-expanded="false" id="dataInfoBtn" type="button" class="flex items-center gap-2 px-3 py-2 rounded-lg
@@ -297,14 +305,6 @@
                         </div>
                     </div>
                 
-                    <a href="#berita" class="hover:text-kemenag-green transition">
-                        Berita
-                    </a>
-                
-                    <a href="#kontak" class="hover:text-kemenag-green transition">
-                        Kontak
-                    </a>
-                
                 </nav>
 
                 
@@ -321,7 +321,7 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 text-white" data-aos="fade-up">
             <h4 class="text-xl sm:text-5xl lg:text-7xl font-extrabold text-kemenag-orange leading-tight mb-4 tracking-tighter">
-                KPRI BAKTI MULIA KUAT<br class="hidden sm:block"> ANGGOTA SEJATERA
+                KPRI BAKTI MULIA <br class="hidden sm:block"> KUAT ANGGOTA SEJATERA
             </h4>
             <p class="text-xl sm:text-4xl font-light mb-10 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
                 Kementerian Agama Kota Yogyakarta
@@ -519,8 +519,7 @@
         </div>
     </section>
 
-<<<<<<< HEAD
-    <!-- ================== STANDAR LAYANAN (DI ATAS FOOTER) ================== -->
+    
     <section class="bg-gray-50 py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -727,8 +726,7 @@
     </div>
 </section>
 
-<!-- End Standar Layanan -->
->>>>>>> 47db357789555e8378d83c54829f0994cff01029
+
 
 
     <footer id="kontak" class="bg-gray-800 py-10">

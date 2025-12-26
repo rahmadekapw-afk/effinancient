@@ -54,6 +54,8 @@ Route::get('/tren-rupiah/create', [AdminController::class,'tren_rupiah'])->name(
 Route::get('/admin/manajemen_anggota',[SuperAdminController::class,'manajemen_anggota'])->middleware('admin.or.super');
 Route::delete('/admin/manajemen_anggota/hapus/{id}',[SuperAdminController::class,'hapus_anggota'])->middleware('admin.or.super');
 Route::post('/admin/manajemen_anggota/tambah',[SuperAdminController::class,'tambah_anggota'])->middleware('admin.or.super');
+// Tambah simpanan (admin) — menambahkan nilai ke kolom simpanan yang sesuai
+Route::post('/admin/simpanan/tambah/{jenis}/{id}', [SuperAdminController::class, 'tambahSimpanan'])->middleware('admin.or.super');
 
 Route::get('/admin/manajemen_akses',[SuperAdminController::class,'manajemen_akses'])->middleware('superadmin.auth');
 

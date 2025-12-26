@@ -116,7 +116,18 @@
                     </thead>
                     <tbody>
                         @foreach ($anggota as $value)
-                            <tr id="row-display-{{ $value['anggota_id'] }}">
+                            <tr id="row-display-{{ $value['anggota_id'] }}"
+                                data-nomor_anggota="{{ $value['nomor_anggota'] }}"
+                                data-username="{{ $value['username'] ?? '' }}"
+                                data-nama_lengkap="{{ $value['nama_lengkap'] }}"
+                                data-email="{{ $value['email'] }}"
+                                data-no_hp="{{ $value['no_hp'] }}"
+                                data-saldo="{{ $value['saldo'] }}"
+                                data-simpanan_wajib="{{ $value['simpanan_wajib'] ?? 0 }}"
+                                data-simpanan_pokok="{{ $value['simpanan_pokok'] ?? 0 }}"
+                                data-simpanan_hari_raya="{{ $value['simpanan_hari_raya'] ?? 0 }}"
+                                data-status_anggota="{{ $value['status_anggota'] }}"
+                                data-alamat="{{ $value['alamat'] ?? '' }}">
                                 <!-- Kolom Data Anggota -->
                                 <td class="px-3 py-4 text-sm font-medium text-green-600">{{ $value['nomor_anggota'] }}</td>
                                 <td class="px-3 py-4">
@@ -165,7 +176,7 @@
                                         <div class="flex flex-row gap-2 justify-center">
                                             <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'qurban')"
                                                 class="bg-yellow-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1  hover:bg-yellow-500">
-                                                <i class="bi bi-cash-coin"></i> Qurban
+                                                <i class="bi bi-cash-coin"></i> Hari raya
                                             </button>
                                             <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'wajib')"
                                                 class="bg-blue-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-blue-500">
@@ -209,6 +220,107 @@
                             </div>
                         </div>
 
+                        <!-- Modal Edit Anggota (mirip persis dengan modal Tambah Anggota Baru) -->
+                        <div id="editAnggotaModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center">
+                            <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-6 m-4">
+                                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                                    <h3 class="text-xl font-bold text-gray-800">Edit Anggota</h3>
+                                    <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <form id="formEditAnggota" method="POST" action="">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                                        <div>
+                                            <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Akun & Identitas</h4>
+
+                                            <div class="mb-4 hidden">
+                                                <label for="edit_anggota_id_display" class="block text-sm font-medium text-gray-700 mb-1">ID Anggota</label>
+                                                <input type="text" id="edit_anggota_id_display" class="w-full px-3 py-2 border bg-gray-50 rounded-lg" readonly>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_nomor_anggota" class="block text-sm font-medium text-gray-700 mb-1">Nomor Anggota</label>
+                                                <input type="text" id="edit_nomor_anggota" name="nomor_anggota" required class="w-full px-3 py-2 border rounded-lg">
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_username" class="block text-sm font-medium text-gray-700 mb-1">Username (Login)</label>
+                                                <input type="text" id="edit_username" name="username" class="w-full px-3 py-2 border rounded-lg">
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                                <input type="password" id="edit_password" name="password" class="w-full px-3 py-2 border rounded-lg" placeholder="Isi jika ingin mengubah">
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_status_anggota" class="block text-sm font-medium text-gray-700 mb-1">Status Anggota</label>
+                                                <select id="edit_status_anggota" name="status_anggota" class="w-full px-3 py-2 border rounded-lg">
+                                                    <option value="aktif">Aktif</option>
+                                                    <option value="nonaktif">Nonaktif</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                                                <input type="text" id="edit_nama_lengkap" name="nama_lengkap" required class="w-full px-3 py-2 border rounded-lg">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Kontak & Lainnya</h4>
+
+                                            <div class="mb-4">
+                                                <label for="edit_email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                                <input type="email" id="edit_email" name="email" class="w-full px-3 py-2 border rounded-lg">
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_no_hp" class="block text-sm font-medium text-gray-700 mb-1">Nomor HP</label>
+                                                <input type="tel" id="edit_no_hp" name="no_hp" class="w-full px-3 py-2 border rounded-lg" placeholder="Contoh: 0812xxxxxx">
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_wajib" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Wajib</label>
+                                                <input type="number" id="edit_wajib" name="wajib" min="0" step="1000" class="w-full px-3 py-2 border rounded-lg">
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_hari_raya" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Hari Raya</label>
+                                                <input type="number" id="edit_hari_raya" name="hari_raya" min="0" step="1000" class="w-full px-3 py-2 border rounded-lg">
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="edit_pokok" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Pokok</label>
+                                                <input type="number" id="edit_pokok" name="pokok" min="0" step="1000" class="w-full px-3 py-2 border rounded-lg">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <label for="edit_saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Sehat</label>
+                                        <input type="number" id="edit_saldo" name="saldo" min="0" step="1000" class="w-full px-3 py-2 border rounded-lg">
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <label for="edit_alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
+                                        <textarea id="edit_alamat" name="alamat" rows="3" class="w-full px-3 py-2 border rounded-lg"></textarea>
+                                    </div>
+
+                                    <div class="flex justify-end space-x-3 pt-4 border-t mt-6">
+                                        <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg">Batal</button>
+                                        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg">Simpan Perubahan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                         <script>
                             function openSimpananModal(id, jenis) {
                                 document.getElementById('modalSimpanan').classList.remove('hidden');
@@ -228,6 +340,50 @@
                             }
                         </script>
 
+                        <script>
+                            // Toggle edit modal: ambil data dari atribut data- pada row
+                            function toggleEdit(id) {
+                                const row = document.getElementById('row-display-' + id);
+                                if (!row) return;
+
+                                const nomor = row.dataset.nomor_anggota || '';
+                                const username = row.dataset.username || '';
+                                const nama = row.dataset.nama_lengkap || '';
+                                const email = row.dataset.email || '';
+                                const nohp = row.dataset.no_hp || '';
+                                const saldo = row.dataset.saldo || 0;
+                                const wajib = row.dataset.simpanan_wajib || 0;
+                                const pokok = row.dataset.simpanan_pokok || 0;
+                                const hariRaya = row.dataset.simpanan_hari_raya || 0;
+                                const status = row.dataset.status_anggota || 'aktif';
+                                const alamat = row.dataset.alamat || '';
+
+                                document.getElementById('edit_anggota_id_display').value = id;
+                                document.getElementById('edit_nomor_anggota').value = nomor;
+                                document.getElementById('edit_username').value = username;
+                                document.getElementById('edit_nama_lengkap').value = nama;
+                                document.getElementById('edit_email').value = email;
+                                document.getElementById('edit_no_hp').value = nohp;
+                                document.getElementById('edit_saldo').value = saldo;
+                                document.getElementById('edit_wajib').value = wajib;
+                                document.getElementById('edit_pokok').value = pokok;
+                                document.getElementById('edit_hari_raya').value = hariRaya;
+                                document.getElementById('edit_status_anggota').value = status;
+                                document.getElementById('edit_alamat').value = alamat;
+
+                                // set form action to update route
+                                const form = document.getElementById('formEditAnggota');
+                                form.action = '/admin/manajemen_anggota/update/' + id;
+
+                                // show modal
+                                document.getElementById('editAnggotaModal').classList.remove('hidden');
+                            }
+
+                            function closeEditModal() {
+                                document.getElementById('editAnggotaModal').classList.add('hidden');
+                            }
+                        </script>
+
                     </tbody>
                 </table>
             </div>
@@ -244,6 +400,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.2/css/jquery.dataTables.min.css">
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/2.0.2/js/jquery.dataTables.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function () {
@@ -276,6 +435,40 @@
             $('#anggota-table_paginate').appendTo('#datatables-info');
 
 
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // success messages
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: "{{ session('success') }}",
+                    timer: 2200,
+                    showConfirmButton: false
+                });
+            @endif
+
+            @if(session('pesan_sukses'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: "{{ session('pesan_sukses') }}",
+                    timer: 2200,
+                    showConfirmButton: false
+                });
+            @endif
+
+            // validation errors
+            @if($errors->any())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    html: '{!! implode("<br>", $errors->all()) !!}',
+                });
+            @endif
         });
     </script>
 
