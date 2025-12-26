@@ -15,7 +15,7 @@
             </div>
         </section>
 
-           <section class="bg-white rounded-lg shadow p-5">
+        <section class="bg-white rounded-lg shadow p-5">
             <h4 class="text-base font-semibold text-gray-800 mb-3">Aksi Cepat</h4>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <a href="#" id="openModal"
@@ -23,7 +23,7 @@
                     <div class="inline-block p-2 bg-green-800 text-white rounded-full">
                         <i class="bi bi-arrow-down-left text-base"></i>
                     </div>
-                    <p class="mt-1 text-xs font-medium text-gray-700">Setor Simpanan</p>
+                    <p class="mt-1 text-xs font-medium text-gray-700">Ajukan Simpanan</p>
                 </a>
 
 
@@ -54,7 +54,7 @@
                 </a>
 
 
-                <a href="#" class="text-center p-3 bg-purple-50 rounded-lg hover:shadow-md transition-shadow">
+                <a href="{{ url('anggota/transaksi') }}" class="text-center p-3 bg-purple-50 rounded-lg hover:shadow-md transition-shadow">
                     <div class="inline-block p-2 bg-purple-600 text-white rounded-full">
                         <i class="bi bi-file-earmark-text-fill text-base"></i>
                     </div>
@@ -64,71 +64,71 @@
         </section>
 
         <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Simpanan Wajib -->
-        <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
-            <div>
-                <div class="flex items-center gap-2">
-                    <div class="bg-green-100 text-green-800 p-1 rounded-lg">
-                        <i class="bi bi-wallet-fill text-base"></i>
+            <!-- Simpanan Wajib -->
+            <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <div class="bg-green-100 text-green-800 p-1 rounded-lg">
+                            <i class="bi bi-wallet-fill text-base"></i>
+                        </div>
+                        <h4 class="text-base font-semibold text-gray-800">Simpanan Sehat</h4>
                     </div>
-                    <h4 class="text-base font-semibold text-gray-800">Simpanan Sehat</h4>
+                    <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($saldo, 0, ',', '.') }}
+                    </p>
                 </div>
-                <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($saldo, 0, ',', '.') }}
-</p>
+                <span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded-full">
+                    Aktif
+                </span>
             </div>
-            <span class="text-xs font-medium text-green-800 bg-green-100 px-2 py-0.5 rounded-full">
-                Aktif
-            </span>
-        </div>
 
-        <!-- Simpanan Hari Raya -->
-        <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
-            <div>
-                <div class="flex items-center gap-2">
-                    <div class="bg-blue-100 text-blue-600 p-1 rounded-lg">
-                        <i class="bi bi-graph-up-arrow text-base"></i>
+            <!-- Simpanan Hari Raya -->
+            <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <div class="bg-blue-100 text-blue-600 p-1 rounded-lg">
+                            <i class="bi bi-graph-up-arrow text-base"></i>
+                        </div>
+                        <h4 class="text-base font-semibold text-gray-800">Simpanan Hari Raya</h4>
                     </div>
-                    <h4 class="text-base font-semibold text-gray-800">Simpanan Hari Raya</h4>
+                    <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($hari_raya, 0, ',', '.') }}</p>
                 </div>
-                <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($hari_raya, 0, ',', '.') }}</p>
+                <span class="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
+                    Aktif
+                </span>
             </div>
-            <span class="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
-                Aktif
-            </span>
-        </div>
 
-        <!-- Simpanan Pendidikan -->
-        <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
-            <div>
-                <div class="flex items-center gap-2">
-                    <div class="bg-purple-100 text-purple-700 p-1 rounded-lg">
-                        <i class="bi bi-mortarboard-fill text-base"></i>
+            <!-- Simpanan Pendidikan -->
+            <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <div class="bg-purple-100 text-purple-700 p-1 rounded-lg">
+                            <i class="bi bi-mortarboard-fill text-base"></i>
+                        </div>
+                        <h4 class="text-base font-semibold text-gray-800">Simpanan wajib</h4>
                     </div>
-                    <h4 class="text-base font-semibold text-gray-800">Simpanan wajib</h4>
+                    <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($wajib, 0, ',', '.') }}</p>
                 </div>
-                <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($wajib, 0, ',', '.') }}</p>
+                <span class="text-xs font-medium text-purple-700 bg-purple-100 px-2 py-0.5 rounded-full">
+                    Aktif
+                </span>
             </div>
-            <span class="text-xs font-medium text-purple-700 bg-purple-100 px-2 py-0.5 rounded-full">
-                Aktif
-            </span>
-        </div>
 
-        <!-- Simpanan Pokok -->
-        <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
-            <div>
-                <div class="flex items-center gap-2">
-                    <div class="bg-orange-100 text-orange-700 p-1 rounded-lg">
-                        <i class="bi bi-piggy-bank-fill text-base"></i>
+            <!-- Simpanan Pokok -->
+            <div class="bg-white rounded-lg shadow p-5 flex justify-between items-start">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <div class="bg-orange-100 text-orange-700 p-1 rounded-lg">
+                            <i class="bi bi-piggy-bank-fill text-base"></i>
+                        </div>
+                        <h4 class="text-base font-semibold text-gray-800">Simpanan Pokok</h4>
                     </div>
-                    <h4 class="text-base font-semibold text-gray-800">Simpanan Pokok</h4>
+                    <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($pokok, 0, ',', '.') }}</p>
                 </div>
-                <p class="text-xl font-bold text-gray-900 mt-3">Rp {{ number_format($pokok, 0, ',', '.') }}</p>
+                <span class="text-xs font-medium text-orange-700 bg-orange-100 px-2 py-0.5 rounded-full">
+                    Aktif
+                </span>
             </div>
-            <span class="text-xs font-medium text-orange-700 bg-orange-100 px-2 py-0.5 rounded-full">
-                Aktif
-            </span>
-        </div>
-    </section>
+        </section>
 
         <section class="bg-white rounded-lg shadow p-5">
             <div class="flex items-center gap-2">
@@ -251,14 +251,25 @@
                 <input type="hidden" name="angsuran_bulanan" id="angsuranHidden">
 
                 <!-- Nominal -->
-                <div class="mb-3">
-                    <label class="text-sm font-medium">Nominal Pinjaman</label>
-                    <input type="number" id="nominal" name="nominal" class="w-full border rounded p-2 mt-1"
-                        placeholder="Maksimal 150000000" required>
+             <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">
+                        Nominal Pinjaman
+                    </label>
+
+                    <div class="relative">
+                        <input type="number" id="nominal" name="nominal"
+                            class="w-full border rounded-xl p-2.5 mt-1 pr-4
+                                focus:ring-2 focus:ring-green-500 focus:border-green-500
+                                transition duration-150"
+                            placeholder="Maksimal {{ number_format($batasan_pinjaman,0,',','.') }}" required>
+
+                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
+                            Rupiah
+                        </span>
+                    </div>
 
                     <p id="errorNominal" class="text-red-500 text-xs mt-1 hidden"></p>
                 </div>
-
                 <!-- Jangka Waktu -->
                 <div class="mb-3">
                     <label class="text-sm font-medium">Jangka Waktu (Bulan)</label>
@@ -336,29 +347,32 @@
                     <select id="jenis" name="jenis"
                         class="w-full mt-1 rounded-lg border-gray-300 focus:ring-green-500 focus:border-green-500">
                         <option value="">-- Pilih Jenis --</option>
-                        <option value="qurban">Pembayaran Qurban</option>
-                        <option value="zakat">Zakat</option>
-                        <option value="wajib">Wajib</option>
-                        <option value="simpanan">Setor Simpanan</option>
-                    </select>
-                </div>
-
-                <!-- Metode -->
-                <div class="mb-3" id="metode-wrapper">
-                    <label class="block text-sm font-medium text-gray-600">Metode</label>
-                    <select id="metode" name="metode" class="w-full mt-1 rounded-lg border-gray-300">
-                        <option value="">-- Pilih Metode --</option>
-                        <option value="saldo">Saldo</option>
-                        <option value="gaji">Pengurangan Gaji</option>
+                        <option value="hari_raya">Simpanan Hari Raya</option>
+                        <option value="sehat">Simpanan Sehat </option>
+                        <option value="wajib">Simpanan Wajib</option>
+                        <option value="pokok">Simpanan Pokok</option>
                     </select>
                 </div>
 
                 <!-- Nominal -->
-                <div class="mb-3">
-                    <label class="block text-sm font-medium text-gray-600">Nominal</label>
-                    <input type="number" name="nominal"
-                        class="w-full mt-1 rounded-lg border-gray-300 focus:ring-green-500 focus:border-green-500"
-                        placeholder="Masukkan nominal">
+                <div class="mb-4">
+                    <label class="block mb-1 text-sm font-semibold text-gray-700">
+                        Nominal Pinjaman
+                    </label>
+
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                            Rp
+                        </span>
+
+                        <input type="number" name="nominal" id="nominal"
+                            class="w-full pl-12 pr-4 py-2.5 rounded-xl border border-gray-300 
+                                focus:ring-2 focus:ring-green-500 focus:border-green-500
+                                transition duration-150 ease-in-out"
+                            placeholder="Contoh: 10000000">
+                    </div>
+
+                    <small id="errorNominal" class="hidden text-red-500 mt-1 text-xs"></small>
                 </div>
 
                 <!-- Action -->
@@ -381,7 +395,7 @@
     <script>
         $(document).ready(function () {
 
-            const MAX_PINJAMAN = 150000000; // 150 juta
+            const MAX_PINJAMAN = {{ $batasan_pinjaman }};
             const MAX_TENOR = 180;          // 180 bulan
             const BUNGA = 0.007;            // 0.7%
 
@@ -423,7 +437,7 @@
 
                 if (nominal > MAX_PINJAMAN) {
                     $("#errorNominal").removeClass("hidden")
-                        .text("Pinjaman maksimal Rp 150.000.000");
+                     .text("Pinjaman maksimal Rp " + MAX_PINJAMAN.toLocaleString("id-ID"));
                 } else {
                     $("#errorNominal").addClass("hidden");
                 }
@@ -561,16 +575,16 @@
             for (let i = 1; i <= sisa; i++) {
                 // buat tombol bayar yang langsung redirect ke alur full-page (sama tab)
                 list.innerHTML += `
-                        <div class="border rounded p-3 flex justify-between items-center gap-4">
-                            <div>
-                                <span class="text-sm">Angsuran ke-${dibayar + i}</span>
-                                <div class="text-sm text-gray-500">Rp ${angsuran.toLocaleString('id-ID')}</div>
-                            </div>
-                            <div>
-                                <a href="/dashboard/anggota/pinjaman/bayar-now-angsuran/${btn.dataset.pinjaman}/${dibayar + i}/${angsuran}" class="bg-blue-600 text-white text-xs px-3 py-1 rounded">Bayar</a>
-                            </div>
-                        </div>
-                    `;
+                                <div class="border rounded p-3 flex justify-between items-center gap-4">
+                                    <div>
+                                        <span class="text-sm">Angsuran ke-${dibayar + i}</span>
+                                        <div class="text-sm text-gray-500">Rp ${angsuran.toLocaleString('id-ID')}</div>
+                                    </div>
+                                    <div>
+                                        <a href="/dashboard/anggota/pinjaman/bayar-now-angsuran/${btn.dataset.pinjaman}/${dibayar + i}/${angsuran}" class="bg-blue-600 text-white text-xs px-3 py-1 rounded">Bayar</a>
+                                    </div>
+                                </div>
+                            `;
             }
         }
 

@@ -42,6 +42,15 @@ Route::get('/login_admin', [AdminController::class, 'masuk']);
 Route::get('dashboard/admin', [AdminController::class, 'index'])->middleware('admin.or.super');
 Route::get('/admin/logout', [AdminController::class, 'logout'])->middleware('admin.or.super');
 
+Route::post(
+    'admin/manajemen_anggota/import_excel',
+    [SuperAdminController::class, 'importExcel']
+)->name('anggota.import.excel');
+
+
+Route::get('/admin/dashboard', [AdminController::class,'index'])->name('admin.dashboard');
+Route::get('/tren-rupiah/create', [AdminController::class,'tren_rupiah'])->name('tren_rupiah.create');
+
 Route::get('/admin/manajemen_anggota',[SuperAdminController::class,'manajemen_anggota'])->middleware('admin.or.super');
 Route::delete('/admin/manajemen_anggota/hapus/{id}',[SuperAdminController::class,'hapus_anggota'])->middleware('admin.or.super');
 Route::post('/admin/manajemen_anggota/tambah',[SuperAdminController::class,'tambah_anggota'])->middleware('admin.or.super');

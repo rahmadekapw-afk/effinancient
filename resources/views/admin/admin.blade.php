@@ -35,7 +35,7 @@
                     <i class="bi bi-arrow-down-up text-xl"></i>
                 </div>
                 <p class="text-lg font-bold text-gray-800">{{ $total_transaksi }}</p>
-                <p class="text-xs text-gray-500">Transaksi Bulan Ini</p>
+                <p class="text-xs text-gray-500">Total Transaksi Online </p>
             </div>
             <div class="flex items-center text-sm text-green-600 font-medium">
                 <i class="bi bi-arrow-up-right"></i> 
@@ -57,19 +57,26 @@
 
         <div class="lg:col-span-3 grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-            <div class="bg-white rounded-lg shadow p-5 h-full">
+            <div class="bg-white rounded-lg shadow p-5 h-full xl:col-span-2">
                 <h3 class="text-base font-semibold text-gray-800 mb-4">Pertumbuhan Bulanan</h3>
                 <div class="relative h-64">
                     <canvas id="growthChartAdmin"></canvas>
                 </div>
-                <div class="flex justify-center gap-4 text-xs mt-4">
-                    <span class="flex items-center gap-1 text-blue-600"><span
-                            class="w-2 h-2 rounded-full bg-blue-600"></span> Pinjaman (Juta)</span>
-                    <span class="flex items-center gap-1 text-green-600"><span
-                            class="w-2 h-2 rounded-full bg-green-600"></span> Simpanan (Juta)</span>
-                    <span class="flex items-center gap-1 text-orange-500"><span
-                            class="w-2 h-2 rounded-full bg-orange-500"></span> Transaksi</span>
+             <div class="flex justify-between items-center text-xs mt-4">
+
+                <div class="flex gap-4">
+                    <span class="flex items-center gap-1 text-red-500"><span class="w-2 h-2 rounded-full bg-red-500"></span> High</span>
+                    <span class="flex items-center gap-1 text-blue-600"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Close</span>
+                    <span class="flex items-center gap-1 text-green-600"><span class="w-2 h-2 rounded-full bg-green-600"></span> Open</span>
+                    <span class="flex items-center gap-1 text-orange-500"><span class="w-2 h-2 rounded-full bg-orange-500"></span> Low</span>
                 </div>
+
+                <div class="flex gap-2">
+                    <a href="{{ route('tren_rupiah.create') }}" class="bg-green-500 text-white px-3 rounded">
+                        + Tambah
+                    </a>
+                </div>
+            </div>
             </div>
 
             <div class="bg-white rounded-lg shadow p-5 h-full">
@@ -87,7 +94,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow p-5 xl:col-span-2">
+            <div class="bg-white rounded-lg shadow p-5 ">
                 <h3 class="text-base font-semibold text-gray-800 mb-4">Distribusi Jenis Transaksi</h3>
                 <div class="relative h-64">
                     <canvas id="transactionBarChart"></canvas>
@@ -96,6 +103,122 @@
                     <span class="flex items-center gap-1 text-green-600"><span
                             class="w-2 h-2 rounded-full bg-green-600"></span> Jumlah Transaksi</span>
                 </div>
+            </div>
+                
+            <div class="bg-white rounded-lg shadow p-5 h-full xl:col-span-2">
+                <div class="container-fluid">
+                    <div class="p-6 space-y-8">
+                        <div class="bg-white shadow-sm rounded ">
+                              <h3 class="text-base font-semibold text-gray-800 ">Hasil Kelayakan Pinjaman Anggota C4.5</h3>
+                            <div class="bg-white shadow-sm rounded">
+                                    <div class="px-3 py-2 border-b text-sm font-semibold text-gray-700">
+                                        Hasil Penentuan Batas Pinjaman Anggota
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full text-xs text-center">
+                                            <thead class="bg-gray-800 text-white">
+                                                <tr>
+                                                    <th class="px-2 py-1">No</th>
+                                                    <th class="px-2 py-1">Nama</th>
+                                                    <th class="px-2 py-1">Tren</th>
+                                                    <th class="px-2 py-1">Simpanan</th>
+                                                    <th class="px-2 py-1">Bayar</th>
+                                                    <th class="px-2 py-1">Pinjam</th>
+                                                    <th class="px-2 py-1">Entropy</th>
+                                                    <th class="px-2 py-1">IG</th>
+                                                    <th class="px-2 py-1">GR</th>
+                                                    <th class="px-2 py-1">Root</th>
+                                                    <th class="px-2 py-1">Batas</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($hasil as $i => $h)
+                                                <tr class="border-t hover:bg-gray-50">
+                                                    <td class="px-2 py-1">{{ $i+1 }}</td>
+                                                    <td class="px-2 py-1 font-medium">{{ $h['nama'] }}</td>
+                                                    <td class="px-2 py-1">{{ number_format($h['tren_rupiah'],1) }}</td>
+                                                    <td class="px-2 py-1">{{ number_format($h['simpanan']) }}</td>
+                                                    <td class="px-2 py-1">{{ number_format($h['pembayaran']) }}</td>
+                                                    <td class="px-2 py-1">{{ $h['kali'] }}x</td>
+                                                    <td class="px-2 py-1 font-mono">{{ number_format($h['entropy_kelas'],4) }}</td>
+                                                    <td class="px-2 py-1 font-mono">{{ number_format($h['information_gain'],4) }}</td>
+                                                    <td class="px-2 py-1 font-mono">{{ number_format($h['gain_ratio'],4) }}</td>
+                                                   <td class="px-2 py-1 font-semibold text-indigo-600">
+                                                        {{ ucfirst($root) }}
+                                                    </td>
+                                                    <td class="px-2 py-1">
+                                                        <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">
+                                                            {{ number_format($h['batas_pinjaman']) }}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="px-3 py-2 border-b text-sm font-semibold text-gray-700">
+                                    Dataset Training
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full text-xs text-center">
+                                        <thead class="bg-gray-100">
+                                            <tr>
+                                                <th class="px-2 py-1">Tren</th>
+                                                <th class="px-2 py-1">Simpanan</th>
+                                                <th class="px-2 py-1">Frekuensi</th>
+                                                <th class="px-2 py-1">Bayar</th>
+                                                <th class="px-2 py-1">Kelas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach([
+                                                ['rendah','besar','sering','besar','tinggi'],
+                                                ['sedang','sedang','jarang','sedang','menengah'],
+                                                ['tinggi','kecil','jarang','kecil','rendah'],
+                                                ['sedang','besar','sering','besar','tinggi'],
+                                                ['rendah','kecil','jarang','kecil','rendah']
+                                            ] as $row)
+                                            <tr class="border-t">
+                                                @foreach($row as $cell)
+                                                    <td class="px-2 py-1">{{ ucfirst($cell) }}</td>
+                                                @endforeach
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+
+                                {{-- Entropy --}}
+                                <div class="bg-white shadow-sm rounded px-3 py-2 text-sm">
+                                    <div class="text-gray-500">Entropy Kelas</div>
+                                    <div class="font-mono font-semibold text-indigo-600">
+                                        {{ number_format($entropyKelas,4) }}
+                                    </div>
+                                </div>
+
+                                {{-- Information Gain --}}
+                                <div class="bg-white shadow-sm rounded px-3 py-2 text-sm">
+                                    <div class="text-gray-500">Information Gain ({{ ucfirst($root) }})</div>
+                                    <div class="font-mono font-semibold text-blue-600">
+                                        {{ number_format($informationGain[$root],4) }}
+                                    </div>
+                                </div>
+
+                                {{-- Gain Ratio --}}
+                                <div class="bg-white shadow-sm rounded px-3 py-2 text-sm">
+                                    <div class="text-gray-500">Gain Ratio (Root)</div>
+                                    <div class="font-mono font-semibold text-green-600">
+                                        {{ number_format($gainRatio[$root],4) }}
+                                    </div>
+                                </div>
+
+                            </div>
+    </div>
+            </div>
             </div>
 
         </div>
@@ -134,86 +257,127 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <script>
-        // PENTING: Gunakan Vanilla JS DOMContentLoaded untuk keandalan
-        document.addEventListener('DOMContentLoaded', function () {
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
-            // Memberi sedikit delay jika diperlukan
-            setTimeout(function () {
+    
+const labels    = @json($labels);
+const highData  = @json($highData);
+const closeData = @json($closeData);
+const openData  = @json($openData);
+const lowData   = @json($lowData);
 
-                // Data simulasi sesuai gambar
-                const pinjamanData = [100, 110, 130, 150, 170, 190];
-                const simpananData = [170, 180, 200, 220, 240, 260];
-                const transaksiData = [85, 95, 105, 120, 140, 160];
-                const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
+new Chart(document.getElementById('growthChartAdmin'), {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [
+            { label: 'High',  data: highData,  borderColor:'#ef4444', tension:0.4 },
+            { label: 'Close', data: closeData, borderColor:'#3b82f6', tension:0.4 },
+            { label: 'Open',  data: openData,  borderColor:'#10b981', tension:0.4 },
+            { label: 'Low',   data: lowData,   borderColor:'#f97316', tension:0.4 }
+        ]
+    },
+    options: {
+        responsive:true,
+        maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom' }},
+        scales:{
+            y:{
+                ticks:{
+                    callback:(v)=>'Rp '+v.toLocaleString('id-ID')
+                }
+            }
+        }
+    }
+});
+   
 
-                // Fungsi Pembantu untuk Membuat Chart
-                function createChart(id, type, data, options) {
-                    const ctx = document.getElementById(id);
-                    if (ctx && typeof Chart !== 'undefined') {
-                        new Chart(ctx.getContext('2d'), {
-                            type: type,
-                            data: data,
-                            options: options
-                        });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* =======================
+       PIE KATEGORI ANGGOTA
+    ======================= */
+    const pieCtx = document.getElementById('memberCategoryChart');
+
+    if (pieCtx) {
+        new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Layak Tinggi (150 jt)',
+                    'Layak Menengah (75 jt)',
+                    'Layak Rendah (30 jt)'
+                ],
+                datasets: [{
+                    data: [
+                        {{ $kategori150 }},
+                        {{ $kategori75 }},
+                        {{ $kategori30 }}
+                    ],
+                    backgroundColor: ['#16a34a','#facc15','#ef4444']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    }
+
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    @if(isset($transactionChartData))
+    const ctx = document.getElementById('transactionBarChart');
+
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Simpanan Pokok',
+                    'Simpanan Wajib',
+                    'Simpanan Hari Raya',
+                    'Pembayaran',
+                    'Pinjaman'
+                ],
+                datasets: [{
+                    data: @json($transactionChartData),
+                    backgroundColor: '#10b981',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: v => 'Rp ' + v.toLocaleString('id-ID')
+                        }
                     }
                 }
-
-                // 1. GRAFIK GARIS: Pertumbuhan Bulanan
-                const growthData = {
-                    labels: labels,
-                    datasets: [
-                        { label: 'Pinjaman (Juta)', data: pinjamanData, borderColor: '#3b82f6', tension: 0.4, fill: false, pointRadius: 4, pointBackgroundColor: '#3b82f6' },
-                        { label: 'Simpanan (Juta)', data: simpananData, borderColor: '#10b981', tension: 0.4, fill: false, pointRadius: 4, pointBackgroundColor: '#10b981' },
-                        { label: 'Transaksi', data: transaksiData, borderColor: '#f97316', tension: 0.4, fill: false, pointRadius: 4, pointBackgroundColor: '#f97316' }
-                    ]
-                };
-                const growthOptions = {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, max: 340, ticks: { stepSize: 85 } },
-                        x: { grid: { display: false } }
-                    }
-                };
-                createChart('growthChartAdmin', 'line', growthData, growthOptions);
-
-
-                // 2. GRAFIK PIE: Kategori Anggota
-                const memberData = {
-                    labels: ['Aktif 69%', 'Pasif 20%', 'Baru 11%'],
-                    datasets: [{
-                        data: [69, 20, 11],
-                        backgroundColor: ['#10b981', '#f97316', '#3b82f6'],
-                        hoverOffset: 4
-                    }]
-                };
-                createChart('memberCategoryChart', 'pie', memberData, {
-                    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { enabled: true } }
-                });
-
-
-                // 3. GRAFIK BAR: Distribusi Jenis Transaksi
-                const transactionData = {
-                    labels: ['Simpanan Pokok', 'Simpanan Wajib', 'Simpanan Sukarela', 'Penarikan', 'Pinjaman'],
-                    datasets: [{
-                        label: 'Jumlah Transaksi',
-                        data: [100, 360, 180, 80, 100],
-                        backgroundColor: '#10b981',
-                        borderRadius: 4
-                    }]
-                };
-                const transactionOptions = {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, max: 360, ticks: { stepSize: 90 } },
-                        x: { grid: { display: false } }
-                    }
-                };
-                createChart('transactionBarChart', 'bar', transactionData, transactionOptions);
-
-            }, 50);
+            }
         });
-    </script>
+    }
+    @endif
+
+});
+</script>
+
+
+
+
 @endsection

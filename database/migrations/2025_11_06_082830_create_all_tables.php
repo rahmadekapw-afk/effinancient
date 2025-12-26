@@ -195,6 +195,14 @@ return new class extends Migration
 
             $table->timestamps();
         });
+
+            Schema::create('tren_rupiah', function (Blueprint $table) {
+            $table->string('Date', 512);
+            $table->integer('Close');
+            $table->integer('High');
+            $table->integer('Low');
+            $table->integer('Open');
+        });
     }
 
     public function down(): void
@@ -211,5 +219,6 @@ return new class extends Migration
         Schema::dropIfExists('anggotas');
         Schema::enableForeignKeyConstraints();
         Schema::dropIfExists('keuangan');
+        Schema::dropIfExists('tren_rupiah');
     }
 };

@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Admin;
 use App\Models\Anggota;
 use App\Models\Pinjaman;
 use App\Models\Simpanan;
+use App\Models\Notifikasi;
+use App\Models\Tren_rupiah;
 use App\Models\Pembayaran;
 use App\Models\SuperAdmin;
-use Carbon\Carbon;
-use App\Models\Admin;
-use App\Models\Notifikasi;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {   
         $data['jumlah_anggota'] = $jumlah_anggota = Anggota::count();
         $data['simpanan'] = $saldo = Anggota::sum('saldo');
@@ -46,8 +48,270 @@ class AdminController extends Controller
         ->orderBy('notifikasis.created_at', 'desc')
         ->get();
 
-        return view('admin.admin',$data);
+        // data tren rupiah
+
+        $query = Tren_rupiah::query();
+
+        if ($request->bulan && $request->tahun) {
+            $query->whereRaw("SUBSTRING(date,4,2) = ?", [$request->bulan])
+                ->whereRaw("SUBSTRING(date,7,2) = ?", [$request->tahun]);
+        }
+
+        $rows = $query->select(
+                DB::raw("SUBSTRING(date,4,2) as bulan"),
+                DB::raw("SUBSTRING(date,7,2) as tahun"),
+                DB::raw("AVG(high)  as high"),
+                DB::raw("AVG(close) as close"),
+                DB::raw("AVG(open)  as open"),
+                DB::raw("AVG(low)   as low")
+            )
+            ->groupBy('bulan','tahun')
+            ->orderByRaw("CAST(tahun AS UNSIGNED), CAST(bulan AS UNSIGNED)")
+            ->get();
+
+                    $data['labels']    = [];
+                    $data['highData']  = [];
+                    $data['closeData'] = [];
+                    $data['openData']  = [];
+                    $data['lowData']   = [];
+
+                    foreach ($rows as $r) {
+                        $data['labels'][]    = $r->bulan.'/20'.$r->tahun;
+                        $data['highData'][]  = round($r->high);
+                        $data['closeData'][] = round($r->close);
+                        $data['openData'][]  = round($r->open);
+                        $data['lowData'][]   = round($r->low);
+                    }
+
+                // algoritma c4.5
+                $terbaru = Tren_rupiah::orderByRaw(
+                    "STR_TO_DATE(`Date`, '%d/%m/%y') DESC"
+                )->first();
+
+                $rataRataTerbaru = (
+                    (float) $terbaru->Close +
+                    (float) $terbaru->High +
+                    (float) $terbaru->Low +
+                    (float) $terbaru->Open
+                ) / 4;
+
+                $totalClose = Tren_rupiah::sum('Close');
+                $totalHigh  = Tren_rupiah::sum('High');
+                $totalLow   = Tren_rupiah::sum('Low');
+                $totalOpen  = Tren_rupiah::sum('Open');
+                $jumlahData = Tren_rupiah::count();
+
+                $keseluruhan_rata = 0;
+                if ($jumlahData > 0) {
+                    $totalSemuaKolom = $totalClose + $totalHigh + $totalLow + $totalOpen;
+                    $keseluruhan_rata = $totalSemuaKolom / ($jumlahData * 4);
+                }
+
+                $trenrupiah = ($rataRataTerbaru + $keseluruhan_rata) / 2;
+
+
+                /* =========================================================
+                * 2. DATA TRAINING C4.5
+                * ========================================================= */
+                $dataTraining = [
+                    ['tren'=>'rendah','simpanan'=>'besar','kali'=>'sering','bayar'=>'besar','kelas'=>'tinggi'],
+                    ['tren'=>'sedang','simpanan'=>'sedang','kali'=>'jarang','bayar'=>'sedang','kelas'=>'menengah'],
+                    ['tren'=>'tinggi','simpanan'=>'kecil','kali'=>'jarang','bayar'=>'kecil','kelas'=>'rendah'],
+                    ['tren'=>'sedang','simpanan'=>'besar','kali'=>'sering','bayar'=>'besar','kelas'=>'tinggi'],
+                    ['tren'=>'rendah','simpanan'=>'kecil','kali'=>'jarang','bayar'=>'kecil','kelas'=>'rendah'],
+                ];
+
+
+                /* =========================================================
+                * 3. FUNGSI ALGORITMA C4.5
+                * ========================================================= */
+                function entropy($data){
+                    $total = count($data);
+                    $kelas = array_count_values(array_column($data,'kelas'));
+                    $entropy = 0;
+                    foreach($kelas as $count){
+                        $p = $count / $total;
+                        $entropy -= $p * log($p,2);
+                    }
+                    return $entropy;
+                }
+
+                function informationGain($data,$atribut){
+                    $entropyAwal = entropy($data);
+                    $total = count($data);
+                    $subset = [];
+                    foreach($data as $row){
+                        $subset[$row[$atribut]][] = $row;
+                    }
+                    $entropyAtribut = 0;
+                    foreach($subset as $sub){
+                        $entropyAtribut += (count($sub)/$total) * entropy($sub);
+                    }
+                    return $entropyAwal - $entropyAtribut;
+                }
+
+                function splitInfo($data,$atribut){
+                    $total = count($data);
+                    $nilai = array_count_values(array_column($data,$atribut));
+                    $split = 0;
+                    foreach($nilai as $count){
+                        $p = $count / $total;
+                        $split -= $p * log($p,2);
+                    }
+                    return $split;
+                }
+
+                function gainRatio($data,$atribut){
+                    $gain = informationGain($data,$atribut);
+                    $split = splitInfo($data,$atribut);
+                    return ($split == 0) ? 0 : $gain / $split;
+                }
+
+
+                /* =========================================================
+                * 4. HITUNG ENTROPY, GAIN, GAIN RATIO (GLOBAL)
+                * ========================================================= */
+                $atribut = ['tren','simpanan','kali','bayar'];
+                $entropyKelas = entropy($dataTraining);
+
+                $informationGain = [];
+                $gainRatio = [];
+
+                foreach($atribut as $a){
+                    $informationGain[$a] = informationGain($dataTraining,$a);
+                    $gainRatio[$a] = gainRatio($dataTraining,$a);
+                }
+
+                arsort($gainRatio);
+                $root = array_key_first($gainRatio);
+
+
+                /* =========================================================
+                * 5. LOOP SEMUA ANGGOTA (ADMIN VIEW)
+                * ========================================================= */
+                $hasil = [];
+                $anggota = Anggota::all();
+
+                foreach($anggota as $a){
+
+                    $simpanan_sehat = $a->saldo;
+
+                    $pinjaman_berapa_kali = Pinjaman::where('anggota_id',$a->anggota_id)->count();
+
+                    $total_pembayaran_pinjaman = Pembayaran::where('anggota_id',$a->anggota_id)
+                        ->where('status','berhasil')
+                        ->sum('nominal');
+
+                    /* ---------- Diskritisasi ---------- */
+                    $dataUji = [
+                        'tren' => $trenrupiah >= 14000 ? 'tinggi' :
+                                ($trenrupiah >= 13500 ? 'sedang' : 'rendah'),
+
+                        'simpanan' => $simpanan_sehat >= 70000000 ? 'besar' :
+                                    ($simpanan_sehat >= 30000000 ? 'sedang' : 'kecil'),
+
+                        'kali' => $pinjaman_berapa_kali >= 4 ? 'sering' : 'jarang',
+
+                        'bayar' => $total_pembayaran_pinjaman >= 80000000 ? 'besar' :
+                                ($total_pembayaran_pinjaman >= 30000000 ? 'sedang' : 'kecil')
+                    ];
+
+                    /* ---------- Klasifikasi ---------- */
+                    switch($dataUji[$root]){
+                        case 'besar':
+                            $batas = 150000000;
+                            break;
+                        case 'sedang':
+                            $batas = 75000000;
+                            break;
+                        default:
+                            $batas = 30000000;
+                    }
+                    
+
+                        $hasil[] = [
+                        'nama' => $a->username,
+                        'tren_rupiah' => $trenrupiah,
+                        'simpanan' => $simpanan_sehat,
+                        'pembayaran' => $total_pembayaran_pinjaman,
+                        'kali' => $pinjaman_berapa_kali,
+                        'entropy_kelas' => $entropyKelas,
+                        'information_gain' => $informationGain[$root],
+                        'gain_ratio' => $gainRatio[$root],
+                        'batas_pinjaman' => $batas
+                    ];
+
+        }
+
+
+        // visualisasi diagram pie
+                $data['kategori150'] = 0;
+                $data['kategori75']  = 0;
+                $data['kategori30']  = 0;
+
+                foreach ($hasil as $h) {
+                    if ($h['batas_pinjaman'] == 150000000) {
+                        $data['kategori150']++;
+                    } elseif ($h['batas_pinjaman'] == 75000000) {
+                        $data['kategori75']++;
+                    } else {
+                        $data['kategori30']++;
+                    }
+                }
+            
+
+                // =====================
+                // TOTAL ANGGOTA LAYAK
+                // =====================
+                $data['total_anggota_layak'] =
+                $data['kategori150']
+                + $data['kategori75']
+                + $data['kategori30'];
+
+                // =====================
+                // DATA HASIL (TABEL)
+                // =====================
+                $data['hasil'] = $hasil;
+        
+        //data tren batang
+        $bulanIni = Carbon::now()->month;
+        $tahunIni = Carbon::now()->year;
+                $data['total_pinjaman'] = Pinjaman::whereMonth('created_at', $bulanIni)
+                    ->whereYear('created_at', $tahunIni)
+                    ->sum('nominal');
+
+                // Pembayaran bulan ini
+                $data['total_pembayaran'] = Pembayaran::whereMonth('created_at', $bulanIni)
+                    ->whereYear('created_at', $tahunIni)
+                    ->sum('nominal');
+                
+            
+                /* ===============================
+                SIMPANAN ANGGOTA (AKUMULATIF)
+                ================================ */
+                $data['simpanan_pokok'] = Anggota::sum('simpanan_pokok');
+                $data['simpanan_wajib'] = Anggota::sum('simpanan_wajib');
+                $data['simpanan_hari_raya'] = Anggota::sum('simpanan_hari_raya');
+
+                $data['transactionChartData'] = [
+                    (int) $data['simpanan_pokok'],
+                    (int) $data['simpanan_wajib'],
+                    (int) $data['simpanan_hari_raya'],
+                    (int) $data['total_pembayaran'],
+                    (int) $data['total_pinjaman'],
+                ];
+
+        return view('admin.admin',$data, [
+            'hasil' => $hasil,
+            'entropyKelas' => $entropyKelas,
+            'informationGain' => $informationGain,
+            'gainRatio' => $gainRatio,
+            'root' => $root ,
+            
+        ]);
     }
+
+    
 
     public function transaksi()
     {

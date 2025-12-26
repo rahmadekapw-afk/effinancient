@@ -8,30 +8,34 @@
                 <h2 class="text-xl font-bold text-gray-800">Manajemen Anggota</h2>
                 <p class="text-sm text-gray-600">Kelola data anggota koperasi</p>
             </div>
-            
-        <div class="flex gap-2 mb-4">
-    <!-- Tambah Anggota -->
-    <button id="openModalButton"
-        class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
-        <i class="bi bi-plus-circle-fill text-lg"></i> Tambah Anggota
-    </button>
 
-    <!-- Download Template Excel -->
-    <a href="{{ url('admin/manajemen_anggota/template_excel') }}" 
-        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
-        <i class="bi bi-file-earmark-arrow-down-fill text-lg"></i> Download Template Excel
-    </a>
+            <div class="flex gap-2 mb-4">
+                <!-- Tambah Anggota -->
+                <button id="openModalButton"
+                    class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
+                    <i class="bi bi-plus-circle-fill text-lg"></i> Tambah Anggota
+                </button>
 
-    <!-- Upload / Masukkan Data Excel -->
-    <label for="uploadExcel"
-        class="bg-sky-500 hover:bg-sky-600 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md cursor-pointer">
-        <i class="bi bi-file-earmark-plus-fill text-lg"></i> Masukkan Data Excel
-    </label>
-    <form id="formUploadExcel" action="{{ url('admin/manajemen_anggota/import_excel') }}" method="POST" enctype="multipart/form-data" class="hidden">
-        @csrf
-        <input type="file" id="uploadExcel" name="excel_file" accept=".xls,.xlsx" onchange="document.getElementById('formUploadExcel').submit()">
-    </form>
-</div>
+                <!-- Upload / Masukkan Data Excel -->
+                <label for="uploadExcel"
+                    class="bg-sky-500 hover:bg-sky-600 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md cursor-pointer">
+                    <i class="bi bi-file-earmark-plus-fill text-lg"></i> Masukkan Data Excel
+                </label>
+
+                <form id="formUploadExcel" action="{{ url('admin/manajemen_anggota/import_excel') }}" method="POST"
+                    enctype="multipart/form-data" class="hidden">
+                    @csrf
+                    <input type="file" id="uploadExcel" name="excel_file" accept=".xls,.xlsx"
+                        onchange="document.getElementById('formUploadExcel').submit()">
+                </form>
+
+                <!-- Download Template Excel -->
+                <a href="{{ asset('file/template_otomatis_kemenag.xlsx') }}" download
+                    class="bg-green-400 hover:bg-green-500 text-black font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
+                    <i class="bi bi-file-earmark-arrow-down-fill text-lg"></i> Download Template
+                </a>
+
+            </div>
 
         </div>
 
@@ -44,7 +48,7 @@
                     <i class="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 </div>
 
-               <div>
+                <div>
                     <button type="submit"
                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-2">
                         <i class="bi bi-search"></i> Cari
@@ -96,17 +100,22 @@
                 <table id="anggota-table" class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA </th>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KONTAK</th>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL  SIMPANAN</th>
-                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STATUS</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
+                            </th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NAMA
+                            </th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                KONTAK</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL
+                                SIMPANAN</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                STATUS</th>
                             <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AKSI
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                      @foreach ($anggota as $value)
+                        @foreach ($anggota as $value)
                             <tr id="row-display-{{ $value['anggota_id'] }}">
                                 <!-- Kolom Data Anggota -->
                                 <td class="px-3 py-4 text-sm font-medium text-green-600">{{ $value['nomor_anggota'] }}</td>
@@ -119,16 +128,12 @@
                                 <td class="px-3 py-4">
                                     <span
                                         class="px-2 inline-flex text-xs font-semibold rounded-full 
-                                        {{ $value['status_anggota'] == 'aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                {{ $value['status_anggota'] == 'aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                         {{ $value['status_anggota'] }}
                                     </span>
                                 </td>
                                 <td class="px-3 py-4 text-sm font-medium">
                                     <div class="flex items-center gap-2 text-lg">
-                                        <button onclick="openDetail({{ $value['anggota_id'] }})"
-                                            class="text-blue-500 hover:text-blue-700" title="Lihat">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
                                         <button onclick="toggleEdit({{ $value['anggota_id'] }})"
                                             class="text-green-500 hover:text-green-700" title="Edit">
                                             <i class="bi bi-pencil-square"></i>
@@ -143,58 +148,68 @@
                                             @csrf
                                             @method('DELETE')
                                         </form>
+                                        <button onclick="toggleDetail({{ $value['anggota_id'] }})"
+                                            class="text-blue-500 hover:text-blue-700" title="Lihat">
+                                            <i class="bi bi-clipboard-plus-fill"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
 
                             {{-- Row Tambah Simpanan --}}
-                            <tr class="bg-gray-100">
-                                <td colspan="2" class="px-3 py-4 text-center ">Tambah Simpanan Anggota </td>
-                                <td colspan="5" class="px-3 py-4">
-                                    <div class="flex flex-row gap-2 justify-center">
-                                        <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'qurban')"
-                                            class="bg-yellow-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1  hover:bg-yellow-500">
-                                            <i class="bi bi-cash-coin"></i> Qurban
-                                        </button>
-                                        <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'wajib')"
-                                            class="bg-blue-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-blue-500">
-                                            <i class="bi bi-wallet2"></i> Wajib
-                                        </button>
-                                        <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'sehat')"
-                                            class="bg-green-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-green-500">
-                                            <i class="bi bi-heart-pulse"></i> Sehat
-                                        </button>
-                                        <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'pokok')"
-                                            class="bg-purple-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-purple-500">
-                                            <i class="bi bi-bank"></i> Pokok
-                                        </button>
+
+                            <tr class="bg-gray-100 detail-row detail-{{ $value['anggota_id'] }}">
+                                <td colspan="7" class="p-0">
+                                    <div class="detail-box hidden px-3 py-4">
+                                        <div class="text-center mb-2 font-semibold">Tambah Simpanan Anggota</div>
+                                        <div class="flex flex-row gap-2 justify-center">
+                                            <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'qurban')"
+                                                class="bg-yellow-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1  hover:bg-yellow-500">
+                                                <i class="bi bi-cash-coin"></i> Qurban
+                                            </button>
+                                            <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'wajib')"
+                                                class="bg-blue-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-blue-500">
+                                                <i class="bi bi-wallet2"></i> Wajib
+                                            </button>
+                                            <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'sehat')"
+                                                class="bg-green-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-green-500">
+                                                <i class="bi bi-heart-pulse"></i> Sehat
+                                            </button>
+                                            <button onclick="openSimpananModal({{ $value['anggota_id'] }}, 'pokok')"
+                                                class="bg-purple-400 text-black px-2 py-1 rounded text-sm flex items-center gap-1 hover:bg-purple-500">
+                                                <i class="bi bi-bank"></i> Pokok
+                                            </button>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
+                        @endforeach
 
-                            <!-- Modal Simpanan -->
-                            <div id="modalSimpanan" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center">
-                                <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-5 relative">
-                                    <!-- Tombol Close -->
-                                    <button onclick="closeSimpananModal()"
-                                        class="absolute top-3 right-3 text-gray-600 hover:text-gray-800 text-xl font-bold">&times;</button>
+                        <!-- Modal Simpanan -->
+                        <div id="modalSimpanan"
+                            class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center">
+                            <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-5 relative">
+                                <!-- Tombol Close -->
+                                <button onclick="closeSimpananModal()"
+                                    class="absolute top-3 right-3 text-gray-600 hover:text-gray-800 text-xl font-bold">&times;</button>
 
-                                    <h3 class="text-lg font-semibold mb-3" id="modalSimpananTitle">Tambah Simpanan</h3>
-                                    <form id="formSimpanan" method="POST" action="">
-                                        @csrf
-                                        <input type="hidden" name="anggota_id" id="anggota_id">
-                                        <div class="mb-3">
-                                            <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah (Rp)</label>
-                                            <input type="number" name="jumlah" id="jumlah" class="w-full border rounded px-2 py-1">
-                                        </div>
-                                        <button type="submit"
-                                            class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">Simpan</button>
-                                    </form>
-                                </div>
+                                <h3 class="text-lg font-semibold mb-3" id="modalSimpananTitle">Tambah Simpanan</h3>
+                                <form id="formSimpanan" method="POST" action="">
+                                    @csrf
+                                    <input type="hidden" name="anggota_id" id="anggota_id">
+                                    <div class="mb-3">
+                                        <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah
+                                            (Rp)</label>
+                                        <input type="number" name="jumlah" id="jumlah"
+                                            class="w-full border rounded px-2 py-1">
+                                    </div>
+                                    <button type="submit"
+                                        class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">Simpan</button>
+                                </form>
                             </div>
+                        </div>
 
-                            <script>
+                        <script>
                             function openSimpananModal(id, jenis) {
                                 document.getElementById('modalSimpanan').classList.remove('hidden');
                                 document.getElementById('anggota_id').value = id;
@@ -211,7 +226,7 @@
                             function closeSimpananModal() {
                                 document.getElementById('modalSimpanan').classList.add('hidden');
                             }
-                            </script>
+                        </script>
 
                     </tbody>
                 </table>
@@ -259,200 +274,216 @@
             // Pindahkan elemen Datatables ke wrapper yang lebih cocok
             $('#anggota-table_info').appendTo('#datatables-info');
             $('#anggota-table_paginate').appendTo('#datatables-info');
+
+
         });
     </script>
-    <script>
-        function toggleEdit(id) {
-            const rowDisplay = document.getElementById('row-display-' + id);
-            const rowEdit = document.getElementById('row-edit-' + id);
 
-            rowDisplay.classList.toggle('hidden');
-            rowEdit.classList.toggle('hidden');
+    <script>
+        function toggleDetail(id) {
+            const row = $('.detail-' + id);
+
+            // Tutup semua detail lain dulu (optional, tapi UX lebih rapi)
+            $('.detail-row').not(row).slideUp(150);
+
+            row.stop(true, true).slideToggle(200);
         }
+        function toggleDetail(id) {
+            const box = $('.detail-' + id + ' .detail-box');
+
+            $('.detail-box').not(box).slideUp(150);   // tutup yg lain
+            box.stop(true, true).slideToggle(200);     // buka / tutup
+        }
+
     </script>
 
+
+
     {{-- Modal Tambah Anggota --}}
-   <div id="anggotaModal"
-    class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden justify-center items-center z-50">
-    <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-6 m-4 transform transition-all duration-300 scale-95 opacity-0"
-        id="modalContent">
-        
-        <div class="flex justify-between items-center border-b pb-3 mb-4">
-            <h3 class="text-xl font-bold text-gray-800">Tambah Anggota Baru</h3>
-            <button id="closeModalButton" class="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
+    <div id="anggotaModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden justify-center items-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-6 m-4 transform transition-all duration-300 scale-95 opacity-0"
+            id="modalContent">
 
-        <form method="POST" action="{{ url('admin/manajemen_anggota/tambah') }}">
-            @csrf
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                <div>
-                    <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Akun & Identitas</h4>
-                    
-                    <div class="mb-4 hidden">
-                        <label for="anggota_id" class="block text-sm font-medium text-gray-700 mb-1">ID Anggota</label>
-                        <input type="text" id="anggota_id" name="anggota_id" 
-                            class="w-full px-3 py-2 border border-gray-300 bg-gray-50 rounded-lg" value="(Otomatis)">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="nomor_anggota" class="block text-sm font-medium text-gray-700 mb-1">Nomor Anggota</label>
-                        <input type="text" id="nomor_anggota" name="nomor_anggota" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Contoh: 2025001">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username (Login)</label>
-                        <input type="text" id="username" name="username" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Contoh: joko_s">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" id="password" name="password" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Minimal 6 karakter">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="status_anggota" class="block text-sm font-medium text-gray-700 mb-1">Status Anggota</label>
-                        <select id="status_anggota" name="status_anggota" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500">
-                            <option value="aktif">Aktif</option>
-                            <option value="nonaktif">Nonaktif</option>
-                        </select>
-                    </div>
-                     <div class="mb-4">
-                        <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                        <input type="text" id="nama_lengkap" name="nama_lengkap" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Nama sesuai KTP">
-                    </div>
-                    
-                   
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Kontak & Lainnya</h4>
-                    
-                    <div class="mb-4">
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="email" name="email"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="alamat@email.com">
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="no_hp" class="block text-sm font-medium text-gray-700 mb-1">Nomor HP</label>
-                        <input type="tel" id="no_hp" name="no_hp"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Contoh: 0812xxxxxx">
-                    </div>
-                    <div class="mb-4">
-                        <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Wajib</label>
-                        <input type="number" id="saldo" name="wajib" min="0" step="1000" value="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Masukkan saldo awal (opsional)">
-                    </div>
-                    <div class="mb-4">
-                        <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Hari Raya</label>
-                        <input type="number" id="saldo" name="hari_raya" min="0" step="1000" value="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Masukkan saldo awal (opsional)">
-                    </div>
-                    <div class="mb-4">
-                        <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Pokok</label>
-                        <input type="number" id="saldo" name="pokok" min="0" step="1000" value="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Masukkan saldo awal (opsional)">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-4">
-                <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Sehat</label>
-                 <input type="number" id="saldo" name="saldo" min="0" step="1000" value="0"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                                    placeholder="Masukkan saldo awal (opsional)">
-            </div>
-            <div class="mt-4">
-                <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
-                <textarea id="alamat" name="alamat" rows="3"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
-                    placeholder="Jalan, RT/RW, Kelurahan, Kecamatan..."></textarea>
-            </div>
-            
-            <div class="flex justify-end space-x-3 pt-4 border-t mt-6">
-                <button type="button" id="cancelButton"
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
-                    Batal
-                </button>
-                <button type="submit"
-                    class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors shadow-md">
-                    Simpan Anggota
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Tambah Anggota Baru</h3>
+                <button id="closeModalButton" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                 </button>
             </div>
-        </form>
+
+            <form method="POST" action="{{ url('admin/manajemen_anggota/tambah') }}">
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                    <div>
+                        <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Akun & Identitas</h4>
+
+                        <div class="mb-4 hidden">
+                            <label for="anggota_id" class="block text-sm font-medium text-gray-700 mb-1">ID Anggota</label>
+                            <input type="text" id="anggota_id" name="anggota_id"
+                                class="w-full px-3 py-2 border border-gray-300 bg-gray-50 rounded-lg" value="(Otomatis)">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="nomor_anggota" class="block text-sm font-medium text-gray-700 mb-1">Nomor
+                                Anggota</label>
+                            <input type="text" id="nomor_anggota" name="nomor_anggota" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="Contoh: 2025001">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username
+                                (Login)</label>
+                            <input type="text" id="username" name="username" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="Contoh: joko_s">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <input type="password" id="password" name="password" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="Minimal 6 karakter">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="status_anggota" class="block text-sm font-medium text-gray-700 mb-1">Status
+                                Anggota</label>
+                            <select id="status_anggota" name="status_anggota" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500">
+                                <option value="aktif">Aktif</option>
+                                <option value="nonaktif">Nonaktif</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="nama_lengkap" class="block text-sm font-medium text-gray-700 mb-1">Nama
+                                Lengkap</label>
+                            <input type="text" id="nama_lengkap" name="nama_lengkap" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="Nama sesuai KTP">
+                        </div>
+
+
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Kontak & Lainnya</h4>
+
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="email" name="email"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="alamat@email.com">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="no_hp" class="block text-sm font-medium text-gray-700 mb-1">Nomor HP</label>
+                            <input type="tel" id="no_hp" name="no_hp"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="Contoh: 0812xxxxxx">
+                        </div>
+                        <div class="mb-4">
+                            <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Wajib</label>
+                            <input type="number" id="saldo" name="wajib" min="0" step="1000" value="0"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="Masukkan saldo awal (opsional)">
+                        </div>
+                        <div class="mb-4">
+                            <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Hari
+                                Raya</label>
+                            <input type="number" id="saldo" name="hari_raya" min="0" step="1000" value="0"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="Masukkan saldo awal (opsional)">
+                        </div>
+                        <div class="mb-4">
+                            <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Pokok</label>
+                            <input type="number" id="saldo" name="pokok" min="0" step="1000" value="0"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                                placeholder="Masukkan saldo awal (opsional)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <label for="saldo" class="block text-sm font-medium text-gray-700 mb-1">Simpanan Sehat</label>
+                    <input type="number" id="saldo" name="saldo" min="0" step="1000" value="0"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                        placeholder="Masukkan saldo awal (opsional)">
+                </div>
+                <div class="mt-4">
+                    <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
+                    <textarea id="alamat" name="alamat" rows="3"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-green-500 focus:border-green-500"
+                        placeholder="Jalan, RT/RW, Kelurahan, Kecamatan..."></textarea>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-4 border-t mt-6">
+                    <button type="button" id="cancelButton"
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors shadow-md">
+                        Simpan Anggota
+                    </button>
+                </div>
+            </form>
         </div>
-</div>
+    </div>
 
+    <script>
+        const modal = document.getElementById('anggotaModal');
+        const modalContent = document.getElementById('modalContent');
+        const openButton = document.getElementById('openModalButton');
+        const closeButton = document.getElementById('closeModalButton');
+        const cancelButton = document.getElementById('cancelButton'); // Tombol Batal
 
-<script>
-    const modal = document.getElementById('anggotaModal');
-    const modalContent = document.getElementById('modalContent');
-    const openButton = document.getElementById('openModalButton');
-    const closeButton = document.getElementById('closeModalButton');
-    const cancelButton = document.getElementById('cancelButton'); // Tombol Batal
-
-    // Fungsi untuk membuka modal
-    function openModal() {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        // Tambahkan transisi masuk
-        setTimeout(() => {
-            modalContent.classList.remove('scale-95', 'opacity-0');
-            modalContent.classList.add('scale-100', 'opacity-100');
-        }, 10); // Jeda kecil untuk memastikan 'display: flex' diterapkan
-    }
-
-    // Fungsi untuk menutup modal
-    function closeModal() {
-        // Mulai transisi keluar
-        modalContent.classList.remove('scale-100', 'opacity-100');
-        modalContent.classList.add('scale-95', 'opacity-0');
-        
-        // Sembunyikan modal setelah transisi selesai (300ms)
-        setTimeout(() => {
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-        }, 300); 
-    }
-
-    // Event Listeners
-    openButton.addEventListener('click', openModal);
-    closeButton.addEventListener('click', closeModal);
-    cancelButton.addEventListener('click', closeModal);
-
-    // Menutup modal ketika mengklik di luar konten modal
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
+        // Fungsi untuk membuka modal
+        function openModal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            // Tambahkan transisi masuk
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10); // Jeda kecil untuk memastikan 'display: flex' diterapkan
         }
-    });
 
-    // Menutup modal ketika menekan tombol ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('flex')) {
-            closeModal();
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            // Mulai transisi keluar
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+
+            // Sembunyikan modal setelah transisi selesai (300ms)
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
         }
-    });
 
-</script>
+        // Event Listeners
+        openButton.addEventListener('click', openModal);
+        closeButton.addEventListener('click', closeModal);
+        cancelButton.addEventListener('click', closeModal);
+
+        // Menutup modal ketika mengklik di luar konten modal
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Menutup modal ketika menekan tombol ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('flex')) {
+                closeModal();
+            }
+        });
+
+    </script>
 
 @endsection

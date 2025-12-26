@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\AnggotaImport;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule; 
 use App\Models\Admin;
@@ -118,6 +119,19 @@ class SuperAdminController extends Controller
 
     }
 
+      public function importExcel(Request $request)
+    {
+        $request->validate([
+            'excel_file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        Excel::import(new AnggotaImport, $request->file('excel_file'));
+
+        return redirect()
+            ->back()
+            ->with('success', 'Data anggota berhasil diimpor');
+    }
+
     public function hapus_anggota($id){
         Anggota::where('anggota_id',$id)
         ->delete();
@@ -132,35 +146,7 @@ class SuperAdminController extends Controller
         return view('admin.manajemen_akses', compact('admins'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-  
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, string $id)
     {
          // Validasi input

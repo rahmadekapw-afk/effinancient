@@ -101,7 +101,7 @@
 
                 <a href="/login"
                     class="bg-kemenag-green text-white font-semibold py-2 px-4 rounded-full shadow-kemenag transition duration-300 hover:bg-kemenag-dark transform hover:scale-105">
-                    <i class="fas fa-sign-in-alt mr-2"></i> Area Anggota
+                    <i class="fas fa-sign-in-alt mr-2"></i>  Anggota
                 </a>
             </div>
         </div>
@@ -127,7 +127,7 @@
 
     <section id="layanan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <h2 class="text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-2 text-center"
-            data-aos="fade-down">Pilar Utama Kopinag</h2>
+            data-aos="fade-down">Pilar Utama Effinancient</h2>
         <p class="text-4xl font-extrabold text-gray-800 mb-16 text-center" data-aos="fade-down" data-aos-delay="100">
             Layanan Terbaik Berbasis Syariah
         </p>
@@ -185,7 +185,7 @@
             <h2 class="text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-2 text-center"
                 data-aos="zoom-in">Dampak Nyata</h2>
             <p class="text-4xl font-extrabold text-gray-800 mb-12 text-center" data-aos="zoom-in" data-aos-delay="100">
-                Kopinag Tumbuh Bersama Anggota
+                Effinancient Tumbuh Bersama Anggota
             </p>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
@@ -220,8 +220,8 @@
                 "Koperasi Effinancient sangat membantu dalam pengelolaan keuangan kami. Proses pembiayaan yang syariah
                 memberikan ketenangan hati, dan aplikasinya sangat mudah digunakan."
             </blockquote>
-            <p class="mt-6 text-lg font-semibold text-gray-800">- Bapak H. M. Fauzi, S.Ag., M.S.I. -</p>
-            <p class="text-kemenag-green font-medium">Anggota Aktif Kopinag Kemenag Kota Yogyakarta</p>
+            <p class="mt-6 text-lg font-semibold text-gray-800">- ....., M.S.I. -</p>
+            <p class="text-kemenag-green font-medium">Anggota Aktif KPRI BAKTI MULIA Kemenag Kota Yogyakarta</p>
         </div>
     </section>
 
@@ -231,7 +231,7 @@
                 <h2 class="text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-2">Informasi Terbaru
                 </h2>
                 <p class="text-4xl font-extrabold text-gray-800">
-                    Pusat Berita dan Kegiatan Kopinag
+                    Pusat Berita dan Kegiatan KPRI BAKTI MULIA
                 </p>
             </div>
 
@@ -268,7 +268,8 @@
                             Penyaluran Bantuan Dana Duka Cita Anggota
                         </h3>
                         <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            Komitmen Kopinag melalui dana sosial, memberikan santunan kepada keluarga anggota yang
+                            Komitmen KPRI BAKTI MULIA melalui dana sosial, memberikan santunan kepada keluarga anggota
+                            yang
                             sedang berduka.
                         </p>
                         <div class="flex justify-between items-center text-xs text-gray-500">
@@ -310,71 +311,85 @@
         </div>
     </section>
 
-<!-- ================== STANDAR LAYANAN (DI ATAS FOOTER) ================== -->
- <section class="bg-gray-50 py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- ================== STANDAR LAYANAN (DI ATAS FOOTER) ================== -->
+    <section class="bg-gray-50 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- Header -->
-        <div class="bg-kemenag-green rounded-2xl px-8 py-10 text-white mb-12 shadow-xl" data-aos="fade-down">
-            <h2 class="text-4xl font-extrabold mb-3">Standar Layanan</h2>
-            <p class="text-sm opacity-90 max-w-3xl">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-        </div>
-
-        <!-- Content -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
-            <!-- Sidebar -->
-            <aside class="lg:col-span-1 bg-white rounded-2xl shadow-lg p-6 h-fit" data-aos="fade-right">
-                <ul class="space-y-2 text-sm font-medium">
-                    <li>
-                        <a href="#" class="block px-4 py-3 rounded-lg bg-kemenag-green text-white">
-                            Ketentuan Umum
-                        </a>
-                    </li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Standar Layanan & Maklumat</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Hak & Kewajiban Pemohon</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Hak & Kewajiban Badan Publik</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Jalur & Waktu Layanan</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Standar Biaya</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Permohonan Informasi</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Keberatan & Sengketa</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pengelolaan Website</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pengajuan Konsekuensi</a></li>
-                    <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pelayanan Khusus</a></li>
-                </ul>
-            </aside>
-
-            <!-- Main Content -->
-            <div class="lg:col-span-3 bg-white rounded-2xl shadow-lg p-8" data-aos="fade-left">
-                <h3 class="text-2xl font-extrabold text-kemenag-green mb-6">
-                    Ketentuan Umum
-                </h3>
-
-                <div class="space-y-5 text-sm text-gray-700 leading-relaxed text-justify">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
-                    </p>
-
-                    <p>
-                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi.
-                    </p>
-
-                    <p>
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                    </p>
-
-                    <p>
-                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                    </p>
-                </div>
+            <!-- Header -->
+            <div class="bg-kemenag-green rounded-2xl px-8 py-10 text-white mb-12 shadow-xl" data-aos="fade-down">
+                <h2 class="text-4xl font-extrabold mb-3">Standar Layanan</h2>
+                <p class="text-sm opacity-90 max-w-3xl">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                </p>
             </div>
 
+            <!-- Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+                <!-- Sidebar -->
+                <aside class="lg:col-span-1 bg-white rounded-2xl shadow-lg p-6 h-fit" data-aos="fade-right">
+                    <ul class="space-y-2 text-sm font-medium">
+                        <li>
+                            <a href="#" class="block px-4 py-3 rounded-lg bg-kemenag-green text-white">
+                                Ketentuan Umum
+                            </a>
+                        </li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Standar Layanan &
+                                Maklumat</a></li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Hak & Kewajiban Pemohon</a>
+                        </li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Hak & Kewajiban Badan
+                                Publik</a></li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Jalur & Waktu Layanan</a>
+                        </li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Standar Biaya</a></li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Permohonan Informasi</a>
+                        </li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Keberatan & Sengketa</a>
+                        </li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pengelolaan Website</a>
+                        </li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pengajuan Konsekuensi</a>
+                        </li>
+                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pelayanan Khusus</a></li>
+                    </ul>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="lg:col-span-3 bg-white rounded-2xl shadow-lg p-8" data-aos="fade-left">
+                    <h3 class="text-2xl font-extrabold text-kemenag-green mb-6">
+                        Ketentuan Umum
+                    </h3>
+
+                    <div class="space-y-5 text-sm text-gray-700 leading-relaxed text-justify">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste
+                            natus error sit voluptatem accusantium doloremque laudantium.
+                        </p>
+
+                        <p>
+                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+                            voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi.
+                        </p>
+
+                        <p>
+                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
+                            consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                        </p>
+
+                        <p>
+                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+                            velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam
+                            quaerat voluptatem.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
-</section>
-<!-- End Standar Layanan -->
+    </section>
+    <!-- End Standar Layanan -->
 
 
     <footer id="kontak" class="bg-gray-800 py-10">
@@ -422,7 +437,7 @@
             </div>
             <div class="mt-10 pt-6 border-t border-gray-700 text-center text-gray-500 text-sm">
                 &copy; 2024 Effinancient. All rights reserved. Crafted with <span
-                    class="text-kemenag-green">&hearts;</span> for Kopinag Kemenag.
+                    class="text-kemenag-green">&hearts;</span> for Effinancient
             </div>
         </div>
     </footer>
