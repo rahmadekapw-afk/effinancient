@@ -73,6 +73,9 @@ Route::get('/admin/transaksi/konfirmasi/{pinjaman_id}', [AdminController::class,
 Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index'])->middleware('admin.or.super');
 
 
+Route::get('/admin/berita_layanan',[AdminController::class,'berita_layanan'])->middleware('admin.or.super');
+
+
 
 // Route::resource('anggota', AnggotaController::class);
 

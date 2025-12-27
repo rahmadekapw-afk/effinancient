@@ -176,6 +176,18 @@
                 <span class="font-medium text-sm">Manajemen Anggota</span>
             </a>
 
+            {{-- Jenis Layanan --}}
+            <a href="{{ url('/admin/berita_layanan') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
+                @if(Request::is('admin/berita_layanan'))
+                    active-link
+                @else
+                    hover:bg-emerald-700
+                @endif">
+                <i class="bi bi-cloud-upload-fill text-lg"></i>
+                <span class="font-medium text-sm">Berita & Layanan</span>
+            </a>
+
+
             {{-- Transaksi ('/admin/transaksi') --}}
             <a href="{{ url('/admin/transaksi') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
                     @if(Request::is('admin/transaksi'))

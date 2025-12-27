@@ -203,6 +203,34 @@ return new class extends Migration
             $table->integer('Low');
             $table->integer('Open');
         });
+         Schema::create('berita', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('kategori'); // RAT, Berita, Pengumuman, dll
+            $table->string('judul');
+            $table->string('slug')->unique();
+
+            $table->string('gambar')->nullable(); // path gambar
+            $table->text('ringkasan'); // deskripsi singkat (preview card)
+            $table->longText('isi'); // isi lengkap artikel
+
+            $table->date('tanggal'); // 10 Desember 2024
+            $table->unsignedBigInteger('views')->default(0);
+
+            $table->boolean('status')->default(1); // 1=publish, 0=draft
+
+            $table->timestamps();
+        });
+            Schema::create('jenis_layanans', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('jenis_layanan'); // nama layanan
+            $table->string('gambar')->nullable(); // boleh kosong
+            $table->string('link')->nullable();   // boleh kosong
+            $table->longText('isi'); // deskripsi / konten layanan
+
+            $table->timestamps();
+        });
     }
 
     public function down(): void
@@ -217,8 +245,11 @@ return new class extends Migration
         Schema::dropIfExists('super_admins');
         Schema::dropIfExists('admins');
         Schema::dropIfExists('anggotas');
+        
         Schema::enableForeignKeyConstraints();
         Schema::dropIfExists('keuangan');
         Schema::dropIfExists('tren_rupiah');
+        Schema::dropIfExists('berita');
+        Schema::dropIfExists('jenis_layanans');
     }
 };

@@ -529,7 +529,9 @@ class AdminController extends Controller
     }
 
 
-    
+    public function berita_layanan(){
+        return view('admin.berita_layanan');
+    }
 
     public function logout(){
         session()->flush();
