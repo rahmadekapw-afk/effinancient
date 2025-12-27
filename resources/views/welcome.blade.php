@@ -319,19 +319,57 @@
     <section class="hero-bg-image relative py-20 lg:py-32 overflow-hidden">
         <div class="absolute inset-0 image-overlay"></div>
 
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 text-white" data-aos="fade-up">
-            <h4 class="text-xl sm:text-5xl lg:text-7xl font-extrabold text-kemenag-orange leading-tight mb-4 tracking-tighter">
-                KPRI BAKTI MULIA <br class="hidden sm:block"> KUAT ANGGOTA SEJATERA
-            </h4>
-            <p class="text-xl sm:text-4xl font-light mb-10 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-                Kementerian Agama Kota Yogyakarta
-            </p>
-            <a href="/login"
-                class="inline-block bg-white text-kemenag-green font-bold py-4 px-10 rounded-full text-xl shadow-2xl transition duration-500 hover:bg-gray-100 transform hover:-translate-y-1 animate-pulse-once"
-                data-aos="zoom-in" data-aos-delay="400">
-                <i class="fas fa-sign-in-alt mr-2"></i> Masuk
-            </a>
-        </div>
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8
+            text-center relative z-10"
+     data-aos="fade-up">
+
+    <!-- JUDUL UTAMA -->
+    <h1 class="font-extrabold
+               text-4xl sm:text-6xl lg:text-7xl
+               tracking-wide
+               text-kemenag-orange
+               drop-shadow-xl">
+        KPRI BAKTI MULIA
+    </h1>
+
+    <!-- SLOGAN -->
+    <h2 class="mt-4
+               text-xl sm:text-3xl lg:text-4xl
+               font-semibold
+               tracking-wide
+               text-white">
+        Kuat Anggota Sejahtera
+    </h2>
+
+    <!-- DESKRIPSI -->
+    <p class="mt-8
+              text-lg sm:text-2xl
+              font-light
+              text-gray-200
+              max-w-3xl mx-auto"
+       data-aos="fade-up"
+       data-aos-delay="200">
+        Kementerian Agama Kota Yogyakarta
+    </p>
+
+    <!-- TOMBOL -->
+    <a href="/login"
+       class="inline-block mt-12
+              bg-white text-kemenag-green
+              font-bold py-4 px-12
+              rounded-full text-xl
+              shadow-2xl
+              transition-all duration-500
+              hover:bg-gray-100
+              hover:-translate-y-1"
+       data-aos="zoom-in"
+       data-aos-delay="400">
+        <i class="fas fa-sign-in-alt mr-2"></i>
+        Masuk
+    </a>
+
+</div>
+
     </section>
 
     <section id="layanan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
