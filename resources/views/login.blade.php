@@ -92,7 +92,7 @@
         body.dark-mode .login-card {
             background: rgba(15, 23, 42, 0.9);
             border-color: var(--kemenag-dark);
-            color: white;
+            color: black;
         }
 
         .login-card:hover {
