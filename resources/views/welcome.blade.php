@@ -130,17 +130,23 @@
         }
 
         /* --- REVISI BACKGROUND IMAGE --- */
-        .hero-bg-image {
-            /* MENGGUNAKAN GAMBAR UNGGAHAN ANDA */
-            background-image: url('/img/image.png');
-            background-size: cover;
-            background-position: center;
-        }
+       .hero-bg-image {
+    background-image: url('/img/image.png');
+    background-size: cover;
+    background-position: center;
+    filter: saturate(1.1) contrast(1.05);
+}
+
 
         .image-overlay {
-            /* Overlay hijau tua dengan transparansi 85% */
-            background-color: rgba(4, 120, 87, 0.66);
-        }
+    background: linear-gradient(
+        to bottom,
+        rgba(6, 78, 50, 0.55),
+        rgba(6, 78, 50, 0.32),
+        rgba(6, 78, 50, 0.55)
+    );
+}
+
 
         /* ------------------------------- */
 
@@ -227,148 +233,146 @@
 
 <body class="font-sans bg-kemenag-bg text-gray-800">
 
-    <header class="sticky top-0 z-50 bg-white shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4 transition duration-300">
-                
-        <!-- BRAND WRAPPER -->
-        <div class="flex items-center gap-4">
-        
-            <!-- LOGO -->
-            <div class="flex items-center gap-2">
-                <img src="{{ asset('img/kemenag.png') }}" alt="Logo Kemenag" class="h-11 w-auto object-contain">
-        
-                <img src="{{ asset('img/koperasi.png') }}" alt="Logo Koperasi" class="h-11 w-auto object-contain">
-            </div>
-        
-            <!-- TEXT BRAND -->
-            <div class="leading-tight border-l border-gray-300 pl-3 hidden sm:block">
-                <p class="text-lg font-bold text-gray-800 tracking-wide">
-                    KPRI Bakti Mulia
-                </p>
-                <p class="text-sm text-gray-600 font-medium">
-                    Kementerian Agama Kota Yogyakarta
-                </p>
-            </div>
-        </div>
-        
+<header class="sticky top-0 z-50 bg-[#0B5E3C] shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
 
-                <nav class="hidden md:flex items-center space-x-8 text-gray-700 font-medium">
-                
-                    <a href="#layanan" class="hover:text-kemenag-green transition">
-                        Layanan
-                    </a>
-                
-                   
-                    <a href="#berita" class="hover:text-kemenag-green transition">
-                        Berita
-                    </a>
-                
-                    <a href="#kontak" class="hover:text-kemenag-green transition">
-                        Kontak
-                    </a>
-                 <!-- DROPDOWN DATA & INFORMASI (CLICK) -->
-                    <div class="relative">
-                
-                        <button aria-haspopup="true" aria-expanded="false" id="dataInfoBtn" type="button" class="flex items-center gap-2 px-3 py-2 rounded-lg
-                                   hover:bg-kemenag-bg hover:text-kemenag-green transition
-                                   focus:outline-none">
-                            Data & Informasi
-                            <i id="dataInfoIcon" class="fas fa-chevron-down text-xs text-kemenag-orange transition-transform"></i>
-                        </button>
-                
-                        <!-- DROPDOWN MENU -->
-                        <div id="dataInfoMenu" class="hidden absolute left-0 mt-3 w-64 bg-white rounded-xl shadow-xl
-                                   border border-gray-100 z-50">
-                
-                            <ul class="py-2 text-sm">
-                
-                                <li>
-                                    <a href="#ppid-title" class="block px-5 py-3 hover:bg-kemenag-bg hover:text-kemenag-green transition">
-                                        Standar Layanan Informasi
-                                    </a>
-                                </li>
-                
-                                <li>
-                                    <a href="#" class="block px-5 py-3 hover:bg-kemenag-bg hover:text-kemenag-green transition">
-                                        Neraca Koperasi
-                                    </a>
-                                </li>
-                
-                                <li>
-                                    <a href="#" class="block px-5 py-3 hover:bg-kemenag-bg hover:text-kemenag-green transition">
-                                        Laporan & Statistik
-                                    </a>
-                                </li>
-                
-                            </ul>
-                        </div>
-                    </div>
-                
-                </nav>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="{{ asset('img/kemenag.png') }}" class="h-11 hover:scale-110 transition duration-300">
+                    <img src="{{ asset('img/koperasi.png') }}" class="h-11 hover:scale-110 transition duration-300">
+                </div>
 
-                
-                <a href="/login"
-                    class="bg-kemenag-green text-white font-semibold py-2 px-4 rounded-full shadow-kemenag transition duration-300 hover:bg-kemenag-dark transform hover:scale-105">
-                    <i class="fas fa-sign-in-alt mr-2"></i>  Anggota
+                <div class="leading-tight border-l border-white/50 pl-3 hidden sm:block">
+                    <p class="text-lg font-bold text-white tracking-wide">KPRI Bakti Mulia</p>
+                    <p class="text-sm text-white/80 font-medium">Kementerian Agama Kota Yogyakarta</p>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-8 text-white font-medium">
+                <a href="#layanan" class="relative group">
+                    <span>Layanan</span>
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
                 </a>
+
+                <a href="#berita" class="relative group">
+                    <span>Berita</span>
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+
+                <a href="#kontak" class="relative group">
+                    <span>Kontak</span>
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+
+                <div class="relative">
+                    <button
+                        id="dataInfoBtn"
+                        aria-expanded="false"
+                        class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 hover:text-[#FCB53B] transition duration-300"
+                    >
+                        Data & Informasi
+                        <i
+                            id="dataInfoIcon"
+                            class="fas fa-chevron-down text-xs transition-transform duration-300"
+                        ></i>
+                    </button>
+
+                    <div
+                        id="dataInfoMenu"
+                        aria-labelledby="dataInfoBtn"
+                        class="absolute left-0 mt-3 w-64 bg-[#064E32] rounded-lg shadow-2xl overflow-hidden ring-1 ring-black ring-opacity-5 transform origin-top-left transition-all duration-200 hidden opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                    >
+                        <a
+                            href="#"
+                            class="block px-5 py-3 text-white hover:bg-white/10 hover:pl-7 transition-all duration-200"
+                        >
+                            Standar Layanan Informasi
+                        </a>
+
+                        <a
+                            href="#"
+                            class="block px-5 py-3 text-white hover:bg-white/10 hover:pl-7 transition-all duration-200"
+                        >
+                            Neraca Koperasi
+                        </a>
+
+                        <a
+                            href="#"
+                            class="block px-5 py-3 text-white hover:bg-white/10 hover:pl-7 transition-all duration-200"
+                        >
+                            Laporan & Statistik
+                        </a>
+                    </div>
                 </div>
-                </div>
-    </header>
+            </nav>
+
+            <a href="/login"
+               class="bg-white text-[#0B5E3C] font-semibold py-2 px-6 rounded-full shadow-lg transition duration-300 hover:bg-[#FCB53B] hover:text-white hover:scale-105 active:scale-95">
+                <i class="fas fa-sign-in-alt mr-2"></i> Anggota
+            </a>
+
+        </div>
+    </div>
+</header>
+
+
+
 
     <section class="hero-bg-image relative py-20 lg:py-32 overflow-hidden">
         <div class="absolute inset-0 image-overlay"></div>
 
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8
-            text-center relative z-10"
-     data-aos="fade-up">
+                    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8
+                                text-center relative z-10"
+                        data-aos="fade-up">
+                        <h1 class="font-extrabold
+                                text-5xl sm:text-6xl lg:text-7xl
+                                tracking-wide
+                                text-kemenag-orange
+                                drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+                            KPRI BAKTI MULIA
+                        </h1>
 
-    <!-- JUDUL UTAMA -->
-    <h1 class="font-extrabold
-               text-4xl sm:text-6xl lg:text-7xl
-               tracking-wide
-               text-kemenag-orange
-               drop-shadow-xl">
-        KPRI BAKTI MULIA
-    </h1>
 
-    <!-- SLOGAN -->
-    <h2 class="mt-4
-               text-xl sm:text-3xl lg:text-4xl
-               font-semibold
-               tracking-wide
-               text-white">
-        Kuat Anggota Sejahtera
-    </h2>
 
-    <!-- DESKRIPSI -->
-    <p class="mt-8
-              text-lg sm:text-2xl
-              font-light
-              text-gray-200
-              max-w-3xl mx-auto"
-       data-aos="fade-up"
-       data-aos-delay="200">
-        Kementerian Agama Kota Yogyakarta
-    </p>
+                                                <!-- SLOGAN -->
+                                            <p class="mt-4
+                                text-xl sm:text-2xl lg:text-3xl
+                                font-semibold
+                                text-white
+                                drop-shadow-[0_3px_8px_rgba(0,0,0,0.6)]">
+                            Kuat Anggota Sejahtera
+                        </p>
 
-    <!-- TOMBOL -->
-    <a href="/login"
-       class="inline-block mt-12
-              bg-white text-kemenag-green
-              font-bold py-4 px-12
-              rounded-full text-xl
-              shadow-2xl
-              transition-all duration-500
-              hover:bg-gray-100
-              hover:-translate-y-1"
-       data-aos="zoom-in"
-       data-aos-delay="400">
-        <i class="fas fa-sign-in-alt mr-2"></i>
-        Masuk
-    </a>
 
-</div>
+
+                                                <!-- DESKRIPSI -->
+                                            <p class="mt-6
+                                text-base sm:text-lg lg:text-xl
+                                font-medium
+                                text-gray-100">
+                            Kementerian Agama Kota Yogyakarta
+                        </p>
+
+
+
+                        <!-- TOMBOL -->
+                        <a href="/login"
+                        class="inline-block mt-12
+                                bg-white text-kemenag-green
+                                font-bold py-4 px-12
+                                rounded-full text-xl
+                                shadow-2xl
+                                transition-all duration-500
+                                hover:bg-gray-100
+                                hover:-translate-y-1"
+                        data-aos="zoom-in"
+                        data-aos-delay="400">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Masuk
+                        </a>
+
+                    </div>
 
     </section>
 
@@ -459,17 +463,54 @@
         </div>
     </section>
 
-    <section class="py-16 kemenag-bg">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in-up">
-            <i class="fas fa-quote-left text-5xl text-kemenag-green opacity-70 mb-6"></i>
-            <blockquote class="text-2xl italic text-gray-700 font-serif">
-                "Koperasi Effinancient sangat membantu dalam pengelolaan keuangan kami. Proses pembiayaan yang syariah
-                memberikan ketenangan hati, dan aplikasinya sangat mudah digunakan."
-            </blockquote>
-            <p class="mt-6 text-lg font-semibold text-gray-800">- ....., M.S.I. -</p>
-            <p class="text-kemenag-green font-medium">Anggota Aktif KPRI BAKTI MULIA Kemenag Kota Yogyakarta</p>
+   <section class="py-20 bg-kemenag-gl">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+
+        <!-- JUDUL -->
+        <div class="text-center mb-14">
+            <h2 class="text-sm font-semibold uppercase tracking-widest text-kemenag-green mb-2">
+                Visi dan Misi
+            </h2>
+            <p class="text-4xl font-extrabold text-gray-800">
+                Kementerian Agama Republik Indonesia
+            </p>
         </div>
-    </section>
+
+        <!-- VISI -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-10 border-l-8 border-kemenag-green"
+             data-aos="fade-right">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-eye text-3xl text-kemenag-green mr-3"></i>
+                <h3 class="text-2xl font-extrabold text-kemenag-green">Visi</h3>
+            </div>
+            <p class="text-gray-700 text-lg leading-relaxed text-justify">
+                <span class="font-semibold">“Kementerian Agama yang profesional dan andal</span>
+                dalam membangun masyarakat yang saleh, moderat, cerdas dan unggul untuk mewujudkan
+                Indonesia maju yang berdaulat, mandiri, dan berkepribadian berdasarkan gotong royong.”
+            </p>
+        </div>
+
+        <!-- MISI -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-l-8 border-kemenag-orange"
+             data-aos="fade-left">
+            <div class="flex items-center mb-6">
+                <i class="fas fa-bullseye text-3xl text-kemenag-orange mr-3"></i>
+                <h3 class="text-2xl font-extrabold text-kemenag-orange">Misi</h3>
+            </div>
+
+            <ol class="space-y-4 text-gray-700 text-lg list-decimal list-inside">
+                <li>Meningkatkan kualitas kesalehan umat beragama.</li>
+                <li>Memperkuat moderasi beragama dan kerukunan umat beragama.</li>
+                <li>Meningkatkan layanan keagamaan yang adil, mudah, dan merata.</li>
+                <li>Meningkatkan layanan pendidikan yang merata dan bermutu.</li>
+                <li>Meningkatkan produktivitas dan daya saing pendidikan.</li>
+                <li>Memantapkan tata kelola pemerintahan yang baik (<em>Good Governance</em>).</li>
+            </ol>
+        </div>
+
+    </div>
+</section>
+
 
     <section id="berita" class="bg-gray-100 py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -482,74 +523,49 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl transform hover:-translate-y-1"
-                    data-aos="fade-up">
-                    <div class="h-48 bg-kemenag-green flex items-center justify-center text-white text-3xl font-bold">
-                        [Gambar RAT]
-                    </div>
-                    <div class="p-6">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-kemenag-green">RAT</span>
-                        <h3 class="text-xl font-bold text-gray-800 my-2 hover:text-kemenag-dark transition">
-                            Suksesnya Pelaksanaan RAT Tahun Buku 2024
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            Rapat Anggota Tahunan Kopinag telah dilaksanakan dengan lancar, menghasilkan keputusan
-                            strategis untuk peningkatan SHU anggota.
-                        </p>
-                        <div class="flex justify-between items-center text-xs text-gray-500">
-                            <span><i class="far fa-calendar-alt mr-1"></i> 10 Desember 2024</span>
-                            <a href="#" class="font-semibold text-kemenag-green hover:underline">Baca Selengkapnya</a>
+                @if(isset($artikels) && $artikels->count())
+                    @foreach($artikels as $a)
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl transform hover:-translate-y-1"
+                            data-aos="fade-up">
+                            @if($a->gambar)
+                                <img src="/{{ $a->gambar }}" alt="{{ $a->judul }}" class="h-48 w-full object-cover">
+                            @else
+                                <div class="h-48 bg-kemenag-green flex items-center justify-center text-white text-3xl font-bold">
+                                    [Gambar]
+                                </div>
+                            @endif
+                            <div class="p-6">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-kemenag-green">{{ strtoupper($a->kategori ?? 'Berita') }}</span>
+                                <h3 class="text-xl font-bold text-gray-800 my-2 hover:text-kemenag-dark transition">
+                                    {{ $a->judul }}
+                                </h3>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                                    {{ \Illuminate\Support\Str::limit(strip_tags($a->isi ?? ''), 150) }}
+                                </p>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span><i class="far fa-calendar-alt mr-1"></i> {{ \Carbon\Carbon::parse($a->tanggal)->translatedFormat('d F Y') }}</span>
+                                    @php
+                                        $targetLink = $a->external_url ?? null;
+                                        if (! $targetLink && preg_match('#https?://#i', $a->slug ?? '')) {
+                                            $targetLink = $a->slug;
+                                        }
+                                    @endphp
+                                    @if($targetLink)
+                                        <a href="{{ $targetLink }}" target="_blank" rel="noopener" class="font-semibold text-kemenag-green hover:underline">Baca Selengkapnya</a>
+                                    @else
+                                        <a href="{{ url('/berita/'.$a->slug) }}" class="font-semibold text-kemenag-green hover:underline">Baca Selengkapnya</a>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl transform hover:-translate-y-1"
-                    data-aos="fade-up" data-aos-delay="200">
-                    <div class="h-48 bg-gray-300 flex items-center justify-center text-kemenag-dark text-3xl font-bold">
-                        [Gambar Bantuan]
-                    </div>
-                    <div class="p-6">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-kemenag-green">Sosial</span>
-                        <h3 class="text-xl font-bold text-gray-800 my-2 hover:text-kemenag-dark transition">
-                            Penyaluran Bantuan Dana Duka Cita Anggota
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            Komitmen KPRI BAKTI MULIA melalui dana sosial, memberikan santunan kepada keluarga anggota
-                            yang
-                            sedang berduka.
-                        </p>
-                        <div class="flex justify-between items-center text-xs text-gray-500">
-                            <span><i class="far fa-calendar-alt mr-1"></i> 25 November 2024</span>
-                            <a href="#" class="font-semibold text-kemenag-green hover:underline">Baca Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl transform hover:-translate-y-1"
-                    data-aos="fade-up" data-aos-delay="400">
-                    <div
-                        class="h-48 bg-kemenag-green/70 flex items-center justify-center text-white text-3xl font-bold">
-                        [Gambar Pelatihan]
-                    </div>
-                    <div class="p-6">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-kemenag-green">Edukasi</span>
-                        <h3 class="text-xl font-bold text-gray-800 my-2 hover:text-kemenag-dark transition">
-                            Pelatihan Pengelolaan Keuangan Syariah Dasar
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            Mengikuti acara edukasi untuk meningkatkan literasi keuangan anggota Kemenag di Aula
-                            Serbaguna.
-                        </p>
-                        <div class="flex justify-between items-center text-xs text-gray-500">
-                            <span><i class="far fa-calendar-alt mr-1"></i> 05 November 2024</span>
-                            <a href="#" class="font-semibold text-kemenag-green hover:underline">Baca Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                @else
+                    <div class="col-span-1 md:col-span-3 text-center text-gray-500">Belum ada berita</div>
+                @endif
             </div>
 
             <div class="text-center mt-12" data-aos="zoom-in" data-aos-delay="600">
-                <a href="#"
+                <a href="{{ route('berita.index') }}"
                     class="inline-block bg-kemenag-green text-white font-bold py-3 px-8 rounded-full shadow-kemenag transition duration-300 hover:bg-kemenag-dark transform hover:scale-105">
                     Lihat Semua Berita dan Kegiatan <i class="fas fa-arrow-right ml-2"></i>
                 </a>
@@ -557,86 +573,8 @@
         </div>
     </section>
 
-    
-    <section class="bg-gray-50 py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   
 
-            <!-- Header -->
-            <div class="bg-kemenag-green rounded-2xl px-8 py-10 text-white mb-12 shadow-xl" data-aos="fade-down">
-                <h2 class="text-4xl font-extrabold mb-3">Standar Layanan</h2>
-                <p class="text-sm opacity-90 max-w-3xl">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua.
-                </p>
-            </div>
-
-            <!-- Content -->
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
-                <!-- Sidebar -->
-                <aside class="lg:col-span-1 bg-white rounded-2xl shadow-lg p-6 h-fit" data-aos="fade-right">
-                    <ul class="space-y-2 text-sm font-medium">
-                        <li>
-                            <a href="#" class="block px-4 py-3 rounded-lg bg-kemenag-green text-white">
-                                Ketentuan Umum
-                            </a>
-                        </li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Standar Layanan &
-                                Maklumat</a></li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Hak & Kewajiban Pemohon</a>
-                        </li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Hak & Kewajiban Badan
-                                Publik</a></li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Jalur & Waktu Layanan</a>
-                        </li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Standar Biaya</a></li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Permohonan Informasi</a>
-                        </li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Keberatan & Sengketa</a>
-                        </li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pengelolaan Website</a>
-                        </li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pengajuan Konsekuensi</a>
-                        </li>
-                        <li><a href="#" class="block px-4 py-3 rounded-lg hover:bg-gray-100">Pelayanan Khusus</a></li>
-                    </ul>
-                </aside>
-
-                <!-- Main Content -->
-                <div class="lg:col-span-3 bg-white rounded-2xl shadow-lg p-8" data-aos="fade-left">
-                    <h3 class="text-2xl font-extrabold text-kemenag-green mb-6">
-                        Ketentuan Umum
-                    </h3>
-
-                    <div class="space-y-5 text-sm text-gray-700 leading-relaxed text-justify">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste
-                            natus error sit voluptatem accusantium doloremque laudantium.
-                        </p>
-
-                        <p>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-                            voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi.
-                        </p>
-
-                        <p>
-                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                            consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        </p>
-
-                        <p>
-                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-                            velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam
-                            quaerat voluptatem.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- End Standar Layanan -->
-=======
 <!-- ================== STANDAR LAYANAN (DI ATAS FOOTER) ================== -->
  <section class="kemenag-bg py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -767,55 +705,66 @@
 
 
 
-    <footer id="kontak" class="bg-gray-800 py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-2xl font-extrabold mb-3 text-kemenag-green">Effinancient</h3>
-                    <p class="text-gray-400 text-sm">
-                        Koperasi Pegawai Kemenag Kota Yogyakarta. Berkah untuk Anggota, Maju Bersama.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 border-b border-kemenag-green pb-1">Navigasi</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-kemenag-green transition duration-150">Tentang
-                                Kami</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-kemenag-green transition duration-150">Laporan
-                                SHU</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-kemenag-green transition duration-150">Kebijakan
-                                Privasi</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 border-b border-kemenag-green pb-1">Hubungi Kami</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-kemenag-green"></i> Jl.
-                            Jawa No. 1, Kota Yogyakarta</li>
-                        <li class="flex items-center"><i class="fas fa-phone mr-2 text-kemenag-green"></i> (0274) 123456
-                        </li>
-                        <li class="flex items-center"><i class="fas fa-envelope mr-2 text-kemenag-green"></i>
-                            admin@effinancient.com</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 border-b border-kemenag-green pb-1">Ikuti Kami</h4>
-                    <div class="flex space-x-4 text-2xl">
-                        <a href="#" class="text-gray-400 hover:text-kemenag-green transition duration-150"><i
-                                class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-kemenag-green transition duration-150"><i
-                                class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-kemenag-green transition duration-150"><i
-                                class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
+    <footer id="kontak" class="footer-custom pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-left">
+            
+            <div class="space-y-6">
+                <h3 class="text-3xl font-black tracking-tighter text-white">
+                    Effin<span class="text-emerald-500">ancient</span>
+                </h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    Koperasi Pegawai Kemenag Kota Yogyakarta. Berkah untuk Anggota, Maju Bersama melalui layanan digital terpercaya.
+                </p>
             </div>
-            <div class="mt-10 pt-6 border-t border-gray-700 text-center text-gray-500 text-sm">
-                &copy; 2024 Effinancient. All rights reserved. Crafted with <span
-                    class="text-kemenag-green">&hearts;</span> for Effinancient
+
+            <div>
+                <h4 class="footer-title">Navigasi</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="footer-link">Tentang Kami</a></li>
+                    <li><a href="#" class="footer-link">Laporan SHU</a></li>
+                    <li><a href="#" class="footer-link">Kebijakan Privasi</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-title">Hubungi Kami</h4>
+                <ul class="space-y-4">
+                    <li class="contact-item">
+                        <i class="fas fa-map-marker-alt text-emerald-500"></i>
+                        <span>Jl. Jawa No. 1, Yogyakarta</span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fas fa-phone text-emerald-500"></i>
+                        <span>(0274) 123456</span>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fas fa-envelope text-emerald-500"></i>
+                        <span>admin@effinancient.com</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-title">Ikuti Kami</h4>
+                <div class="flex space-x-3">
+                    <a href="#" class="social-box"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-box"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-box"><i class="fab fa-youtube"></i></a>
+                </div>
             </div>
         </div>
-    </footer>
+
+        <div class="mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-slate-500 text-xs tracking-widest uppercase">
+                &copy; 2024 <span class="text-white font-bold">Effinancient</span>. All rights reserved.
+            </p>
+            <p class="text-slate-600 text-[11px]">
+                Crafted with <span class="text-red-500">♥</span> for KPRI Bakti Mulia
+            </p>
+        </div>
+    </div>
+</footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -847,7 +796,7 @@
     });
     </script>
 
-   <script>
+    <script>
     document.addEventListener('click', function (e) {
         const btn = document.getElementById('dataInfoBtn');
         const menu = document.getElementById('dataInfoMenu');
@@ -855,22 +804,480 @@
 
         if (!btn || !menu) return;
 
-        // Klik tombol dropdown
+        // Toggle dropdown when clicking the button (animated)
         if (btn.contains(e.target)) {
-            menu.classList.toggle('hidden');
+            const isHidden = menu.classList.contains('hidden');
+
+            if (isHidden) {
+                // show: remove hidden and start enter classes
+                menu.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    menu.classList.remove('opacity-0', 'scale-95', '-translate-y-2', 'pointer-events-none');
+                    menu.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+                });
+                btn.setAttribute('aria-expanded', 'true');
+            } else {
+                // hide: play exit classes then set hidden after transition
+                menu.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+                menu.classList.add('opacity-0', 'scale-95', '-translate-y-2', 'pointer-events-none');
+                btn.setAttribute('aria-expanded', 'false');
+                setTimeout(() => menu.classList.add('hidden'), 220);
+            }
+
             icon.classList.toggle('rotate-180');
             return;
         }
 
-        // Klik di luar dropdown
+        // Click outside: ensure hidden
         if (!menu.contains(e.target)) {
-            menu.classList.add('hidden');
-            icon.classList.remove('rotate-180');
+            if (!menu.classList.contains('hidden')) {
+                menu.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+                menu.classList.add('opacity-0', 'scale-95', '-translate-y-2', 'pointer-events-none');
+                icon.classList.remove('rotate-180');
+                btn.setAttribute('aria-expanded', 'false');
+                setTimeout(() => menu.classList.add('hidden'), 220);
+            }
         }
     });
     </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sectionAngka = document.getElementById('angka');
+        const counters = sectionAngka.querySelectorAll('.text-6xl');
+        let hasAnimated = false;
 
+        const animateCounter = (el) => {
+            const targetText = el.innerText;
+            // Mengambil angka murni (menghapus +, %, M)
+            const targetValue = parseInt(targetText.replace(/[^0-9]/g, ''));
+            // Menyimpan simbol (suffix) seperti +, %, atau M+
+            const suffix = targetText.replace(/[0-9]/g, '');
+            
+            let count = 0;
+            const duration = 2000; // Durasi animasi 2 detik
+            const increment = targetValue / (duration / 16); // 16ms per frame (60fps)
+
+            const updateCount = () => {
+                count += increment;
+                if (count < targetValue) {
+                    el.innerHTML = `${Math.ceil(count)}<span class="text-3xl">${suffix}</span>`;
+                    requestAnimationFrame(updateCount);
+                } else {
+                    el.innerHTML = `${targetValue}<span class="text-3xl">${suffix}</span>`;
+                }
+            };
+
+            updateCount();
+        };
+
+        // Deteksi scroll menggunakan Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !hasAnimated) {
+                counters.forEach(counter => animateCounter(counter));
+                hasAnimated = true; // Agar animasi hanya berjalan sekali
+            }
+        }, { threshold: 0.5 }); // Animasi dimulai saat 50% section terlihat
+
+        observer.observe(sectionAngka);
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Animasi Floating untuk Judul Utama
+        const heroTitle = document.querySelector('.hero-bg-image h1');
+        if (heroTitle) {
+            heroTitle.animate([
+                { transform: 'translateY(0px)' },
+                { transform: 'translateY(-15px)' },
+                { transform: 'translateY(0px)' }
+            ], {
+                duration: 5000,
+                iterations: Infinity,
+                easing: 'ease-in-out'
+            });
+        }
+
+        // 2. Efek Parallax pada Background Hero
+        const heroSection = document.querySelector('.hero-bg-image');
+        window.addEventListener('scroll', () => {
+            const scrollValue = window.scrollY;
+            if (heroSection) {
+                // Background bergerak lebih lambat dari scroll (efek depth)
+                heroSection.style.backgroundPositionY = (scrollValue * 0.5) + 'px';
+            }
+        });
+
+        // 3. Animasi Glow pada Tombol "Masuk" secara berkala
+        const loginBtn = document.querySelector('.hero-bg-image a');
+        if (loginBtn) {
+            setInterval(() => {
+                loginBtn.classList.add('animate-pulse');
+                setTimeout(() => {
+                    loginBtn.classList.remove('animate-pulse');
+                }, 2000);
+            }, 4000);
+        }
+
+        // 4. Animasi Fade-in halus untuk Deskripsi
+        const heroDesc = document.querySelector('.hero-bg-image p.mt-6');
+        if (heroDesc) {
+            heroDesc.style.opacity = '0';
+            heroDesc.style.transform = 'translateY(20px)';
+            heroDesc.style.transition = 'all 1s ease-out 0.8s';
+            
+            // Trigger setelah halaman dimuat
+            setTimeout(() => {
+                heroDesc.style.opacity = '1';
+                heroDesc.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    });
+</script>
+
+<style>
+    /* Menambahkan efek transisi smooth untuk parallax */
+    .hero-bg-image {
+        transition: background-position 0.1s ease-out;
+        background-attachment: fixed; /* Membuat efek parallax lebih terasa */
+    }
+
+    /* Modifikasi drop shadow agar lebih dramatis saat animasi */
+    h1.font-extrabold {
+        text-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+</style>
+<style>
+    /* 1. Efek Kilau Logam Bergerak pada Judul */
+    .hero-bg-image h1 {
+        background: linear-gradient(90deg, #FCB53B, #fff, #FCB53B);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine-gold 3s linear infinite;
+        filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
+    }
+
+    @keyframes shine-gold {
+        to { background-position: 200% center; }
+    }
+
+    /* 2. Efek Glassmorphism & Glow pada Tombol */
+    .hero-bg-image a[href="/login"] {
+        backdrop-filter: blur(8px);
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 20px rgba(5, 150, 105, 0.3), inset 0 0 10px rgba(255,255,255,0.5);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* 3. Efek Cahaya Menyapu (Light Sweep) pada Tombol */
+    .hero-bg-image a[href="/login"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+        transform: skewX(-25deg);
+        transition: 0.5s;
+    }
+
+    .hero-bg-image a[href="/login"]:hover::before {
+        left: 150%;
+    }
+
+    /* 4. Overlay Gradasi untuk Kedalaman */
+    .image-overlay {
+        background: linear-gradient(135deg, rgba(4, 120, 87, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%);
+    }
+</style>
+<script>
+document.addEventListener('mousemove', function(e) {
+    const hero = document.querySelector('.hero-bg-image');
+    const h1 = hero.querySelector('h1');
+    const pSlogan = hero.querySelector('p.text-xl');
+    const btn = hero.querySelector('a');
+
+    // Menghitung posisi mouse
+    let x = (window.innerWidth / 2 - e.pageX) / 30;
+    let y = (window.innerHeight / 2 - e.pageY) / 30;
+
+    // Memberikan efek gerakan berbeda (parallax) tiap layer tanpa ubah HTML
+    // Judul bergerak paling lambat (jauh)
+    h1.style.transform = `translateX(${x * 0.5}px) translateY(${y * 0.5}px)`;
+    
+ 
+    // Background bergerak sedikit berlawanan
+    hero.style.backgroundPosition = `${50 + x * 0.1}% ${50 + y * 0.1}%`;
+});
+
+// Reset posisi saat mouse keluar area
+document.querySelector('.hero-bg-image').addEventListener('mouseleave', function() {
+    const elements = this.querySelectorAll('h1, p, a');
+    elements.forEach(el => {
+        el.style.transform = `translateX(0) translateY(0)`;
+        el.style.transition = 'transform 0.5s ease-out';
+    });
+});
+</script>
+<style>
+    /* Pewarnaan Ikon yang lebih hidup */
+    .icon-pokok i { color: #059669; filter: drop-shadow(0 4px 6px rgba(5,150,105,0.2)); }
+    .icon-wajib i { color: #FCB53B; filter: drop-shadow(0 4px 6px rgba(252,181,59,0.2)); }
+    .icon-qurban i { color: #A72703; filter: drop-shadow(0 4px 6px rgba(167,39,3,0.2)); }
+
+    /* Style untuk tombol di dalam card agar seragam */
+    .btn-soft {
+        background: rgba(5, 150, 105, 0.1);
+        color: #059669;
+        transition: all 0.3s ease;
+    }
+
+    .card-pokok:hover .btn-soft, 
+    .card-wajib:hover .btn-soft, 
+    .card-qurban:hover .btn-soft {
+        background: #059669;
+        color: white;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* Animasi mengapung untuk ikon saat card di-hover */
+    .grid > div:hover i {
+        animation: floatingIcon 2s ease-in-out infinite;
+    }
+
+    @keyframes floatingIcon {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    /* Background Card saat Hover */
+    .grid > div {
+        background: white;
+        border: 1px solid transparent;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .grid > div:hover {
+        border-color: rgba(5, 150, 105, 0.2);
+        background: linear-gradient(to bottom right, #ffffff, #f9fafb);
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('#layanan .grid > div');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; // posisi x mouse di dalam card
+                const y = e.clientY - rect.top;  // posisi y mouse di dalam card
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Hitung rotasi (maksimal 5 derajat agar tidak pusing)
+                const rotateX = (centerY - y) / 10;
+                const rotateY = (x - centerX) / 10;
+
+                card.style.transform = `perspective(1000px) scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                card.style.zIndex = "10";
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) scale(1) rotateX(0deg) rotateY(0deg)`;
+                card.style.zIndex = "1";
+            });
+        });
+    });
+</script>
+<style>
+    /* 1. Efek Teks Berkilau (Shimmer) */
+    .bg-white.rounded-2xl h3 {
+        background: linear-gradient(90deg, #1f2937, #059669, #FCB53B, #1f2937);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textShimmer 3s linear infinite;
+    }
+
+    @keyframes textShimmer {
+        to { background-position: 200% center; }
+    }
+
+    /* 2. Animasi Denyut pada Card saat Hover */
+    .bg-white.rounded-2xl:hover {
+        animation: hypePulse 2s infinite;
+        border-color: #FCB53B !important;
+    }
+
+    @keyframes hypePulse {
+        0% { box-shadow: 0 0 0 0 rgba(252, 181, 59, 0.4); }
+        70% { box-shadow: 0 0 0 20px rgba(252, 181, 59, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(252, 181, 59, 0); }
+    }
+
+    /* 3. Animasi Poin Misi saat masuk area */
+    .space-y-4 li:hover {
+        transform: scale(1.05) translateX(10px);
+        background: rgba(252, 181, 59, 0.1) !important;
+        font-weight: bold;
+    }
+</style>
+
+<style>
+    /* Link Navigasi */
+    .footer-link {
+        color: #94a3b8; /* slate-400 */
+        transition: all 0.3s ease;
+        display: inline-block;
+        position: relative;
+    }
+
+    .footer-link:hover {
+        color: #10b981; /* kemenag-green */
+        transform: translateX(5px);
+    }
+
+    /* Ikon Sosial Media */
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        background: #1e293b; /* slate-800 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: #94a3b8;
+        transition: all 0.4s ease;
+        border: 1px solid transparent;
+    }
+
+    .social-icon:hover {
+        background: #10b981;
+        color: white;
+        border-color: #34d399;
+        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+        transform: translateY(-5px);
+    }
+
+    /* Dekorasi Background Footer (Statis) */
+    #kontak {
+        background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Efek cahaya redup di pojok agar tidak flat */
+    #kontak::before {
+        content: '';
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 300px;
+        height: 300px;
+        background: rgba(16, 185, 129, 0.03);
+        filter: blur(80px);
+        border-radius: 50%;
+    }
+
+    /* Remove white boxes inside footer: make columns transparent */
+    #kontak .grid > div {
+        background: transparent !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+
+    /* Remove boxed look for the angka (counters) section */
+    #angka .grid > div {
+        background: transparent !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+
+    /* Ensure footer text remains readable on dark background */
+    #kontak .footer-title, #kontak .contact-item, #kontak p, #kontak ul li, #kontak .social-box {
+        color: #e6f7ef !important;
+    }
+</style>
+<!-- Berita section animations: stagger reveal + hover effects -->
+<style>
+    /* initial state for berita cards */
+    #berita .grid > div {
+        opacity: 0;
+        transform: translateY(20px) scale(0.995);
+        transition: transform 600ms cubic-bezier(.2,.9,.2,1), opacity 600ms ease, box-shadow 300ms ease;
+        will-change: transform, opacity;
+    }
+
+    /* visible state after observer */
+    #berita .grid > div.entered {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    /* hover / focus interactions */
+    #berita .grid > div:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 25px 45px -12px rgba(5,150,105,0.18);
+        z-index: 5;
+    }
+
+    /* subtle image zoom on hover */
+    #berita .grid > div img {
+        transition: transform 600ms cubic-bezier(.2,.9,.2,1);
+        will-change: transform;
+    }
+
+    #berita .grid > div:hover img {
+        transform: scale(1.06) translateZ(0);
+    }
+
+    /* small responsive tweak for smaller screens */
+    @media (max-width: 640px) {
+        #berita .grid > div { transform: translateY(8px) scale(0.998); }
+        #berita .grid > div:hover { transform: translateY(-6px) scale(1.01); }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = Array.from(document.querySelectorAll('#berita .grid > div'));
+    if (!cards.length) return;
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const idx = cards.indexOf(entry.target);
+                // stagger reveal by index
+                setTimeout(() => entry.target.classList.add('entered'), idx * 120);
+                io.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.18 });
+
+    cards.forEach(card => io.observe(card));
+
+    // Optional lightweight tilt effect on mouse move for each card
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) - rect.width/2;
+            const y = (e.clientY - rect.top) - rect.height/2;
+            const rotateX = (y / rect.height) * -6; // tilt amount
+            const rotateY = (x / rect.width) * 6;
+            card.style.transform = `translateY(-6px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+});
+</script>
 </body>
 
 </html>

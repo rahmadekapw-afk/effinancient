@@ -48,7 +48,7 @@
     <style>
         /* Menggunakan warna hijau yang lebih cerah untuk fokus */
         .sidebar-bg {
-            background-color: #059669;
+             background-color: #065f46;
             /* emerald-600 */
         }
 
@@ -176,9 +176,9 @@
                 <span class="font-medium text-sm">Manajemen Anggota</span>
             </a>
 
-            {{-- Jenis Layanan --}}
-            <a href="{{ url('/admin/berita_layanan') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
-                @if(Request::is('admin/berita_layanan'))
+            {{-- Jenis Layanan / Artikel --}}
+            <a href="{{ url('/admin/artikel') }}" class="flex items-center gap-3 px-6 py-3 transition-colors 
+                @if(Request::is('admin/artikel'))
                     active-link
                 @else
                     hover:bg-emerald-700
@@ -280,43 +280,79 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
-        // Kode JQuery Sidebar 
-        $(document).ready(function () {
-            var $body = $('body');
-            var $overlay = $('#sidebar-overlay-admin');
+        // Animated Sidebar (GSAP-enhanced) -------------------------------------------------
+        (function () {
+            const $body = $('body');
+            const $overlay = $('#sidebar-overlay-admin');
+            const $sidebar = $('#sidebar-admin');
+            const $hamburger = $('#hamburger-btn-admin');
+            let isOpenDesktop = $(window).width() >= 768;
+
+            // initialize positions with GSAP (no flicker)
+            gsap.set($sidebar, { x: isOpenDesktop ? 0 : -256 });
+            if (!isOpenDesktop) $overlay.addClass('hidden');
+
+            function openSidebarDesktop() {
+                gsap.to($sidebar, { x: 0, duration: 0.45, ease: 'power3.out' });
+                $body.removeClass('sidebar-closed');
+                gsap.to($hamburger.find('i'), { rotation: 90, duration: 0.35, ease: 'power2.out' });
+            }
+
+            function closeSidebarDesktop() {
+                gsap.to($sidebar, { x: -256, duration: 0.45, ease: 'power3.inOut' });
+                $body.addClass('sidebar-closed');
+                gsap.to($hamburger.find('i'), { rotation: 0, duration: 0.35, ease: 'power2.out' });
+            }
+
+            function openSidebarMobile() {
+                gsap.to($sidebar, { x: 0, duration: 0.36, ease: 'power3.out' });
+                $overlay.removeClass('hidden');
+                gsap.to($overlay, { autoAlpha: 1, duration: 0.25 });
+                $body.addClass('sidebar-open-mobile');
+                gsap.to($hamburger.find('i'), { rotation: 90, duration: 0.25 });
+            }
+
+            function closeSidebarMobile() {
+                gsap.to($sidebar, { x: -256, duration: 0.36, ease: 'power3.inOut' });
+                gsap.to($overlay, { autoAlpha: 0, duration: 0.22, onComplete() { $overlay.addClass('hidden'); } });
+                $body.removeClass('sidebar-open-mobile');
+                gsap.to($hamburger.find('i'), { rotation: 0, duration: 0.25 });
+            }
 
             function toggleSidebar() {
                 if ($(window).width() < 768) {
-                    $body.toggleClass('sidebar-open-mobile');
-                    $overlay.toggleClass('hidden');
+                    if ($body.hasClass('sidebar-open-mobile')) closeSidebarMobile();
+                    else openSidebarMobile();
                 } else {
-                    $body.toggleClass('sidebar-closed');
+                    if ($body.hasClass('sidebar-closed') || gsap.getProperty($sidebar[0], 'x') < -10) openSidebarDesktop();
+                    else closeSidebarDesktop();
                 }
             }
 
-            if ($(window).width() >= 768) {
-                $body.removeClass('sidebar-closed');
-            } else {
-                $body.removeClass('sidebar-open-mobile');
-            }
+            // Button bindings
+            $hamburger.on('click', toggleSidebar);
+            $overlay.on('click', function () { if ($(window).width() < 768) closeSidebarMobile(); });
 
-            $('#hamburger-btn-admin').on('click', toggleSidebar);
-
-            $overlay.on('click', function () {
-                if ($(window).width() < 768) {
-                    toggleSidebar();
-                }
-            });
-
+            // Keep layout consistent on resize
             $(window).on('resize', function () {
-                if ($(window).width() >= 768) {
-                    $body.removeClass('sidebar-open-mobile');
+                const wide = $(window).width() >= 768;
+                if (wide) {
+                    // show desktop sidebar
+                    gsap.set($overlay, { autoAlpha: 0 });
                     $overlay.addClass('hidden');
+                    $body.removeClass('sidebar-open-mobile');
+                    if ($body.hasClass('sidebar-closed')) {
+                        gsap.set($sidebar, { x: -256 });
+                    } else {
+                        gsap.set($sidebar, { x: 0 });
+                    }
                 } else {
-                    $body.removeClass('sidebar-closed');
+                    // hide sidebar for mobile by default
+                    $body.addClass('sidebar-closed');
+                    gsap.set($sidebar, { x: -256 });
                 }
             }).trigger('resize');
-        });
+        })();
 
         // Polling untuk notifikasi pinjaman (lonceng)
         $(document).ready(function () {

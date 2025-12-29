@@ -1,3 +1,77 @@
+@extends('material/temp_admin')
+
+@section('content')
+    <div class="p-6">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold">Notifikasi Pengajuan</h2>
+            <div class="flex items-center gap-2">
+                <a href="?show=all" class="px-3 py-2 bg-gray-100 rounded">Tampilkan Semua</a>
+                <button id="mark-read-btn" class="px-3 py-2 bg-emerald-600 text-white rounded">Tandai Dibaca</button>
+            </div>
+        </div>
+
+        <form id="notifs-form">
+            <table class="w-full bg-white rounded shadow overflow-hidden table-auto">
+                <thead class="bg-gray-50 text-left">
+                    <tr>
+                        <th class="p-3"><input id="check-all" type="checkbox"></th>
+                        <th class="p-3">ID</th>
+                        <th class="p-3">Judul</th>
+                        <th class="p-3">Isi</th>
+                        <th class="p-3">Dari Anggota</th>
+                        <th class="p-3">Tanggal</th>
+                        <th class="p-3">Admin Read</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($notifikasis as $n)
+                        <tr class="border-t">
+                            <td class="p-3"><input name="ids[]" value="{{ $n->notifikasi_id }}" type="checkbox" class="row-check"></td>
+                            <td class="p-3">{{ $n->notifikasi_id }}</td>
+                            <td class="p-3 font-semibold">{{ $n->judul }}</td>
+                            <td class="p-3">{{ Str::limit($n->isi, 140) }}</td>
+                            <td class="p-3">{{ $n->anggota_id }} @if(isset($n->username)) ({{ $n->username }}) @endif</td>
+                            <td class="p-3">{{ $n->created_at->format('d M Y H:i') }}</td>
+                            <td class="p-3">@if($n->is_admin_read) <span class="text-sm text-green-600 font-medium">Dibaca</span> @else <span class="text-sm text-red-600 font-medium">Belum</span> @endif</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </form>
+
+        <div class="mt-4">
+            {{ $notifikasis->links() }}
+        </div>
+    </div>
+
+@endsection
+
+@section('scripts')
+    <script>
+        $(function(){
+            $('#check-all').on('change', function(){
+                $('.row-check').prop('checked', this.checked);
+            });
+
+            $('#mark-read-btn').on('click', function(e){
+                e.preventDefault();
+                var ids = $('input.row-check:checked').map(function(){ return $(this).val(); }).get();
+                if (!ids.length) { alert('Pilih minimal satu notifikasi'); return; }
+
+                $.post('/notifikasi/mark-read', { id: ids, _token: '{{ csrf_token() }}' })
+                    .done(function(res){
+                        if (res.ok) {
+                            // reload to reflect changes
+                            location.reload();
+                        } else {
+                            alert('Gagal menandai dibaca');
+                        }
+                    })
+                    .fail(function(){ alert('Terjadi kesalahan jaringan'); });
+            });
+        });
+    </script>
+@endsection
 @extends('material.temp_admin')
 
 @section('content')

@@ -142,13 +142,8 @@ class NotifikasiController extends Controller
             return response()->json(['count' => 0, 'latest' => []]);
         }
 
-        $query = Notifikasi::where('anggota_id', $anggotaId)
-            ->where(function($q) {
-                $q->where('judul', 'like', '%Disetujui%')
-                  ->orWhere('judul', 'like', '%Lunas%')
-                  ->orWhere('judul', 'like', '%disetujui%')
-                  ->orWhere('judul', 'like', '%lunas%');
-            });
+        // Return all notifications for this anggota (limit recent ones) so the bell reflects actual messages.
+        $query = Notifikasi::where('anggota_id', $anggotaId);
 
         $count = $query->count();
         $latest = $query->orderByDesc('created_at')->limit(5)->get(['notifikasi_id','judul','isi','tanggal','created_at']);

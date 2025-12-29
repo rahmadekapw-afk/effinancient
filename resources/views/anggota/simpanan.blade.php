@@ -11,19 +11,45 @@
             </button>
         </div>
         <p class="text-sm text-gray-600 -mt-3">Kelola simpanan dan riwayat setoran Anda</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-        <section class="bg-green-700 text-white rounded-lg shadow-lg p-5 grid grid-cols-2  gap-4">
-            <div>
-                <p class="text-sm font-semibold">Total Simpanan</p>
-                <p class="text-2xl font-bold mt-1">Rp {{ number_format($total_saldo, 0, ',', '.') }}</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<section id="luxury-gold-card" class="relative overflow-hidden bg-[#FFC107] text-[#064e3b] rounded-2xl shadow-[0_20px_40px_rgba(251,191,36,0.3)] p-8 grid grid-cols-2 gap-8 border-b-4 border-[#e6af06] opacity-0 translate-y-10">
+    
+    <div class="absolute inset-0 opacity-5 pointer-events-none" 
+         style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');">
+    </div>
+
+    <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="p-2 bg-[#064e3b]/10 rounded-lg">
+                <i class="bi bi-cash-stack text-[#064e3b] text-xl"></i>
             </div>
-            <div class="border-l border-green-600 pl-4">
-                <p class="text-sm">Simpanan Pokok</p>
-                <p class="text-lg font-semibold">Rp {{ number_format($pokok, 0, ',', '.') }}</p>
-            </div>
+            <p class="text-xs uppercase tracking-[0.2em] font-black opacity-70">Total Simpanan</p>
+        </div>
+        <p class="text-4xl font-black tracking-tighter">
+            <span class="opacity-60 text-2xl">Rp</span> <span class="count-up" data-target="{{ $total_saldo }}">0</span>
+        </p>
+    </div>
 
-        </section>
-
+    <div class="relative z-10 border-l border-[#064e3b]/10 pl-8">
+        <p class="text-[10px] uppercase tracking-widest font-bold opacity-70 mb-1">Simpanan Pokok</p>
+        <p class="text-2xl font-bold flex items-baseline gap-1">
+            <span class="opacity-60 text-sm">Rp</span>
+            <span class="count-up" data-target="{{ $pokok }}">0</span>
+        </p>
+        
+        <div class="mt-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold bg-[#064e3b] text-white shadow-lg">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                TERVERIFIKASI
+            </span>
+        </div>
+    </div>
+</section>
         <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             <div class="bg-white rounded-lg shadow p-5">
@@ -227,6 +253,62 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Entrance Animation
+    gsap.to("#luxury-gold-card", {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "elastic.out(1, 0.8)" // Efek membal yang elegan
+    });
+
+    // 2. Counter Logic
+    const formatIDR = (n) => new Intl.NumberFormat('id-ID').format(Math.floor(n));
+    const counters = document.querySelectorAll('.count-up');
+
+    counters.forEach(el => {
+        const target = parseFloat(el.getAttribute('data-target'));
+        const data = { val: 0 };
+
+        gsap.to(data, {
+            val: target,
+            duration: 2.5,
+            ease: "power4.out",
+            onUpdate: () => {
+                el.innerText = formatIDR(data.val);
+            }
+        });
+    });
+
+    // 3. Hover Interaction (3D Floating)
+    const card = document.querySelector('#luxury-gold-card');
+    card.addEventListener('mousemove', (e) => {
+        const { left, top, width, height } = card.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+
+        gsap.to(card, {
+            rotationY: x * 15,
+            rotationX: y * -15,
+            transformPerspective: 1000,
+            duration: 0.4,
+            ease: "power2.out"
+        });
+    });
+
+    card.addEventListener('mouseleave', () => {
+        gsap.to(card, { 
+            rotationY: 0, 
+            rotationX: 0, 
+            duration: 0.8, 
+            ease: "elastic.out(1, 0.5)" 
+        });
+    });
 });
 </script>
 

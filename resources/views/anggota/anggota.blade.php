@@ -2,19 +2,33 @@
 
 @section('content')
     <div class="p-4 md:p-6 grid grid-cols-1 gap-4 md:gap-6">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-        <section class="bg-green-800 text-white rounded-lg shadow-lg p-5">
-            <h3 class="text-lg font-semibold">Selamat Datang, {{ session('username') }}</h3>
-            <p class="text-sm text-green-100">Berikut ringkasan keuangan Anda di koperasi</p>
+    <section id="welcome-section" class="relative overflow-hidden bg-[#0A192F] text-white rounded-2xl shadow-2xl p-8 opacity-0">
+    <canvas id="fireworksCanvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
 
-
-
-            <div class="mt-4 bg-green-900 rounded-lg p-3">
-                <p class="text-xs text-green-200">Total Saldo</p>
-                <p class="text-2xl font-bold">Rp {{ number_format($total_saldo, 0, ',', '.') }}</p>
+    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+            <h3 id="welcome-text" class="text-2xl font-bold tracking-tight mb-1">
+                Selamat Datang, <span class="text-[#E2B13C]">{{ session('username') }}</span>
+            </h3>
+            <p id="sub-text" class="text-blue-200/70 font-medium">Berikut ringkasan keuangan Anda di koperasi</p>
+        </div>
+        
+        <div id="saldo-box" class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 min-w-[300px] shadow-[0_0_30px_rgba(226,177,60,0.1)] group">
+            <p class="text-[10px] uppercase tracking-[0.3em] font-black text-[#E2B13C] mb-2">Total Saldo </p>
+            <div class="flex items-baseline gap-2">
+                <span class="text-xl font-light text-white/50">Rp</span>
+                <p class="text-4xl font-black tracking-tighter text-white">
+                    <span id="saldo-counter" data-target="{{ $total_saldo }}">0</span>
+                </p>
             </div>
-        </section>
-
+            <div class="w-full h-1 bg-white/10 rounded-full mt-4 overflow-hidden">
+                <div id="saldo-progress" class="h-full bg-[#E2B13C] w-0"></div>
+            </div>
+        </div>
+    </div>
+</section>
         <section class="bg-white rounded-lg shadow p-5">
             <h4 class="text-base font-semibold text-gray-800 mb-3">Aksi Cepat</h4>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -664,5 +678,215 @@
             });
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    // Set ukuran canvas
+    function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Partikel Kembang Api
+    class Particle {
+        constructor(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.velocity = {
+                x: (Math.random() - 0.5) * 8,
+                y: (Math.random() - 0.5) * 8
+            };
+            this.alpha = 1;
+            this.friction = 0.95;
+        }
+
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        update() {
+            this.velocity.x *= this.friction;
+            this.velocity.y *= this.friction;
+            this.x += this.velocity.x;
+            this.y += this.velocity.y;
+            this.alpha -= 0.01;
+        }
+    }
+
+    function createFirework(x, y) {
+        const colors = ['#E2B13C', '#FFFFFF', '#4CC9F0', '#F72585'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle(x, y, color));
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, i) => {
+            if (p.alpha <= 0) {
+                particles.splice(i, 1);
+            } else {
+                p.update();
+                p.draw();
+            }
+        });
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // Jalankan Animasi GSAP
+    const tl = gsap.timeline();
+
+    tl.to("#welcome-section", { 
+        opacity: 1, 
+        duration: 1.5, 
+        ease: "power4.out",
+        onStart: () => {
+            // Ledakan kembang api saat muncul
+            setTimeout(() => createFirework(canvas.width/4, canvas.height/2), 200);
+            setTimeout(() => createFirework(canvas.width/2, canvas.height/3), 600);
+            setTimeout(() => createFirework(canvas.width/1.2, canvas.height/2), 1000);
+        }
+    })
+    .from("#welcome-text", { y: 20, opacity: 0, duration: 1 }, "-=1")
+    .from("#saldo-box", { scale: 0.9, opacity: 0, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
+
+    // Counter Angka
+    const counterEl = document.getElementById('saldo-counter');
+    const targetValue = parseFloat(counterEl.getAttribute('data-target'));
+    const countObj = { val: 0 };
+
+    gsap.to(countObj, {
+        val: targetValue,
+        duration: 3,
+        ease: "expo.out",
+        onUpdate: () => {
+            counterEl.innerText = new Intl.NumberFormat('id-ID').format(Math.floor(countObj.val));
+        }
+    });
+
+    // Animasi Progress Bar
+    gsap.to("#saldo-progress", { width: "100%", duration: 2.5, ease: "power2.inOut", delay: 1 });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. ANIMASI MASUK (ENTRANCE)
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+    tl.to("#welcome-section", {
+        opacity: 1,
+        duration: 1.2,
+        y: 0,
+        startAt: { y: 30 }
+    })
+    .from("#welcome-text", {
+        x: -50,
+        opacity: 0,
+        duration: 0.8
+    }, "-=0.8")
+    .from("#saldo-box", {
+        scale: 0.9,
+        opacity: 0,
+        duration: 1
+    }, "-=0.6");
+
+    // 2. ANIMASI PENGHITUNG SALDO (COUNTER)
+    const saldoElement = document.getElementById('saldo-counter');
+    const targetSaldo = parseFloat(saldoElement.getAttribute('data-target'));
+
+    gsap.to(saldoElement, {
+        innerText: targetSaldo,
+        duration: 2.5,
+        snap: { innerText: 1 }, // Memastikan angka bulat
+        ease: "expo.out",
+        onUpdate: function() {
+            // Format angka ke Rupiah saat update
+            const value = Math.ceil(this.targets()[0].innerText);
+            saldoElement.innerHTML = value.toLocaleString('id-ID');
+        }
+    });
+
+    // 3. ANIMASI PROGRESS BAR
+    gsap.to("#saldo-progress", {
+        width: "100%",
+        duration: 2,
+        ease: "power2.inOut",
+        delay: 0.5
+    });
+
+    // 4. ANIMASI FIREWORKS (CANVAS)
+    initFireworks();
+});
+
+function initFireworks() {
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + 10;
+            this.sx = Math.random() * 3 - 1.5;
+            this.sy = Math.random() * -3 - 2;
+            this.size = Math.random() * 2 + 1;
+            this.life = Math.random() * 100 + 50;
+            this.opacity = 1;
+            this.color = `hsl(${Math.random() * 40 + 30}, 100%, 60%)`; // Warna emas/kuning
+        }
+        update() {
+            this.x += this.sx;
+            this.y += this.sy;
+            this.life--;
+            if (this.life < 0) this.reset();
+        }
+        draw() {
+            ctx.globalAlpha = this.life / 150;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+</script>
+    
 
 @endsection

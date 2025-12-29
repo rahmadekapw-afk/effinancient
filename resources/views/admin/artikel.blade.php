@@ -34,8 +34,8 @@
                         <input name="judul" required class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-4 py-3 focus:border-emerald-500 outline-none transition-all">
                     </div>
                     <div>
-                        <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Slug / Link</label>
-                        <input name="slug" id="slugBerita"  class="w-full bg-slate-100 border-none rounded-xl px-4 py-3 text-slate-400 font-mono text-xs">
+                                 <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">External URL (opsional)</label>
+                        <input name="external_url" placeholder="https://... (jika sumber eksternal)" class="w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-4 py-3 focus:border-emerald-500 outline-none transition-all">
                     </div>
                     <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">Kategori</label>
@@ -116,6 +116,65 @@
     </div>
 </div>
 
+    <div class="max-w-7xl mx-auto mt-8 bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+        <div class="flex items-center gap-3 mb-6">
+            <i data-lucide="list" class="w-6 h-6 text-slate-700"></i>
+            <h3 class="text-lg font-bold text-slate-800 tracking-tight">Daftar Artikel</h3>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-left text-sm">
+                <thead>
+                    <tr class="text-slate-500 uppercase text-xs">
+                        <th class="px-4 py-3">id</th>
+                        <th class="px-4 py-3">kategori</th>
+                        <th class="px-4 py-3">judul</th>
+                        <th class="px-4 py-3">slug</th>
+                        <th class="px-4 py-3">gambar</th>
+                        <th class="px-4 py-3">isi</th>
+                        <th class="px-4 py-3">tanggal</th>
+                        <th class="px-4 py-3">views</th>
+                        <th class="px-4 py-3">status</th>
+                        <th class="px-4 py-3">created_at</th>
+                        <th class="px-4 py-3">updated_at</th>
+                        <th class="px-4 py-3">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-slate-700">
+                    @foreach($artikels as $a)
+                        <tr class="bg-white border-b hover:bg-slate-50">
+                            <td class="px-4 py-3 align-top">{{ $a->id }}</td>
+                            <td class="px-4 py-3 align-top">{{ $a->kategori }}</td>
+                            <td class="px-4 py-3 font-semibold align-top">{{ \Illuminate\Support\Str::limit($a->judul, 60) }}</td>
+                            <td class="px-4 py-3 align-top">{{ $a->slug }}</td>
+                            <td class="px-4 py-3 align-top">
+                                @if($a->gambar)
+                                    <img src="/{{ $a->gambar }}" alt="cover" class="h-20 w-28 object-cover rounded">
+                                @else
+                                    <div class="h-20 w-28 bg-slate-100 flex items-center justify-center text-slate-400 text-xs">No Image</div>
+                                @endif
+                            </td>
+                            <td class="px-4 py-3 align-top">{{ \Illuminate\Support\Str::limit(strip_tags($a->isi), 80) }}</td>
+                            <td class="px-4 py-3 align-top">{{ $a->tanggal }}</td>
+                            <td class="px-4 py-3 align-top">{{ $a->views }}</td>
+                            <td class="px-4 py-3 align-top">{{ $a->status }}</td>
+                            <td class="px-4 py-3 align-top">{{ $a->created_at }}</td>
+                            <td class="px-4 py-3 align-top">{{ $a->updated_at }}</td>
+                            <td class="px-4 py-3 align-top">
+                                <div class="flex gap-3">
+                                    <a href="#" class="text-emerald-600 font-semibold">Edit</a>
+                                    <a href="#" class="text-slate-600">Copy</a>
+                                    <a href="#" class="text-red-600">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 <script>
     // Inisialisasi Lucide Icons
     lucide.createIcons();
@@ -135,50 +194,7 @@
 
 
 </script>
-    
-        <!-- Contoh tampilan artikel yang dimasukkan (data statis sesuai permintaan) -->
-        <div class="max-w-7xl mx-auto mt-8">
-            <h3 class="text-xl font-bold text-slate-800 mb-4">Preview Berita</h3>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                @if(isset($artikels) && $artikels->count())
-                    @foreach($artikels as $a)
-                        <div class="rounded-2xl bg-white shadow p-0 overflow-hidden">
-                            @if($a->gambar)
-                                <img src="/{{ $a->gambar }}" class="h-44 w-full object-cover" alt="{{ $a->judul }}">
-                            @else
-                                <div class="h-44 bg-emerald-600 flex items-center justify-center text-white font-black text-lg">[Gambar]</div>
-                            @endif
-                            <div class="p-6">
-                                <div class="text-emerald-500 text-xs uppercase font-bold mb-2">{{ $a->kategori ?? 'berita' }}</div>
-                                <h4 class="font-bold text-slate-800 mb-2">{{ \Illuminate\Support\Str::limit($a->judul, 60) }}</h4>
-                                <p class="text-sm text-slate-500 mb-4">{{ \Illuminate\Support\Str::limit(strip_tags($a->isi ?? ''), 120) }}</p>
-                                <div class="flex items-center justify-between text-[13px] text-slate-400">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3M3 11h18M5 21h14a2 2 0 002-2V7H3v12a2 2 0 002 2z"></path></svg>
-                                        <span>{{ $a->tanggal }}</span>
-                                    </div>
-                                    @php
-                                        $targetLink = $a->external_url ?? null;
-                                        if (! $targetLink && preg_match('#https?://#i', $a->slug ?? '')) {
-                                            $targetLink = $a->slug;
-                                        }
-                                    @endphp
-                                    @if($targetLink)
-                                        <a href="{{ $targetLink }}" target="_blank" rel="noopener" class="text-emerald-600 font-semibold text-sm">Baca Selengkapnya</a>
-                                    @else
-                                        <a href="{{ url('/berita/'.$a->slug) }}" class="text-emerald-600 font-semibold text-sm">Baca Selengkapnya</a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="col-span-1 md:col-span-3 text-center text-slate-500">Belum ada artikel</div>
-                @endif
-            </div>
-        </div>
-<!-- SweetAlert2: tampilkan notifikasi sukses setelah submit -->
+<!-- SweetAlert2 feedback -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -192,10 +208,9 @@
         @endif
 
         @if($errors->any())
-            // tampilkan error pertama jika ada
             Swal.fire({
                 icon: 'error',
-                title: 'Terjadi Kesalahan',
+                title: 'Gagal',
                 text: '{{ $errors->first() }}'
             });
         @endif

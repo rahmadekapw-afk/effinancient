@@ -16,7 +16,12 @@ class Notifikasi extends Model
         'isi',
         'tanggal',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'is_admin_read'
+    ];
+
+    protected $casts = [
+        'is_admin_read' => 'boolean',
     ];
 
     protected static function booted()

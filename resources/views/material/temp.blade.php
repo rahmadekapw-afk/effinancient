@@ -95,7 +95,7 @@
 
     {{-- batas sweat --}}
     <aside id="sidebar"
-        class="bg-green-800 text-white w-64 h-screen fixed top-0 left-0 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
+        class="bg-[#0B5E3C] text-white w-64 h-screen fixed top-0 left-0 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
 
         <div class="p-4 text-center">
             <h2 class="text-xl font-bold">Koperasi Digital</h2>
@@ -258,29 +258,43 @@
                 }
             }).trigger('resize');
 
-            // Polling notifikasi untuk anggota (lonceng anggota)
-            function updateAnggotaNotif() {
-                $.getJSON('/anggota/notifications')
-                    .done(function(res) {
-                        var count = res.count || 0;
-                        var $badge = $('#anggota-notif-badge');
-                        if (count > 0) {
-                            $badge.text(count > 99 ? '99+' : count);
-                            $badge.removeClass('hidden');
-                            $badge.addClass('animate-pulse');
-                        } else {
-                            $badge.addClass('hidden');
-                            $badge.removeClass('animate-pulse');
-                        }
-                    })
-                    .fail(function() {
-                        // ignore
-                    });
-            }
+            // Polling notifikasi untuk anggota (lonceng anggota) + play sound on new
+            (function () {
+                var prevCount = 0;
+                var bellAudio = document.createElement('audio');
+                bellAudio.src = '/file/sounds/notification.mp3';
+                bellAudio.preload = 'auto';
 
-            // start polling setiap 8 detik
-            updateAnggotaNotif();
-            setInterval(updateAnggotaNotif, 8000);
+                function updateAnggotaNotif() {
+                    $.getJSON('/anggota/notifications')
+                        .done(function(res) {
+                            var count = res.count || 0;
+                            var $badge = $('#anggota-notif-badge');
+                            if (count > 0) {
+                                $badge.text(count > 99 ? '99+' : count);
+                                $badge.removeClass('hidden');
+                                $badge.addClass('animate-pulse');
+                            } else {
+                                $badge.addClass('hidden');
+                                $badge.removeClass('animate-pulse');
+                            }
+
+                            // play sound when new notifications arrive
+                            if (count > prevCount) {
+                                // only attempt to play if user interacted with page (browsers may block autoplay)
+                                try { bellAudio.play().catch(function(){}); } catch(e) {}
+                            }
+                            prevCount = count;
+                        })
+                        .fail(function() {
+                            // ignore
+                        });
+                }
+
+                // start polling setiap 8 detik
+                updateAnggotaNotif();
+                setInterval(updateAnggotaNotif, 8000);
+            })();
 
             // klik bell anggota: buka halaman notifikasi anggota
             $('#anggota-notif-btn').on('click', function () {

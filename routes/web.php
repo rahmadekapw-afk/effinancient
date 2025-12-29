@@ -12,12 +12,14 @@ use App\Http\Controllers\{
     NotifikasiController,
     WaGatewayController,
     LaporanKeuanganController,
+    BeritaController,
     UserController
 };
 use App\Models\LaporanKeuangan;
 
 Route::get('/', function() {
-    return view('welcome');
+    $artikels = \App\Models\Berita::orderBy('created_at', 'desc')->take(3)->get();
+    return view('welcome', ['artikels' => $artikels]);
 });
 
 
@@ -73,6 +75,11 @@ Route::get('/admin/transaksi/konfirmasi/{pinjaman_id}', [AdminController::class,
 Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index'])->middleware('admin.or.super');
 
 
+Route::get('/admin/artikel',[AdminController::class,'artikel'])->middleware('admin.or.super');
+Route::get('/admin/artikel/{id}/edit', [AdminController::class, 'editArtikel'])->middleware('admin.or.super');
+Route::put('/admin/artikel/{id}', [AdminController::class, 'updateArtikel'])->middleware('admin.or.super');
+Route::delete('/admin/artikel/{id}', [AdminController::class, 'hapusArtikel'])->middleware('admin.or.super');
+Route::post('/admin/artikel/{id}/copy', [AdminController::class, 'copyArtikel'])->middleware('admin.or.super');
 Route::get('/admin/berita_layanan',[AdminController::class,'berita_layanan'])->middleware('admin.or.super');
 
 
@@ -266,3 +273,14 @@ Route::get('/wa/test-create-notifikasi/{anggota?}', function ($anggota = 1) {
 
 // Laporan Keuangan
 Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])->name('laporan.index');
+
+// Berita: daftar, buat, simpan
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
+Route::get('/berita/create', [BeritaController::class, 'create'])->name('berita.create');
+Route::get('/berita/{slug}', [BeritaController::class, 'show'])->name('berita.show');
+Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
+ 
+// Admin: simpan artikel dari halaman admin/artikel
+Route::post('/admin/artikel/simpan', [AdminController::class, 'simpanArtikel'])->middleware('admin.or.super');
+// Admin: simpan jenis layanan dari halaman admin/artikel
+Route::post('/admin/jenis_layanan/simpan', [AdminController::class, 'simpanJenisLayanan'])->middleware('admin.or.super');

@@ -50,6 +50,12 @@ class PembayaranController extends Controller
         $orderId = 'INV' . $pembayaran->pembayaran_id . '-' . substr(sha1(time() . rand()), 0, 6);
         $namaAnggota = $anggota->nama ?? 'Anggota #' . $anggotaId;
 
+        // sanitize customer email for Midtrans (Midtrans requires valid email format)
+        $customerEmail = $anggota->email ?? null;
+        if (! filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
+            $customerEmail = config('mail.from.address', 'no-reply@example.com');
+        }
+
         $serverKey = config('services.midtrans.server_key');
         $endpoint = config('services.midtrans.is_production')
             ? 'https://app.midtrans.com/snap/v1/transactions'
@@ -62,7 +68,7 @@ class PembayaranController extends Controller
             ],
             'customer_details' => [
                 'first_name' => $namaAnggota,
-                'email'      => $anggota->email ?? '',
+                'email'      => $customerEmail,
             ],
             'item_details' => [[
                 'id'       => $pinjaman->pinjaman_id,
@@ -300,6 +306,12 @@ class PembayaranController extends Controller
         $orderId = 'INV' . $pembayaran->pembayaran_id . '-' . substr(sha1(time() . rand()), 0, 6);
         $namaAnggota = $anggota->nama ?? 'Anggota #' . $anggotaId;
 
+        // sanitize customer email for Midtrans
+        $customerEmail = $anggota->email ?? null;
+        if (! filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
+            $customerEmail = config('mail.from.address', 'no-reply@example.com');
+        }
+
         $serverKey = config('services.midtrans.server_key');
         $endpoint = config('services.midtrans.is_production')
             ? 'https://app.midtrans.com/snap/v1/transactions'
@@ -312,7 +324,7 @@ class PembayaranController extends Controller
             ],
             'customer_details' => [
                 'first_name' => $namaAnggota,
-                'email'      => $anggota->email ?? '',
+                'email'      => $customerEmail,
             ],
             'item_details' => [[
                 'id'       => $pinjaman->pinjaman_id,
@@ -386,6 +398,12 @@ class PembayaranController extends Controller
         $orderId = 'INV' . $pembayaran->pembayaran_id . '-' . substr(sha1(time() . rand()), 0, 6);
         $namaAnggota = $anggota->nama ?? 'Anggota #' . $anggotaId;
 
+        // sanitize customer email for Midtrans
+        $customerEmail = $anggota->email ?? null;
+        if (! filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
+            $customerEmail = config('mail.from.address', 'no-reply@example.com');
+        }
+
         $serverKey = config('services.midtrans.server_key');
         $endpoint = config('services.midtrans.is_production')
             ? 'https://app.midtrans.com/snap/v1/transactions'
@@ -398,7 +416,7 @@ class PembayaranController extends Controller
             ],
             'customer_details' => [
                 'first_name' => $namaAnggota,
-                'email'      => $anggota->email ?? '',
+                'email'      => $customerEmail,
             ],
             'item_details' => [[
                 'id'       => $pinjaman->pinjaman_id,
