@@ -14,14 +14,127 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
+        :root {
+            --kemenag-green: #059669;
+            --kemenag-dark: #047857;
+            --kemenag-yellow: #FFE797;
+            --kemenag-orange: #FCB53B;
+            --kemenag-red: #A72703;
+            --kemenag-bg: #F1F3E0;
+            --bg-kemenag-gl: #ECF4E8;
+        }
+
+        /* Konfigurasi Dark Mode Tailwind */
+        body.dark {
+            background-color: var(--kemenag-bg-dark);
+            color: #e2e8f0;
+        }
+
         /* Menambahkan font default sans-serif (bawaan tailwind) */
         body {
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+             transition: background-color 0.8s ease;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+       /* Set Background Dasar Siang */
+        body.light-mode {
+            background-color: var(--kemenag-yellow);
+        }
+
+       /* Set Background Dasar Malam */
+        body.dark-mode {
+            background-color: #0c1221; /* Biru Kehitaman */
+        }
+
+        /* Layer Background Gambar */
+        .bg-image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.8s ease, opacity 0.8s ease;
+            z-index: -1;
+        }
+
+        /* Mode Siang */
+        body.light-mode .bg-image-overlay {
+            /* Path diarahkan ke folder img dan ekstensi diubah ke .png */
+            background-image: url("{{ asset('img/siang.png') }}");
+            opacity: 0.7;
+        }
+
+        /* Mode Malam */
+        body.dark-mode .bg-image-overlay {
+            /* Pastikan file malam juga ada di folder img dengan ekstensi .png */
+            background-image: url("{{ asset('img/malam.png') }}");
+            opacity: 0.5;
+        }
+
+        /* Card Login dengan Efek Kaca (Glassmorphism) */
+        .login-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 3rem;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 4px solid transparent;
+        }
+
+        body.dark-mode .login-card {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: var(--kemenag-dark);
+            color: white;
+        }
+
+        .login-card:hover {
+            transform: scale(1.02);
+            border-color: var(--kemenag-green);
+        }
+
+        /* Tombol Toggle yang Mengambang */
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            border: 3px solid white;
+        }
+
+        body.light-mode .theme-toggle { background: var(--kemenag-orange); color: white; }
+        body.dark-mode .theme-toggle { background: #1e293b; color: var(--kemenag-yellow); }
+
+        .theme-toggle:hover { transform: rotate(360deg) scale(1.1); }
+
+        .tab-active {
+            background-color: var(--kemenag-green) !important;
+            color: white !important;
+            box-shadow: 0 8px 15px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Input yang ramah lansia */
+        input::placeholder { font-size: 1.1rem; opacity: 0.6; }
     </style>
 </head>
 
-<body class="bg-green-50 text-gray-800">
+<body class="light-mode"> <div class="bg-image-overlay"></div>
     {{-- alert --}}
     @if(session('pesan_sukses'))
         <script>
@@ -47,21 +160,20 @@
         </script>
     @endif
 
-    <div class="min-h-screen flex flex-col justify-center items-center p-4">
+    <div id="btn-toggle" class="theme-toggle">
+        <i id="theme-icon" class="bi bi-sun-fill text-3xl"></i>
+    </div>
 
-        <main class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-md">
+    <div class="w-full max-w-lg p-4 relative">
 
-            <div class="flex mb-6">
-                <button id="tab-anggota"
-                    class="tab-btn flex-1 py-3 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 bg-white text-green-600 shadow-md">
-                    <i class="bi bi-person-fill"></i>
-                    Anggota
+        <main class="login-card bg-white rounded-[3rem] p-8 md:p-12 shadow-2xl overflow-hidden">
+
+            <div class="flex mb-10 p-2 bg-gray-100 dark:bg-gray-900 rounded-2xl border-2 border-transparent focus-within:border-[var(--kemenag-yellow)]">
+                <button id="tab-anggota" class="tab-btn flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 tab-active text-xl">
+                    <i class="bi bi-person-circle"></i> Anggota
                 </button>
-
-                <button id="tab-admin"
-                    class="tab-btn flex-1 py-3 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 text-gray-500 hover:bg-gray-100">
-                    <i class="bi bi-person-fill-gear"></i>
-                    Admin
+                <button id="tab-admin" class="tab-btn flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 text-gray-500 dark:text-gray-400 hover:text-[var(--kemenag-green)] text-xl">
+                    <i class="bi bi-shield-lock"></i> Admin
                 </button>
             </div>
 
@@ -177,8 +289,11 @@
 
         </main>
 
-        <footer class="mt-6 text-center text-gray-500 text-sm">
-            © 2024 Koperasi Digital. Sistem koperasi modern dan terpercaya.
+        <footer class="mt-6 text-center">
+            <p class="text-gray-700 font-bold text-lg italic">
+                <span class="text-[var(--kemenag-green)]">Koperasi</span> Digital Modern & Terpercaya
+            </p>
+            <p class="text-gray-500 mt-1">&copy; 2024 - Kementerian Agama Yogyakarta</p>
         </footer>
     </div>
 
@@ -186,45 +301,35 @@
 
     <script>
         $(document).ready(function () {
-            // Definisikan style untuk tab aktif dan tidakaktif
-            const activeStyles = 'bg-white text-green-600 shadow-md';
-            const inactiveStyles = 'text-gray-500 hover:bg-gray-100';
+            // Logic Ganti Tema
+            $('#btn-toggle').on('click', function () {
+                const body = $('body');
+                const icon = $('#theme-icon');
+                const welcomeText = $('#content-anggota p');
 
-            // Kecepatan animasi (dalam milidetik)
-            const animationSpeed = 200; // 200ms
-
-            // Saat Tab Anggota diklik
-            $('#tab-anggota').on('click', function () {
-                // Jika sudah aktif, jangan lakukan apa-apa
-                if ($(this).hasClass(activeStyles)) {
-                    return;
+                if (body.hasClass('light-mode')) {
+                    body.removeClass('light-mode').addClass('dark-mode');
+                    icon.removeClass('bi-sun-fill').addClass('bi-moon-stars-fill');
+                    welcomeText.text('Selamat malam, Bapak/Ibu Anggota.');
+                } else {
+                    body.removeClass('dark-mode').addClass('light-mode');
+                    icon.removeClass('bi-moon-stars-fill').addClass('bi-sun-fill');
+                    welcomeText.text('Selamat siang, Bapak/Ibu Anggota.');
                 }
-
-                // Atur style tab
-                $(this).removeClass(inactiveStyles).addClass(activeStyles);
-                $('#tab-admin').removeClass(activeStyles).addClass(inactiveStyles);
-
-                // Animasikan konten (REVISI)
-                $('#content-admin').fadeOut(animationSpeed, function () {
-                    $('#content-anggota').fadeIn(animationSpeed);
-                });
             });
 
-            // Saat Tab Admin diklik
-            $('#tab-admin').on('click', function () {
-                // Jika sudah aktif, jangan lakukan apa-apa
-                if ($(this).hasClass(activeStyles)) {
-                    return;
+            // Logic Tab
+            $('.tab-btn').on('click', function () {
+                $('.tab-btn').removeClass('tab-active text-gray-500 dark:text-gray-400');
+                $(this).addClass('tab-active');
+
+                if ($(this).attr('id') === 'tab-anggota') {
+                    $('#content-admin').hide();
+                    $('#content-anggota').fadeIn();
+                } else {
+                    $('#content-anggota').hide();
+                    $('#content-admin').fadeIn();
                 }
-
-                // Atur style tab
-                $(this).removeClass(inactiveStyles).addClass(activeStyles);
-                $('#tab-anggota').removeClass(activeStyles).addClass(inactiveStyles);
-
-                // Animasikan konten (REVISI)
-                $('#content-anggota').fadeOut(animationSpeed, function () {
-                    $('#content-admin').fadeIn(animationSpeed);
-                });
             });
         });
     </script>
