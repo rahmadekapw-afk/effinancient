@@ -509,7 +509,7 @@
 
             <form method="POST" action="{{ url('admin/manajemen_anggota/tambah') }}">
                 @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4">
                     <div>
                         <h4 class="text-lg font-semibold text-green-700 mb-3 border-b pb-1">Data Akun & Identitas</h4>
 

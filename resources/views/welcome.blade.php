@@ -573,7 +573,6 @@
         </div>
     </section>
 
-   
 
 <!-- ================== STANDAR LAYANAN (DI ATAS FOOTER) ================== -->
  <section class="kemenag-bg py-20">
@@ -598,21 +597,12 @@
             <aside class="lg:col-span-1 bg-white rounded-2xl shadow-lg p-6 h-fit ppid-sidebar">
                 <ul class="space-y-1 text-sm font-medium">
 
-                    <li><button class="ppid-btn active" data-target="ketentuan">Ketentuan Umum</button></li>
+                    <li><button class="ppid-btn active" data-target="Sertifikat Koperasi">Sertifikat Koperasi</button></li>
+                    <li><button class="ppid-btn" data-target="Sertifikat Pengurus">Sertifikat Pengurus</button></li>
                     <li><button class="ppid-btn" data-target="anggaran-kpri">Anggaran Rumah Tangga KPRI Bakti Mulia</button></li>
-                    <li><button class="ppid-btn" data-target="hak-pemohon">Hak dan Kewajiban Pemohon</button></li>
-                    <li><button class="ppid-btn" data-target="hak-badan">Hak dan Kewajiban Badan Publik</button></li>
-                    <li><button class="ppid-btn" data-target="jalur-waktu">Jalur dan Waktu Layanan</button></li>
-                    <li><button class="ppid-btn" data-target="standar-biaya">Standar Biaya</button></li>
-                    <li><button class="ppid-btn" data-target="permohonan">Prosedur Permohonan Informasi Publik</button></li>
-                    <li><button class="ppid-btn" data-target="keberatan">Prosedur Pengajuan Keberatan atau Sengketa Informasi Publik</button></li>
-                    <li><button class="ppid-btn" data-target="pengelolaan">Prosedur Pengelolaan Website dan Medsos</button></li>
-                    <li><button class="ppid-btn" data-target="konsekuensi">Pengajuan Konsekuensi</button></li>
-                    <li><button class="ppid-btn" data-target="khusus">Pelayanan Berkebutuhan Khusus</button></li>
-                    <li><button class="ppid-btn" data-target="sarana">Sarana dan Prasarana Pelayanan</button></li>
-                    <li><button class="ppid-btn" data-target="rentan">Pelayanan Ramah Kelompok Rentan</button></li>
-                    <li><button class="ppid-btn" data-target="mpp">Standar Pelayanan Mall Pelayanan Publik Kantor Kementerian Kota Yogyakarta</button></li>
-                    <li><button class="ppid-btn" data-target="kua">Standar Pelayanan Kantor Urusan Agama (KUA) se-Kota Yogyakarta</button></li>
+                    <li><button class="ppid-btn" data-target="Prestasi">Prestasi</button></li>
+                    <li><button class="ppid-btn" data-target="SOM KPRI BM">Standar Operasional Manajemen</button></li>
+                    <li><button class="ppid-btn" data-target="pengelolaan">Standar Operasional Prosedur</button></li>
 
                 </ul>
             </aside>
@@ -621,7 +611,7 @@
             <div class="lg:col-span-3 rounded-2xl shadow-lg p-10 ppid-content-wrapper">
 
                 <!-- TEMPLATE CONTENT -->
-                <div id="ketentuan" class="ppid-content">
+                <div id="Sertifikat Pengurus" class="ppid-content">
                     <h3>Ketentuan Umum</h3>
                 
                     <p>
@@ -665,37 +655,7 @@
                     <p>Lorem ipsum dolor sit amet. Permohonan informasi dilakukan secara tertulis maupun elektronik.</p>
                 </div>
 
-                <div id="keberatan" class="ppid-content hidden">
-                    <p>Lorem ipsum dolor sit amet. Keberatan diajukan apabila permohonan tidak ditanggapi.</p>
-                </div>
-
-                <div id="pengelolaan" class="ppid-content hidden">
-                    <p>Lorem ipsum dolor sit amet. Pengelolaan website dan media sosial mengikuti prinsip keterbukaan.</p>
-                </div>
-
-                <div id="konsekuensi" class="ppid-content hidden">
-                    <p>Lorem ipsum dolor sit amet. Konsekuensi informasi ditetapkan berdasarkan uji konsekuensi.</p>
-                </div>
-
-                <div id="khusus" class="ppid-content hidden">
-                    <p>Lorem ipsum dolor sit amet. Pelayanan khusus diberikan bagi pemohon berkebutuhan khusus.</p>
-                </div>
-
-                <div id="sarana" class="ppid-content hidden">
-                    <p>Lorem ipsum dolor sit amet. Sarana dan prasarana mendukung pelayanan informasi publik.</p>
-                </div>
-
-                <div id="rentan" class="ppid-content hidden">
-                    <p>Lorem ipsum dolor sit amet. Pelayanan ramah kelompok rentan bersifat inklusif.</p>
-                </div>
-
-                <div id="mpp" class="ppid-content hidden">
-                    <p>Lorem ipsum dolor sit amet. Standar pelayanan MPP diterapkan sesuai kebijakan Kemenag.</p>
-                </div>
-
-                <div id="kua" class="ppid-content hidden">
-                    <p>Lorem ipsum dolor sit amet. Standar pelayanan KUA berlaku di seluruh Kota Yogyakarta.</p>
-                </div>
+              
                 
             </div>
         </div>
