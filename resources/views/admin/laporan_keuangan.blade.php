@@ -9,12 +9,14 @@
                 <p class="text-sm text-gray-600">Smart Financial Report - Pelaporan otomatis keuangan koperasi</p>
             </div>
             <div class="flex gap-3">
-                <button class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
-                    <i class="bi bi-file-earmark-excel"></i> Export Excel
-                </button>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-colors shadow-md">
-                    <i class="bi bi-file-earmark-pdf"></i> Export PDF
-                </button>
+               <div class="flex gap-3">
+                    <a href="{{ route('laporan.excel') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2">
+                        <i class="bi bi-file-earmark-excel"></i> Export Excel
+                    </a>
+                    <a href="{{ route('laporan.pdf') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2">
+                        <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                    </a>
+                </div>
             </div>
         </div>
         
@@ -37,100 +39,78 @@
             <div class="p-6 rounded-lg text-white shadow-xl bg-gradient-to-r from-green-500 to-green-700 relative overflow-hidden">
                 <i class="bi bi-arrow-up-right text-4xl absolute -top-1 -right-1 opacity-20"></i>
                 <p class="text-sm font-light">Total Pemasukan</p>
-                <p class="text-3xl font-bold mt-1">Rp 9.0M</p>
+                <p class="text-3xl font-bold mt-1"> Rp {{ number_format($pemasukan)  }}</p>
                 <span class="absolute top-4 right-4 text-xs font-semibold bg-white bg-opacity-20 px-2 py-1 rounded-full">+12%</span>
             </div>
 
             <div class="p-6 rounded-lg text-white shadow-xl bg-gradient-to-r from-red-500 to-red-700 relative overflow-hidden">
                 <i class="bi bi-arrow-down-right text-4xl absolute -top-1 -right-1 opacity-20"></i>
                 <p class="text-sm font-light">Total Pengeluaran</p>
-                <p class="text-3xl font-bold mt-1">Rp 3.7M</p>
+                <p class="text-3xl font-bold mt-1">Rp {{ number_format($pengeluaran)  }}</p>
                 <span class="absolute top-4 right-4 text-xs font-semibold bg-white bg-opacity-20 px-2 py-1 rounded-full">+8%</span>
             </div>
 
             <div class="p-6 rounded-lg text-white shadow-xl bg-gradient-to-r from-blue-500 to-blue-700 relative overflow-hidden">
                 <i class="bi bi-currency-dollar text-4xl absolute -top-1 -right-1 opacity-20"></i>
-                <p class="text-sm font-light">Laba Bersih</p>
-                <p class="text-3xl font-bold mt-1">Rp 5.3M</p>
+                <p class="text-sm font-light">Laba </p>
+                <p class="text-3xl font-bold mt-1">Rp {{ number_format($laba)  }}</p>
                 <span class="absolute top-4 right-4 text-xs font-semibold bg-white bg-opacity-20 px-2 py-1 rounded-full">+15%</span>
             </div>
         </section>
 
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
-            <div class="bg-white rounded-lg shadow p-5">
-                <h3 class="text-base font-semibold text-gray-800 mb-4">Tren Keuangan Bulanan</h3>
-                <div class="relative h-72">
-                    <canvas id="financialTrendChart"></canvas>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow p-5">
-                <h3 class="text-base font-semibold text-gray-800 mb-4">Perbandingan Pemasukan vs Pengeluaran</h3>
-                <div class="relative h-72">
-                    <canvas id="incomeVsExpenseChart"></canvas>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow p-5">
-                <h3 class="text-base font-semibold text-gray-800 mb-4">Rincian Pemasukan</h3>
-                <div class="relative h-72">
-                    <canvas id="incomeDetailChart"></canvas>
-                </div>
-                <div class="flex flex-wrap justify-center gap-3 text-xs mt-4">
-                    <span class="flex items-center gap-1 text-green-600"><span class="w-2 h-2 rounded-full bg-green-600"></span> Simpanan Wajib 39%</span>
-                    <span class="flex items-center gap-1 text-blue-500"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Simpanan Sukarela 31%</span>
-                    <span class="flex items-center gap-1 text-orange-500"><span class="w-2 h-2 rounded-full bg-orange-500"></span> Bunga Pinjaman 21%</span>
-                    <span class="flex items-center gap-1 text-purple-500"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Lain-lain 9%</span>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow p-5">
-                <h3 class="text-base font-semibold text-gray-800 mb-4">Rincian Pengeluaran</h3>
-                <div class="relative h-72">
-                    <canvas id="expenseDetailChart"></canvas>
-                </div>
-                <div class="flex flex-wrap justify-center gap-3 text-xs mt-4">
-                    <span class="flex items-center gap-1 text-red-600"><span class="w-2 h-2 rounded-full bg-red-600"></span> Operasional 32%</span>
-                    <span class="flex items-center gap-1 text-orange-600"><span class="w-2 h-2 rounded-full bg-orange-600"></span> Gaji Karyawan 41%</span>
-                    <span class="flex items-center gap-1 text-yellow-500"><span class="w-2 h-2 rounded-full bg-yellow-500"></span> Pemeliharaan 16%</span>
-                    <span class="flex items-center gap-1 text-gray-500"><span class="w-2 h-2 rounded-full bg-gray-500"></span> Lain-lain 11%</span>
-                </div>
-            </div>
-        </section>
-        
+     
         <section class="bg-white rounded-lg shadow p-5">
-            <h3 class="text-lg font-bold text-gray-800 mb-4">Laporan Arus Kas</h3>
-            
-            <div class="space-y-3">
-                <div class="flex justify-between items-center py-2 px-3 rounded-lg bg-green-50 border-l-4 border-green-400">
-                    <p class="font-semibold text-gray-800">Saldo Awal</p>
-                    <p class="font-bold text-green-600">+Rp 12.500.000</p>
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Laporan Arus Kas</h3>
+        
+        <div class="space-y-3">
+            @foreach($arus_kas as $item)
+            <div class="border-b border-gray-100 pb-3">
+                <div class="flex justify-between text-xs text-gray-500 mb-1">
+                    <span>{{ $item['tanggal']->format('d/m/Y H:i') }}</span>
+                    <span class="font-medium text-gray-700">{{ $item['keterangan'] }}</span>
                 </div>
-                <div class="flex justify-between py-1 border-b border-gray-200">
-                    <p class="text-gray-700 ml-3">Simpanan Masuk</p>
-                    <p class="text-green-600 font-medium">+Rp 8.500.000</p>
-                </div>
-                <div class="flex justify-between py-1 border-b border-gray-200">
-                    <p class="text-gray-700 ml-3">Pinjaman Keluar</p>
-                    <p class="text-red-600 font-medium">-Rp 5.200.000</p>
-                </div>
-                <div class="flex justify-between py-1 border-b border-gray-200">
-                    <p class="text-gray-700 ml-3">Biaya Operasional</p>
-                    <p class="text-red-600 font-medium">-Rp 1.800.000</p>
-                </div>
-                <div class="flex justify-between py-1 border-b border-gray-200">
-                    <p class="text-gray-700 ml-3">Penarikan Simpanan</p>
-                    <p class="text-red-600 font-medium">-Rp 3.200.000</p>
-                </div>
-                <div class="flex justify-between items-center py-2 px-3 rounded-lg bg-green-50 border-l-4 border-green-400 mt-4">
-                    <p class="font-bold text-gray-900">Saldo Akhir</p>
-                    <p class="font-bold text-green-600">+Rp 10.800.000</p>
-                </div>
-            </div>
-        </section>
 
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                @if($item['masuk'] > 0)
+                <div class="flex justify-between py-1">
+                    <p class="text-gray-700 ml-3 text-sm">Pembayaran Angsuran</p>
+                    <p class="text-green-600 font-bold">+Rp {{ number_format($item['masuk'], 0, ',', '.') }}</p>
+                </div>
+                @endif
+
+                @if($item['keluar'] > 0)
+                <div class="flex justify-between py-1">
+                    <p class="text-gray-700 ml-3 text-sm">Pinjaman Diberikan</p>
+                    <p class="text-red-600 font-bold">-Rp {{ number_format($item['keluar'], 0, ',', '.') }}</p>
+                </div>
+                @endif
+            </div>
+            @endforeach
+
+            <div class="flex justify-between items-center py-2 px-3 rounded-lg bg-blue-50 border-l-4 border-blue-400 mt-4">
+                <p class="font-bold text-gray-900">Total Saldo Kas</p>
+                <p class="font-bold {{ $saldo_akhir < 0 ? 'text-red-600' : 'text-blue-600' }}">
+                    Rp {{ number_format($saldo_akhir, 0, ',', '.') }}
+                </p>
+            </div>
+        </div>
+    </section>
+    <div class="space-y-4">
+        <h4 class="font-bold text-gray-700">Detail Transaksi:</h4>
+        @foreach($arus_kas as $kas)
+        <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
+            <div class="flex justify-between">
+                <span class="text-xs text-gray-500">{{ $kas['tanggal'] }}</span>
+                <span class="font-semibold text-sm">{{ $kas['keterangan'] }}</span>
+            </div>
+            <div class="flex justify-between mt-2">
+                <span class="text-sm text-green-600">Masuk: +{{ number_format($kas['masuk'], 0, ',', '.') }}</span>
+                <span class="text-sm text-red-600">Keluar: -{{ number_format($kas['keluar'], 0, ',', '.') }}</span>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
+        {{-- <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <div class="bg-white rounded-lg shadow p-5">
                 <p class="text-sm text-gray-600">Rasio Likuiditas</p>
@@ -155,7 +135,7 @@
                 <p class="text-2xl font-bold text-gray-900 mt-1">12.3%</p>
                 <p class="text-sm font-medium text-green-600">Efisien</p>
             </div>
-        </section>
+        </section> --}}
 
     </div>
 @endsection

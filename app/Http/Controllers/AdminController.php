@@ -109,139 +109,115 @@ class AdminController extends Controller
 
                 $trenrupiah = ($rataRataTerbaru + $keseluruhan_rata) / 2;
 
+/* =========================================================
+| 1. DATA TRAINING
+=========================================================*/
+$dataTraining = [
+ ['tren'=>'rendah','simpanan'=>'besar','kali'=>'sering','bayar'=>'besar','kelas'=>'tinggi'],
+ ['tren'=>'sedang','simpanan'=>'sedang','kali'=>'jarang','bayar'=>'sedang','kelas'=>'menengah'],
+ ['tren'=>'tinggi','simpanan'=>'kecil','kali'=>'jarang','bayar'=>'kecil','kelas'=>'rendah'],
+ ['tren'=>'sedang','simpanan'=>'besar','kali'=>'sering','bayar'=>'besar','kelas'=>'tinggi'],
+ ['tren'=>'rendah','simpanan'=>'kecil','kali'=>'jarang','bayar'=>'kecil','kelas'=>'rendah'],
+];
 
-                /* =========================================================
-                * 2. DATA TRAINING C4.5
-                * ========================================================= */
-                $dataTraining = [
-                    ['tren'=>'rendah','simpanan'=>'besar','kali'=>'sering','bayar'=>'besar','kelas'=>'tinggi'],
-                    ['tren'=>'sedang','simpanan'=>'sedang','kali'=>'jarang','bayar'=>'sedang','kelas'=>'menengah'],
-                    ['tren'=>'tinggi','simpanan'=>'kecil','kali'=>'jarang','bayar'=>'kecil','kelas'=>'rendah'],
-                    ['tren'=>'sedang','simpanan'=>'besar','kali'=>'sering','bayar'=>'besar','kelas'=>'tinggi'],
-                    ['tren'=>'rendah','simpanan'=>'kecil','kali'=>'jarang','bayar'=>'kecil','kelas'=>'rendah'],
-                ];
+/* =========================================================
+| 2. FUNGSI MATEMATIS C4.5
+=========================================================*/
+function entropy($data){
+ $t=count($data); $k=array_count_values(array_column($data,'kelas')); $e=0;
+ foreach($k as $c){$p=$c/$t; $e-=$p*log($p,2);} return $e;
+}
+function informationGain($d,$a){
+ $t=count($d); $e0=entropy($d);
+ foreach($d as $r)$s[$r[$a]][]=$r;
+ $ea=0; foreach($s as $x)$ea+=(count($x)/$t)*entropy($x);
+ return $e0-$ea;
+}
+function splitInfo($d,$a){
+ $t=count($d); $n=array_count_values(array_column($d,$a)); $s=0;
+ foreach($n as $c){$p=$c/$t; $s-=$p*log($p,2);} return $s;
+}
+function gainRatio($d,$a){
+ $si=splitInfo($d,$a); return $si==0?0:informationGain($d,$a)/$si;
+}
+function majorityClass($d){
+ $k=array_count_values(array_column($d,'kelas')); arsort($k); return array_key_first($k);
+}
 
+/* =========================================================
+| 3. HITUNG ENTROPY, GAIN, ROOT
+=========================================================*/
+$atribut=['tren','simpanan','kali','bayar'];
+$entropyKelas = entropy($dataTraining);
+foreach($atribut as $a){
+ $informationGain[$a]=informationGain($dataTraining,$a);
+ $gainRatio[$a]=gainRatio($dataTraining,$a);
+}
+arsort($gainRatio);
+$root = array_key_first($gainRatio);
 
-                /* =========================================================
-                * 3. FUNGSI ALGORITMA C4.5
-                * ========================================================= */
-                function entropy($data){
-                    $total = count($data);
-                    $kelas = array_count_values(array_column($data,'kelas'));
-                    $entropy = 0;
-                    foreach($kelas as $count){
-                        $p = $count / $total;
-                        $entropy -= $p * log($p,2);
-                    }
-                    return $entropy;
-                }
+/* =========================================================
+| 4. BANGUN POHON
+=========================================================*/
+function buildTree($data,$attrs){
+ $kls=array_unique(array_column($data,'kelas'));
+ if(count($kls)==1) return $kls[0];
+ if(count($attrs)==0) return majorityClass($data);
+ foreach($attrs as $a)$g[$a]=gainRatio($data,$a);
+ arsort($g); $best=array_key_first($g);
+ foreach(array_unique(array_column($data,$best)) as $v){
+   $sub=array_filter($data,fn($d)=>$d[$best]==$v);
+   $tree['atribut']=$best;
+   $tree['cabang'][$v]=count($sub)?buildTree($sub,array_diff($attrs,[$best])):majorityClass($data);
+ }
+ return $tree;
+}
+$tree = buildTree($dataTraining,$atribut);
 
-                function informationGain($data,$atribut){
-                    $entropyAwal = entropy($data);
-                    $total = count($data);
-                    $subset = [];
-                    foreach($data as $row){
-                        $subset[$row[$atribut]][] = $row;
-                    }
-                    $entropyAtribut = 0;
-                    foreach($subset as $sub){
-                        $entropyAtribut += (count($sub)/$total) * entropy($sub);
-                    }
-                    return $entropyAwal - $entropyAtribut;
-                }
+/* =========================================================
+| 5. KLASIFIKASI & OUTPUT
+=========================================================*/
+function classify($tree,$data){
+ if(!is_array($tree)) return $tree;
+ $a=$tree['atribut']; return $tree['cabang'][$data[$a]] ?? majorityClass([]);
+}
 
-                function splitInfo($data,$atribut){
-                    $total = count($data);
-                    $nilai = array_count_values(array_column($data,$atribut));
-                    $split = 0;
-                    foreach($nilai as $count){
-                        $p = $count / $total;
-                        $split -= $p * log($p,2);
-                    }
-                    return $split;
-                }
+$hasil=[];
+foreach(Anggota::all() as $a){
 
-                function gainRatio($data,$atribut){
-                    $gain = informationGain($data,$atribut);
-                    $split = splitInfo($data,$atribut);
-                    return ($split == 0) ? 0 : $gain / $split;
-                }
+ $simpanan_sehat = $a->saldo;
+ $pinjaman_berapa_kali = Pinjaman::where('anggota_id',$a->anggota_id)->count();
+ $total_pembayaran_pinjaman = Pembayaran::where('anggota_id',$a->anggota_id)
+        ->where('status','berhasil')->sum('nominal');
 
+ $uji=[
+   'tren'=>$trenrupiah>=14000?'tinggi':($trenrupiah>=13500?'sedang':'rendah'),
+   'simpanan'=>$simpanan_sehat>=70000000?'besar':($simpanan_sehat>=30000000?'sedang':'kecil'),
+   'kali'=>$pinjaman_berapa_kali>=4?'sering':'jarang',
+   'bayar'=>$total_pembayaran_pinjaman>=80000000?'besar':($total_pembayaran_pinjaman>=30000000?'sedang':'kecil')
+ ];
 
-                /* =========================================================
-                * 4. HITUNG ENTROPY, GAIN, GAIN RATIO (GLOBAL)
-                * ========================================================= */
-                $atribut = ['tren','simpanan','kali','bayar'];
-                $entropyKelas = entropy($dataTraining);
+ $kelas = classify($tree,$uji);
 
-                $informationGain = [];
-                $gainRatio = [];
+ $batas = match($kelas){
+   'tinggi'=>150000000,
+   'menengah'=>75000000,
+   default=>30000000
+ };
 
-                foreach($atribut as $a){
-                    $informationGain[$a] = informationGain($dataTraining,$a);
-                    $gainRatio[$a] = gainRatio($dataTraining,$a);
-                }
+ $hasil[]=[
+   'nama'=>$a->username,
+   'tren_rupiah'=>$trenrupiah,
+   'simpanan'=>$simpanan_sehat,
+   'pembayaran'=>$total_pembayaran_pinjaman,
+   'kali'=>$pinjaman_berapa_kali,
+   'entropy_kelas'=>round($entropyKelas,4),
+   'information_gain'=>round($informationGain[$root],4),
+   'gain_ratio'=>round($gainRatio[$root],4),
+   'batas_pinjaman'=>$batas
+ ];
+}
 
-                arsort($gainRatio);
-                $root = array_key_first($gainRatio);
-
-
-                /* =========================================================
-                * 5. LOOP SEMUA ANGGOTA (ADMIN VIEW)
-                * ========================================================= */
-                $hasil = [];
-                $anggota = Anggota::all();
-
-                foreach($anggota as $a){
-
-                    $simpanan_sehat = $a->saldo;
-
-                    $pinjaman_berapa_kali = Pinjaman::where('anggota_id',$a->anggota_id)->count();
-
-                    $total_pembayaran_pinjaman = Pembayaran::where('anggota_id',$a->anggota_id)
-                        ->where('status','berhasil')
-                        ->sum('nominal');
-
-                    /* ---------- Diskritisasi ---------- */
-                    $dataUji = [
-                        'tren' => $trenrupiah >= 14000 ? 'tinggi' :
-                                ($trenrupiah >= 13500 ? 'sedang' : 'rendah'),
-
-                        'simpanan' => $simpanan_sehat >= 70000000 ? 'besar' :
-                                    ($simpanan_sehat >= 30000000 ? 'sedang' : 'kecil'),
-
-                        'kali' => $pinjaman_berapa_kali >= 4 ? 'sering' : 'jarang',
-
-                        'bayar' => $total_pembayaran_pinjaman >= 80000000 ? 'besar' :
-                                ($total_pembayaran_pinjaman >= 30000000 ? 'sedang' : 'kecil')
-                    ];
-
-                    /* ---------- Klasifikasi ---------- */
-                    switch($dataUji[$root]){
-                        case 'besar':
-                            $batas = 150000000;
-                            break;
-                        case 'sedang':
-                            $batas = 75000000;
-                            break;
-                        default:
-                            $batas = 30000000;
-                    }
-                    
-
-                        $hasil[] = [
-                        'nama' => $a->username,
-                        'tren_rupiah' => $trenrupiah,
-                        'simpanan' => $simpanan_sehat,
-                        'pembayaran' => $total_pembayaran_pinjaman,
-                        'kali' => $pinjaman_berapa_kali,
-                        'entropy_kelas' => $entropyKelas,
-                        'information_gain' => $informationGain[$root],
-                        'gain_ratio' => $gainRatio[$root],
-                        'batas_pinjaman' => $batas
-                    ];
-
-        }
 
 
         // visualisasi diagram pie
@@ -301,6 +277,47 @@ class AdminController extends Controller
                     (int) $data['total_pinjaman'],
                 ];
 
+
+                // visualisasi pinjaman
+
+            $distribusi = Pinjaman::select(DB::raw("
+                CASE
+                    WHEN nominal < 5000000 THEN '0-5jt'
+                    WHEN nominal BETWEEN 5000000 AND 9999999 THEN '5-10jt'
+                    WHEN nominal BETWEEN 10000000 AND 19999999 THEN '10-20jt'
+                    WHEN nominal BETWEEN 20000000 AND 49999999 THEN '20-50jt'
+                    ELSE '50jt+'
+                END AS rentang,
+                COUNT(*) as total
+            "))
+            ->groupBy('rentang')
+            ->orderByRaw("
+                CASE rentang
+                    WHEN '0-5jt' THEN 1
+                    WHEN '5-10jt' THEN 2
+                    WHEN '10-20jt' THEN 3
+                    WHEN '20-50jt' THEN 4
+                    ELSE 5
+                END
+            ")
+            ->get();
+
+        $data['loan_dist_labels'] = $distribusi->pluck('rentang');
+        $data['loan_dist_values'] = $distribusi->pluck('total');
+
+
+        // diagram pembayaran
+            $payments = Pembayaran::selectRaw('DATE(created_at) as tanggal, SUM(nominal) as total')
+                ->groupBy('tanggal')
+                ->orderBy('tanggal')
+                ->limit(31)
+                ->get();
+
+            $data['payment_labels'] = $payments->pluck('tanggal');
+            $data['payment_values'] = $payments->pluck('total');
+
+
+
         return view('admin.admin',$data, [
             'hasil' => $hasil,
             'entropyKelas' => $entropyKelas,
@@ -310,6 +327,20 @@ class AdminController extends Controller
             
         ]);
     }
+
+    public function filterPayments($month)
+        {
+            $payments = Pembayaran::selectRaw('DATE(created_at) as tanggal, SUM(nominal) as total')
+                ->whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$month])
+                ->groupBy('tanggal')
+                ->orderBy('tanggal')
+                ->get();
+
+            return response()->json([
+                'labels' => $payments->pluck('tanggal'),
+                'values' => $payments->pluck('total')
+            ]);
+        }
 
     
 
@@ -501,7 +532,7 @@ class AdminController extends Controller
         if ($admin) {
             session([
                 'admin_id' => $admin->admin_id,
-                'username' => $admin->username,
+                'username_admin' => $admin->username,
                 'nama'     => $admin->nama_admin,
                 'login'    => true,
             ]);
@@ -662,9 +693,10 @@ class AdminController extends Controller
         return back()->with('success', 'Jenis layanan berhasil disimpan');
     }
 
-    public function logout(){
-        session()->flush();
-        return redirect('/login')->with('pesan_sukses', 'Berhasil logout');
+   public function logout(){
+        // Hanya hapus session admin, session anggota tetap aman
+        session()->forget('admin_id'); 
+        return redirect('/login')->with('pesan_sukses', 'Berhasil logout Admin');
     }
 }
     

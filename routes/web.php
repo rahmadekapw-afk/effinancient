@@ -284,3 +284,13 @@ Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store')
 Route::post('/admin/artikel/simpan', [AdminController::class, 'simpanArtikel'])->middleware('admin.or.super');
 // Admin: simpan jenis layanan dari halaman admin/artikel
 Route::post('/admin/jenis_layanan/simpan', [AdminController::class, 'simpanJenisLayanan'])->middleware('admin.or.super');
+
+
+// laporan unduh pdf dan excel
+
+Route::get('/export-excel', [LaporanKeuanganController::class, 'exportExcel'])->name('laporan.excel');
+Route::get('/export-pdf', [LaporanKeuanganController::class, 'exportPdf'])->name('laporan.pdf');
+
+// filter pembayaran
+Route::get('/dashboard/payments/{month}', [AdminController::class, 'filterPayments']);
+Route::get('/dashboard', [AdminController::class, 'dashboard']);

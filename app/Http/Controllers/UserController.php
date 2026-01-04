@@ -43,9 +43,10 @@ class UserController extends Controller
         return back()->with('pesan_error', 'Username atau password salah');
     }
 
-    public function logout(){
-        session()->flush();
-        return redirect('/login')->with('pesan_sukses', 'Berhasil logout');
+        public function logout(){
+        // Hanya hapus session anggota, session admin tetap aman
+        session()->forget('anggota_id');
+        return redirect('/login')->with('pesan_sukses', 'Berhasil logout Anggota');
     }
     
 }
