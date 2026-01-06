@@ -49,7 +49,7 @@ class BeritaController extends Controller
             'kategori' => 'nullable|string|max:255',
             'judul' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
-            'external_url' => 'nullable|url|max:2048',
+            'external_url' => 'nullable|max:2048',
             'gambar' => 'nullable|image|max:2048',
             'isi' => 'nullable|string',
             'tanggal' => 'nullable|date',
