@@ -14,7 +14,6 @@ class Simpanan extends Model
         'nominal',
         'tanggal_setor',
         'saldo',
-         'created_at',
-        'updated_at'
+        'status',
     ];
 }

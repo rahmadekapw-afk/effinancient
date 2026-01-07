@@ -103,10 +103,14 @@ Route::get('/admin/audit_trail',[SuperAdminController::class, 'audit'])->name('s
 
 
 // Admin dan Role
+Route::get('/admin/notifikasi', [NotifikasiController::class, 'adminIndex'])
+    ->name('admin.notifikasi');
+
 // Route::resource('admin', AdminController::class);
 Route::resource('role', RoleController::class);
 
 // Anggota
+Route::post('/anggota/setor', [SimpananController::class, 'store']);
 
 
 // Simpanan

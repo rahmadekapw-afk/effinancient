@@ -20,6 +20,11 @@ class Notifikasi extends Model
         'is_admin_read'
     ];
 
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class, 'anggota_id', 'anggota_id');
+    }
+
     protected $casts = [
         'is_admin_read' => 'boolean',
     ];

@@ -36,17 +36,20 @@ class AdminController extends Controller
                             ->count();
 
         $data['pertumbuhan'] = $pertumbuhan = $simpanan + $pinjaman ;
-        $data ['presentase'] = ($pertumbuhan / $jumlah_anggota ) * 100;
+        $data['presentase'] = $jumlah_anggota > 0
+            ? round(($pertumbuhan / $jumlah_anggota) * 100, 2)
+            : 0;
+
 
         $data['total_transaksi'] = Pembayaran::count();
 
-        $data['notifikasi'] = Notifikasi::leftJoin('anggotas', 'notifikasis.anggota_id', '=', 'anggotas.anggota_id')
-        ->select(
-            'notifikasis.*',
-            'anggotas.username'
-        )
-        ->orderBy('notifikasis.created_at', 'desc')
-        ->get();
+        $data['notifikasi'] = Notifikasi::with('anggota')
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get();
+            Notifikasi::where('is_admin_read', false)
+            ->update(['is_admin_read' => true]);
+
 
         // data tren rupiah
 
@@ -420,7 +423,7 @@ foreach(Anggota::all() as $a){
                     'admin_id' => session('admin_id') ?? null,
                     'anggota_id' => $p->anggota_id,
                     'judul' => 'Pinjaman Disetujui',
-                    'isi' => 'Pinjaman #' . $p->pinjaman_id . ' untuk anggota ' . $p->anggota_id . ' telah disetujui.',
+                    'isi' => 'Pengajuan pinjaman anggota ' . $p->anggota->username . ' telah disetujui.',
                     'tanggal' => now(),
                 ]);
                 // Hapus notifikasi pengajuan yang terkait dengan pinjaman ini

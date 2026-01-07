@@ -194,7 +194,7 @@
             @foreach ($notifikasi as $notif)
                 <div class="border-b pb-4">
                     <!-- Username dari anggota -->
-                    <p class="font-medium text-gray-900">{{ $notif->username ?? 'Admin' }}</p>
+                    <p class="font-medium text-gray-900">{{ $notif->anggota->username ?? 'System' }}</p>
 
                     <!-- Judul & waktu -->
                     <div class="flex justify-between items-center text-sm">
