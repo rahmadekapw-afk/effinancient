@@ -176,15 +176,15 @@ class SimpananController extends Controller
 
     // =========================
     // SIMPAN SIMPANAN (PENDING)
-    // =========================
-    DB::table('simpanans')->insert([
-        'anggota_id' => $anggota->anggota_id,
-        'jenis_simpanan'      => $request->jenis,
-        'nominal'    => $request->nominal,
-        'tanggal_setor' => Carbon::now(),
-        'saldo'      => $request->nominal,
-        'status'     => 'pending',
-    ]);
+    // // =========================
+    // DB::table('simpanans')->insert([
+    //     'anggota_id' => $anggota->anggota_id,
+    //     'jenis_simpanan'      => $request->jenis,
+    //     'nominal'    => $request->nominal,
+    //     'tanggal_setor' => Carbon::now(),
+    //     'saldo'      => $request->nominal,
+    //     'status'     => 'pending',
+    // ]);
 
     // =========================
     // NOTIFIKASI ADMIN
