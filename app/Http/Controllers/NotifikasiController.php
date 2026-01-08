@@ -35,6 +35,17 @@ class NotifikasiController extends Controller
         return view('notifikasi.index', compact('notifikasis'));
     }
 
+    // Admin view for notifikasi
+    public function adminIndex()
+    {
+        $notifikasis = Notifikasi::whereNotNull('admin_id')
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        return view('admin.notifikasi', compact('notifikasis'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */

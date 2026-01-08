@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Admin;
 use App\Models\Anggota;
 use App\Models\Pinjaman;
 use App\Models\Notifikasi;
@@ -159,6 +160,67 @@ class SimpananController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+        'jenis'   => 'required|in:hari_raya,sehat,wajib,pokok,qurban',
+        'nominal' => 'required|numeric|min:1000',
+    ]);
+
+    $anggota = Anggota::where(
+        'anggota_id',
+        session('anggota_id')
+    )->first();
+
+    if (! $anggota) {
+        return back()->withErrors('Anggota tidak ditemukan');
+    }
+
+    // =========================
+    // SIMPAN SIMPANAN (PENDING)
+    // // =========================
+    // DB::table('simpanans')->insert([
+    //     'anggota_id' => $anggota->anggota_id,
+    //     'jenis_simpanan'      => $request->jenis,
+    //     'nominal'    => $request->nominal,
+    //     'tanggal_setor' => Carbon::now(),
+    //     'saldo'      => $request->nominal,
+    //     'status'     => 'pending',
+    // ]);
+
+    // =========================
+    // NOTIFIKASI ADMIN
+    // =========================
+    $label = [
+        'hari_raya' => 'Hari Raya',
+        'sehat'     => 'Sehat',
+        'wajib'     => 'Wajib',
+        'pokok'     => 'Pokok',
+        'qurban'    => 'Qurban',
+    ];
+
+    $judul = 'Pengajuan Simpanan ' . $label[$request->jenis];
+
+    $isi = 'Anggota ' . $anggota->nama_lengkap .
+        ' mengajukan simpanan ' .
+        strtolower($label[$request->jenis]) .
+        ' senilai Rp ' . number_format($request->nominal, 0, ',', '.') .
+        '.';
+
+    $admins = Admin::all();
+
+    foreach ($admins as $admin) {
+            Notifikasi::create([
+                'admin_id' => null, // untuk semua admin
+                'anggota_id' => session('anggota_id'),
+                'judul' => 'Pengajuan Simpanan ' . ucfirst($request->jenis_simpanan),
+                'isi' => 'Anggota ' . session('username') .
+                    ' mengajukan simpanan ' . $request->jenis_simpanan .
+                    ' senilai Rp ' . number_format($request->nominal, 0, ',', '.'),
+                'is_admin_read' => false,
+                'tanggal' => Carbon::now(),
+            ]);
+    }
+
+    return back()->with('success', 'Pengajuan simpanan berhasil dikirim');
     }
 
     /**

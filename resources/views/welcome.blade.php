@@ -318,60 +318,49 @@
 
 
 
-    <section class="hero-bg-image relative py-20 lg:py-32 overflow-hidden">
-        <div class="absolute inset-0 image-overlay"></div>
+   <section class="hero-bg-image relative py-12 lg:py-32 overflow-hidden">
+    <div class="absolute inset-0 image-overlay"></div>
 
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8
-                                text-center relative z-10" data-aos="fade-up">
-            <h1 class="font-extrabold
-                                text-5xl sm:text-6xl lg:text-7xl
-                                tracking-wide
-                                text-kemenag-orange
-                                drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
-                KPRI BAKTI MULIA
-            </h1>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-aos="fade-up">
+        
+        <h1 class="font-extrabold 
+                   text-3xl sm:text-5xl lg:text-7xl 
+                   tracking-wide 
+                   text-kemenag-orange 
+                   drop-shadow-[0_4px_10px_rgba(0,0,0,0.6)]">
+            KPRI BAKTI MULIA
+        </h1>
 
+        <p class="mt-2 sm:mt-4 
+                  text-lg sm:text-2xl lg:text-3xl 
+                  font-semibold 
+                  text-white 
+                  drop-shadow-[0_3px_8px_rgba(0,0,0,0.5)]">
+            KEMENTERIAN AGAMA KOTA YOGYAKARTA
+        </p>
 
+        <p class="mt-4 sm:mt-6 
+                  text-sm sm:text-lg lg:text-2xl 
+                  font-medium 
+                  text-yellow-100 uppercase tracking-wider">
+            "KOPERASI KUAT ANGGOTA SEJAHTERA"
+        </p>
 
-            <!-- SLOGAN -->
-            <p class="mt-4
-                                text-xl sm:text-2xl lg:text-3xl
-                                font-semibold
-                                text-white
-                                drop-shadow-[0_3px_8px_rgba(0,0,0,0.6)]">
-                KEMENTERIAN AGAMA KOTA YOGYAKARTA
+        <a href="/login" class="inline-block mt-8 sm:mt-12 
+                                bg-white text-kemenag-green 
+                                font-bold py-3 px-8 sm:py-4 sm:px-12 
+                                rounded-full text-lg sm:text-xl 
+                                shadow-2xl 
+                                transition-all duration-500 
+                                hover:bg-gray-100 
+                                hover:-translate-y-1" 
+           data-aos="zoom-in" data-aos-delay="400">
+            <i class="fas fa-sign-in-alt mr-2"></i>
+            Masuk
+        </a>
 
-            </p>
-
-
-
-            <!-- DESKRIPSI -->
-            <p class="mt-6
-                                text-base sm:text-lg lg:text-3xl
-                                font-medium
-                                text-yellow-100">
-
-                "KOPERASI KUAT ANGGOTA SEJAHTERA"
-            </p>
-
-
-
-            <!-- TOMBOL -->
-            <a href="/login" class="inline-block mt-12
-                                bg-white text-kemenag-green
-                                font-bold py-4 px-12
-                                rounded-full text-xl
-                                shadow-2xl
-                                transition-all duration-500
-                                hover:bg-gray-100
-                                hover:-translate-y-1" data-aos="zoom-in" data-aos-delay="400">
-                <i class="fas fa-sign-in-alt mr-2"></i>
-                Masuk
-            </a>
-
-        </div>
-
-    </section>
+    </div>
+</section>
 
    <section id="layanan" class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10 md:py-20">
     <div class="text-center mb-8 md:mb-16">

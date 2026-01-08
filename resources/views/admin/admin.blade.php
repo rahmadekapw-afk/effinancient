@@ -128,61 +128,98 @@
                 
             <div class="bg-white rounded-lg shadow p-5 h-full xl:col-span-2">
                 <div class="container-fluid">
-                    <div class="p-6 space-y-8">
-                        <div class="bg-white shadow-sm rounded ">
-                              <h3 class="text-base font-semibold text-gray-800 ">Hasil Kelayakan Pinjaman Anggota C4.5</h3>
-                            <div class="bg-white shadow-sm rounded">
-                                    <div class="px-3 py-2 border-b text-sm font-semibold text-gray-700">
-                                        Hasil Penentuan Batas Pinjaman Anggota
-                                    </div>
-                                    <div class="overflow-x-auto">
-                                        <table class="min-w-full text-xs text-center">
-                                            <thead class="bg-gray-800 text-white">
-                                                <tr>
-                                                    <th class="px-2 py-1">No</th>
-                                                    <th class="px-2 py-1">Nama</th>
-                                                    <th class="px-2 py-1">Tren</th>
-                                                    <th class="px-2 py-1">Simpanan</th>
-                                                    <th class="px-2 py-1">Bayar</th>
-                                                    <th class="px-2 py-1">Pinjam</th>
-                                                    <th class="px-2 py-1">Entropy</th>
-                                                    <th class="px-2 py-1">Batas</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($hasil as $i => $h)
-                                                <tr class="border-t hover:bg-gray-50">
-                                                    <td class="px-2 py-1">{{ $i+1 }}</td>
-                                                    <td class="px-2 py-1 font-medium">{{ $h['nama'] }}</td>
-                                                    <td class="px-2 py-1">{{ number_format($h['tren_rupiah'],1) }}</td>
-                                                    <td class="px-2 py-1">{{ number_format($h['simpanan']) }}</td>
-                                                    <td class="px-2 py-1">{{ number_format($h['pembayaran']) }}</td>
-                                                    <td class="px-2 py-1">{{ $h['kali'] }}x</td>
-                                                    <td class="px-2 py-1 font-mono">{{ number_format($h['entropy_kelas'],4) }}</td>
-                                                    
-                                                    <td class="px-2 py-1">
-                                                        <div class="flex justify-start"> <span class="inline-flex items-center px-2.5 py-1 rounded-md border font-bold text-xs tracking-tight
-                                                                {{ $h['batas_pinjaman'] >= 150000000 ? 'bg-green-50 border-green-200 text-green-700' :
-                                                                ($h['batas_pinjaman'] >= 75000000 ? 'bg-yellow-50 border-yellow-200 text-yellow-700' :
-                                                                'bg-red-50 border-red-200 text-red-700') }}">
-                                                                
-                                                                <i class="bi bi-shield-check mr-1"></i> 
-                                                                <span>Rp {{ number_format($h['batas_pinjaman'], 0, ',', '.') }}</span>
-                                                            </span>
-                                                        </div>
+                    <div class="p-4 space-y-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-base font-semibold text-gray-800">Hasil Kelayakan Pinjaman (5 Terbaru)</h3>
+                            <button onclick="openModalSemua()" class="text-xs font-bold text-emerald-600 hover:text-emerald-800 transition">
+                                Lihat Semua <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
 
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                </div>
-
-                              
-                     </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-xs text-center border">
+                                <thead class="bg-gray-800 text-white">
+                                    <tr>
+                                        <th class="px-2 py-2">No</th>
+                                        <th class="px-2 py-2 text-left">Nama</th>
+                                        <th class="px-2 py-2">Entropy</th>
+                                        <th class="px-2 py-2">Batas Pinjaman</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- Mengambil hanya 5 data pertama --}}
+                                    @foreach(collect($hasil)->take(5) as $i => $h)
+                                    <tr class="border-t hover:bg-gray-50">
+                                        <td class="px-2 py-2">{{ $i+1 }}</td>
+                                        <td class="px-2 py-2 text-left font-medium">{{ $h['nama'] }}</td>
+                                        <td class="px-2 py-2 font-mono">{{ number_format($h['entropy_kelas'],4) }}</td>
+                                        <td class="px-2 py-2">
+                                            <span class="font-bold text-emerald-600">Rp {{ number_format($h['batas_pinjaman'], 0, ',', '.') }}</span>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+            {{-- modal --}}
+            <div id="modalSemuaData" class="fixed inset-0 z-[60] hidden overflow-y-auto">
+                <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+
+                <div class="flex items-center justify-center min-h-screen p-4">
+                    <div class="relative bg-white rounded-2xl shadow-2xl max-w-5xl w-full p-6 overflow-hidden">
+                        <div class="flex justify-between items-center mb-4 border-b pb-3">
+                            <h3 class="text-lg font-bold text-gray-800">Seluruh Hasil Kelayakan Pinjaman</h3>
+                            <button onclick="closeModalSemua()" class="text-gray-400 hover:text-gray-600">
+                                <i class="bi bi-x-lg text-xl"></i>
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto max-h-[70vh]">
+                            <table class="min-w-full text-xs text-center">
+                                <thead class="bg-gray-100 sticky top-0">
+                                    <tr>
+                                        <th class="px-3 py-2 border-b">No</th>
+                                        <th class="px-3 py-2 border-b text-left">Nama</th>
+                                        <th class="px-3 py-2 border-b">Tren</th>
+                                        <th class="px-3 py-2 border-b">Simpanan</th>
+                                        <th class="px-3 py-2 border-b">Bayar</th>
+                                        <th class="px-3 py-2 border-b">Pinjam</th>
+                                        <th class="px-3 py-2 border-b">Entropy</th>
+                                        <th class="px-3 py-2 border-b text-left">Batas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($hasil as $i => $h)
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="px-3 py-2 text-gray-500">{{ $i+1 }}</td>
+                                        <td class="px-3 py-2 text-left font-semibold">{{ $h['nama'] }}</td>
+                                        <td class="px-3 py-2">{{ number_format($h['tren_rupiah'],1) }}</td>
+                                        <td class="px-3 py-2">{{ number_format($h['simpanan']) }}</td>
+                                        <td class="px-3 py-2">{{ number_format($h['pembayaran']) }}</td>
+                                        <td class="px-3 py-2">{{ $h['kali'] }}x</td>
+                                        <td class="px-3 py-2 font-mono">{{ number_format($h['entropy_kelas'],4) }}</td>
+                                        <td class="px-3 py-2 text-left">
+                                            <span class="px-2 py-1 rounded text-[10px] font-bold 
+                                                {{ $h['batas_pinjaman'] >= 150000000 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                                                Rp {{ number_format($h['batas_pinjaman'], 0, ',', '.') }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-6 text-right">
+                            <button onclick="closeModalSemua()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-bold text-sm transition">
+                                Tutup
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -194,7 +231,7 @@
             @foreach ($notifikasi as $notif)
                 <div class="border-b pb-4">
                     <!-- Username dari anggota -->
-                    <p class="font-medium text-gray-900">{{ $notif->username ?? 'Admin' }}</p>
+                    <p class="font-medium text-gray-900">{{ $notif->anggota->username ?? 'System' }}</p>
 
                     <!-- Judul & waktu -->
                     <div class="flex justify-between items-center text-sm">
@@ -495,7 +532,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+<script>
+    function openModalSemua() {
+        const modal = document.getElementById('modalSemuaData');
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Stop scroll background
+    }
 
+    function closeModalSemua() {
+        const modal = document.getElementById('modalSemuaData');
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto'; // Enable scroll kembali
+    }
+
+    // Menutup modal jika klik di luar area modal
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalSemuaData');
+        if (event.target == modal) {
+            closeModalSemua();
+        }
+    }
+</script>
 
 
 

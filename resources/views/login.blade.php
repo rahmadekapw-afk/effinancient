@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <title>Login Koperasi (Revisi)</title>
+    <title>Login</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -160,21 +160,28 @@
         </script>
     @endif
 
-    <div id="btn-toggle" class="theme-toggle">
-        <i id="theme-icon" class="bi bi-sun-fill text-3xl"></i>
+    <div id="btn-toggle" class="theme-toggle fixed z-[100] rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border-2 md:border-4 shadow-xl
+        /* Ukuran HP */
+        top-4 right-4 w-12 h-12 
+        /* Ukuran Desktop */
+        md:top-8 md:right-8 md:w-16 md:h-16">
+        
+        <i id="theme-icon" class="bi bi-sun-fill text-xl md:text-3xl"></i>
     </div>
 
     <div class="w-full max-w-lg p-4 relative">
 
         <main class="login-card bg-white rounded-[3rem] p-8 md:p-12 shadow-2xl overflow-hidden">
-
-            <div class="flex mb-10 p-2 bg-gray-100 dark:bg-gray-900 rounded-2xl border-2 border-transparent focus-within:border-[var(--kemenag-yellow)]">
-                <button id="tab-anggota" class="tab-btn flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 tab-active text-xl">
+            <div class="flex mb-6 md:mb-10 p-1 md:p-2 bg-gray-100 dark:bg-gray-900 rounded-2xl border-2 border-transparent focus-within:border-[var(--kemenag-yellow)]">
+                
+                <button id="tab-anggota" class="tab-btn flex-1 py-2.5 md:py-4 rounded-xl font-bold flex items-center justify-center gap-1 md:gap-2 transition-all duration-300 tab-active text-sm md:text-xl">
                     <i class="bi bi-person-circle"></i> Anggota
                 </button>
-                <button id="tab-admin" class="tab-btn flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 text-gray-500 dark:text-gray-400 hover:text-[var(--kemenag-green)] text-xl">
+                
+                <button id="tab-admin" class="tab-btn flex-1 py-2.5 md:py-4 rounded-xl font-bold flex items-center justify-center gap-1 md:gap-2 transition-all duration-300 text-gray-500 dark:text-gray-400 hover:text-[var(--kemenag-green)] text-sm md:text-xl">
                     <i class="bi bi-shield-lock"></i> Admin
                 </button>
+                
             </div>
 
             <div id="content-anggota" class="tab-content">
@@ -214,9 +221,6 @@
 
                     <div class="flex items-center justify-between mt-4">
                         <div class="flex items-center">
-                            <input id="remember-anggota" name="remember" type="checkbox"
-                                class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600">
-                            <label for="remember-anggota" class="ml-2 block text-sm text-gray-900">Ingat saya</label>
                         </div>
                         <button class="text-sm text-green-600 hover:underline font-medium">Lupa password?</button>
                     </div>
@@ -273,9 +277,6 @@
 
                         <div class="flex items-center justify-between mt-4">
                             <div class="flex items-center">
-                                <input id="remember-admin" name="remember" type="checkbox"
-                                    class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-600">
-                                <label for="remember-admin" class="ml-2 block text-sm text-gray-900">Ingat saya</label>
                             </div>
                         </div>
 
