@@ -19,6 +19,7 @@ class Berita extends Model
         'slug',
         'external_url',
         'gambar',
+        'ringkasan',
         'isi',
         'tanggal',
         'views',

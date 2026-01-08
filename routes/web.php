@@ -15,15 +15,13 @@ use App\Http\Controllers\{
     BeritaController,
     UserController
 };
-use App\Models\LaporanKeuangan;
-
-Route::get('/', function() {
-    $artikels = \App\Models\Berita::orderBy('created_at', 'desc')->take(3)->get();
-    return view('welcome', ['artikels' => $artikels]);
-});
 
 
 // Super Admin
+Route::get('/', [UserController::class, 'welcome']);
+
+
+
 Route::get('/login', [UserController::class, 'index']);
 Route::get('/login_anggota', [UserController::class, 'masuk']);
 Route::post('/admin/manajemen_admin/tambah', [SuperAdminController::class, 'store']);
@@ -75,12 +73,12 @@ Route::get('/admin/transaksi/konfirmasi/{pinjaman_id}', [AdminController::class,
 Route::get('/admin/laporan_keuangan',[LaporanKeuanganController::class,'index'])->middleware('admin.or.super');
 
 
-Route::get('/admin/artikel',[AdminController::class,'artikel'])->middleware('admin.or.super');
-Route::get('/admin/artikel/{id}/edit', [AdminController::class, 'editArtikel'])->middleware('admin.or.super');
-Route::put('/admin/artikel/{id}', [AdminController::class, 'updateArtikel'])->middleware('admin.or.super');
-Route::delete('/admin/artikel/{id}', [AdminController::class, 'hapusArtikel'])->middleware('admin.or.super');
-Route::post('/admin/artikel/{id}/copy', [AdminController::class, 'copyArtikel'])->middleware('admin.or.super');
-Route::get('/admin/berita_layanan',[AdminController::class,'berita_layanan'])->middleware('admin.or.super');
+// Route::get('/admin/artikel',[AdminController::class,'artikel'])->middleware('admin.or.super');
+// Route::get('/admin/artikel/{id}/edit', [AdminController::class, 'editArtikel'])->middleware('admin.or.super');
+// Route::put('/admin/artikel/{id}', [AdminController::class, 'updateArtikel'])->middleware('admin.or.super');
+// Route::delete('/admin/artikel/{id}', [AdminController::class, 'hapusArtikel'])->middleware('admin.or.super');
+// Route::post('/admin/artikel/{id}/copy', [AdminController::class, 'copyArtikel'])->middleware('admin.or.super');
+// Route::get('/admin/berita_layanan',[AdminController::class,'berita_layanan'])->middleware('admin.or.super');
 
 
 
@@ -275,15 +273,18 @@ Route::get('/wa/test-create-notifikasi/{anggota?}', function ($anggota = 1) {
 Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])->name('laporan.index');
 
 // Berita: daftar, buat, simpan
-Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
+Route::get('/admin/artikel', [BeritaController::class, 'index'])->name('berita.index');
 Route::get('/berita/create', [BeritaController::class, 'create'])->name('berita.create');
 Route::get('/berita/{slug}', [BeritaController::class, 'show'])->name('berita.show');
-Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
+// Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
+Route::get('/berita_selengkapnya', [BeritaController::class, 'selengkapnya'])->name('berita.store');
+// Berita: daftar, buat, simpan
+Route::post('/admin/artikel/simpan', [BeritaController::class, 'simpan']);
+Route::delete('/admin/artikel/hapus/{id}', [BeritaController::class, 'destroy']);
+Route::delete('/admin/jenis_layanan/hapus/{id}', [BeritaController::class, 'destroy_jenis']);
  
-// Admin: simpan artikel dari halaman admin/artikel
-Route::post('/admin/artikel/simpan', [AdminController::class, 'simpanArtikel'])->middleware('admin.or.super');
 // Admin: simpan jenis layanan dari halaman admin/artikel
-Route::post('/admin/jenis_layanan/simpan', [AdminController::class, 'simpanJenisLayanan'])->middleware('admin.or.super');
+Route::post('/admin/jenis_layanan/simpan', [BeritaController::class, 'store'])->middleware('admin.or.super');
 
 
 // laporan unduh pdf dan excel
