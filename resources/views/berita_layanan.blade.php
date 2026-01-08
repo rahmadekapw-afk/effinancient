@@ -2,9 +2,12 @@
 <html lang="id">
 
 <head>
+     <link rel="icon" type="image/png" href="{{ asset('img/koperasi.png') }}">
+    
+    <link rel="apple-touch-icon" href="{{ asset('img/koperasi.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Effinancient - Koperasi Kemenag Kota Yogyakarta</title>
+    <title>KPRI BAKTI MULIA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

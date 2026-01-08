@@ -2,9 +2,13 @@
 <html lang="id">
 
 <head>
+    
+    <link rel="icon" type="image/png" href="{{ asset('img/koperasi.png') }}">
+    
+    <link rel="apple-touch-icon" href="{{ asset('img/koperasi.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Effinancient - Koperasi Kemenag Kota Yogyakarta</title>
+    <title>KPRI BAKTI MULIA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -665,6 +669,16 @@
                         <div class="prose prose-sm md:prose-lg prose-emerald max-w-none text-gray-600 leading-relaxed mb-8">
                             {!! $l->isi !!}
                         </div>
+                        
+                      <div class="mb-6">
+                        <a href="{!! $l->link !!}" target="_blank" 
+                           class="inline-flex items-center px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-md transition-all shadow-sm hover:shadow">
+                            <span>Buka Link</span>
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                        </a>
+                    </div>
 
                         @if($l->gambar)
                             @php

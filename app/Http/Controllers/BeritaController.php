@@ -28,7 +28,7 @@ class BeritaController extends Controller
             'judul'   => 'required|string|max:255',
             'kategori'=> 'required|string|max:255',
             'isi'     => 'required',
-            'gambar'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'gambar'  => 'nullable|image|mimes:jpg,jpeg,png,webp',
         ]);
 
         // ✅ Generate slug otomatis jika kosong
@@ -84,7 +84,7 @@ class BeritaController extends Controller
             'jenis_layanan' => 'required|string|max:255',
             'link'          => 'nullable',
             'isi'           => 'nullable|string',
-            'gambar' => 'nullable|file|mimes:jpg,jpeg,png,svg,pdf,doc,docx|max:2048'
+            'gambar' => 'nullable|file|mimes:jpg,jpeg,png,svg,pdf,doc,docx|max:10240'
         ]);
 
         $data = $request->only('jenis_layanan', 'link', 'isi');

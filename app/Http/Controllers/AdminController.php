@@ -423,7 +423,7 @@ foreach(Anggota::all() as $a){
                     'admin_id' => session('admin_id') ?? null,
                     'anggota_id' => $p->anggota_id,
                     'judul' => 'Pinjaman Disetujui',
-                    'isi' => 'Pengajuan pinjaman anggota ' . $p->anggota->username . ' telah disetujui.',
+                    'isi' => 'Pengajuan pinjaman anggota  telah disetujui.',
                     'tanggal' => now(),
                 ]);
                 // Hapus notifikasi pengajuan yang terkait dengan pinjaman ini
