@@ -379,9 +379,9 @@
     <section id="layanan" class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10 md:py-20">
         <div class="text-center mb-8 md:mb-16">
             <h2 class="text-[10px] md:text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-1"
-                data-aos="fade-down">Pilar Utama </h2>
+                data-aos="fade-down">KPRI BAKTI MULIA </h2>
             <p class="text-xl md:text-4xl font-extrabold text-gray-800 px-2" data-aos="fade-down" data-aos-delay="100">
-                Layanan KPRI BAKTI MULIA
+                Melayani dengan Istimewa
             </p>
         </div>
 
@@ -432,10 +432,10 @@
     <section id="angka" class="bg-gray-100 py-12 md:py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-[10px] md:text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-2 text-center"
-                data-aos="zoom-in">Dampak Nyata</h2>
+                data-aos="zoom-in">DAMPAK NYATA KPRI BAKTI MULIA</h2>
             <p class="text-xl md:text-4xl font-extrabold text-gray-800 mb-8 md:mb-12 text-center" data-aos="zoom-in"
                 data-aos-delay="100">
-                KPRI BAKTI MULIA Tumbuh Bersama Anggota
+                 Tumbuh Bersama Anggota
             </p>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 text-center">
