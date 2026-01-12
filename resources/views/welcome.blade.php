@@ -2,9 +2,9 @@
 <html lang="id">
 
 <head>
-    
+
     <link rel="icon" type="image/png" href="{{ asset('img/koperasi.png') }}">
-    
+
     <link rel="apple-touch-icon" href="{{ asset('img/koperasi.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -234,213 +234,232 @@
 
 <body class="font-sans bg-kemenag-bg text-gray-800">
 
-<header class="sticky top-0 z-[100] bg-[#0B5E3C] shadow-2xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-3 md:py-4">
+    <header class="sticky top-0 z-[100] bg-[#0B5E3C] shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-3 md:py-4">
 
-            <div class="flex items-center gap-2 md:gap-4">
-                <div class="flex items-center gap-1.5 md:gap-2">
-                    <img src="{{ asset('img/kemenag.png') }}" class="h-8 md:h-11 hover:scale-110 transition duration-300">
-                    <img src="{{ asset('img/koperasi.png') }}" class="h-8 md:h-11 hover:scale-110 transition duration-300">
-                </div>
+                <div class="flex items-center gap-2 md:gap-4">
+                    <div class="flex items-center gap-1.5 md:gap-2">
+                        <img src="{{ asset('img/kemenag.png') }}"
+                            class="h-8 md:h-11 hover:scale-110 transition duration-300">
+                        <img src="{{ asset('img/koperasi.png') }}"
+                            class="h-8 md:h-11 hover:scale-110 transition duration-300">
+                    </div>
 
-                <div class="leading-tight border-l border-white/50 pl-3 hidden xs:block sm:block">
-                    <p class="text-xs md:text-lg font-bold text-white tracking-wide">KPRI Bakti Mulia</p>
-                    <p class="text-[10px] md:text-sm text-white/80 font-medium hidden md:block">Kementerian Agama Kota Yogyakarta</p>
-                </div>
-            </div>
-
-            <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 text-white font-medium">
-                <a href="#layanan" class="relative group">
-                    <span>Layanan</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#berita" class="relative group">
-                    <span>Berita</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#kontak" class="relative group">
-                    <span>Kontak</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#informasi_2" class="relative group">
-                    <span>Informasi</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <div class="relative group">
-                    <button class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 hover:text-[#FCB53B] transition duration-300">
-                        Lainnya <i class="fas fa-chevron-down text-xs"></i>
-                    </button>
-                    <div class="absolute left-0 mt-3 w-64 bg-[#064E32] rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-white/10">
-                        <a href="#" class="block px-5 py-3 text-white hover:bg-white/10 transition">Standar Layanan Informasi</a>
-                        <a href="#" class="block px-5 py-3 text-white hover:bg-white/10 transition">Neraca Koperasi</a>
+                    <div class="leading-tight border-l border-white/50 pl-3 hidden xs:block sm:block">
+                        <p class="text-xs md:text-lg font-bold text-white tracking-wide">KPRI Bakti Mulia</p>
+                        <p class="text-[10px] md:text-sm text-white/80 font-medium hidden md:block">Kementerian Agama
+                            Kota Yogyakarta</p>
                     </div>
                 </div>
-            </nav>
 
-            <div class="flex items-center gap-2">
-                <a href="/login"
-                    class="bg-white text-[#0B5E3C] font-bold py-1.5 px-4 md:py-2 md:px-6 rounded-full shadow-lg transition duration-300 hover:bg-[#FCB53B] hover:text-white text-xs md:text-base flex items-center">
-                    <i class="fas fa-user md:mr-2"></i> 
-                    <span class="hidden md:inline">Anggota</span>
-                </a>
+                <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 text-white font-medium">
+                    <a href="#layanan" class="relative group">
+                        <span>Layanan</span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#berita" class="relative group">
+                        <span>Berita</span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#kontak" class="relative group">
+                        <span>Kontak</span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#informasi_2" class="relative group">
+                        <span>Informasi</span>
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FCB53B] transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <div class="relative group">
+                        <button
+                            class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 hover:text-[#FCB53B] transition duration-300">
+                            Lainnya <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div
+                            class="absolute left-0 mt-3 w-64 bg-[#064E32] rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-white/10">
+                            <a href="#" class="block px-5 py-3 text-white hover:bg-white/10 transition">Standar Layanan
+                                Informasi</a>
+                            <a href="#" class="block px-5 py-3 text-white hover:bg-white/10 transition">Neraca
+                                Koperasi</a>
+                        </div>
+                    </div>
+                </nav>
 
-                <button id="mobileMenuBtn" class="lg:hidden text-white p-2 focus:outline-none">
-                    <i class="fas fa-bars text-xl" id="menuIcon"></i>
-                </button>
+                <div class="flex items-center gap-2">
+                    <a href="/login"
+                        class="bg-white text-[#0B5E3C] font-bold py-1.5 px-4 md:py-2 md:px-6 rounded-full shadow-lg transition duration-300 hover:bg-[#FCB53B] hover:text-white text-xs md:text-base flex items-center">
+                        <i class="fas fa-user md:mr-2"></i>
+                        <span class="hidden md:inline">Anggota</span>
+                    </a>
+
+                    <button id="mobileMenuBtn" class="lg:hidden text-white p-2 focus:outline-none">
+                        <i class="fas fa-bars text-xl" id="menuIcon"></i>
+                    </button>
+                </div>
+
             </div>
-
         </div>
-    </div>
 
-    <div id="mobileMenu" class="hidden lg:hidden bg-[#084d31] border-t border-white/10 shadow-inner">
-        <div class="px-4 py-6 space-y-4 text-white">
-            <a href="#layanan" class="block font-medium hover:text-[#FCB53B]">Layanan</a>
-            <a href="#berita" class="block font-medium hover:text-[#FCB53B]">Berita</a>
-            <a href="#kontak" class="block font-medium hover:text-[#FCB53B]">Kontak</a>
-            <div class="pt-4 border-t border-white/5">
-                <p class="text-[10px] uppercase text-white/40 mb-2">Informasi</p>
-                <a href="#" class="block py-1 text-sm text-white/80">Neraca Koperasi</a>
-                <a href="#" class="block py-1 text-sm text-white/80">Laporan Statistik</a>
+        <div id="mobileMenu" class="hidden lg:hidden bg-[#084d31] border-t border-white/10 shadow-inner">
+            <div class="px-4 py-6 space-y-4 text-white">
+                <a href="#layanan" class="block font-medium hover:text-[#FCB53B]">Layanan</a>
+                <a href="#berita" class="block font-medium hover:text-[#FCB53B]">Berita</a>
+                <a href="#kontak" class="block font-medium hover:text-[#FCB53B]">Kontak</a>
+                <div class="pt-4 border-t border-white/5">
+                    <p class="text-[10px] uppercase text-white/40 mb-2">Informasi</p>
+                    <a href="#" class="block py-1 text-sm text-white/80">Neraca Koperasi</a>
+                    <a href="#" class="block py-1 text-sm text-white/80">Laporan Statistik</a>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<script>
-    // Script untuk buka-tutup menu mobile
-    const btn = document.getElementById('mobileMenuBtn');
-    const menu = document.getElementById('mobileMenu');
-    const icon = document.getElementById('menuIcon');
+    <script>
+        // Script untuk buka-tutup menu mobile
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+        const icon = document.getElementById('menuIcon');
 
-    btn.addEventListener('click', () => {
-        const isHidden = menu.classList.toggle('hidden');
-        icon.classList.toggle('fa-bars', isHidden);
-        icon.classList.toggle('fa-times', !isHidden);
-    });
-</script>
-
+        btn.addEventListener('click', () => {
+            const isHidden = menu.classList.toggle('hidden');
+            icon.classList.toggle('fa-bars', isHidden);
+            icon.classList.toggle('fa-times', !isHidden);
+        });
+    </script>
 
 
-   <section class="hero-bg-image relative py-12 lg:py-32 overflow-hidden">
-    <div class="absolute inset-0 image-overlay"></div>
 
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-aos="fade-up">
-        
-        <h1 class="font-extrabold 
+    <section class="hero-bg-image relative py-12 lg:py-32 overflow-hidden">
+        <div class="absolute inset-0 image-overlay"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-aos="fade-up">
+
+            <h1 class="font-extrabold 
                    text-3xl sm:text-5xl lg:text-7xl 
                    tracking-wide 
                    text-kemenag-orange 
                    drop-shadow-[0_4px_10px_rgba(0,0,0,0.6)]">
-            KPRI BAKTI MULIA
-        </h1>
+                KPRI BAKTI MULIA
+            </h1>
 
-        <p class="mt-2 sm:mt-4 
+            <p class="mt-2 sm:mt-4 
                   text-lg sm:text-2xl lg:text-3xl 
                   font-semibold 
                   text-white 
                   drop-shadow-[0_3px_8px_rgba(0,0,0,0.5)]">
-            KEMENTERIAN AGAMA KOTA YOGYAKARTA
-        </p>
+                KEMENTERIAN AGAMA KOTA YOGYAKARTA
+            </p>
 
-        <p class="mt-4 sm:mt-6 
+            <p class="mt-4 sm:mt-6 
                   text-sm sm:text-lg lg:text-2xl 
                   font-medium 
                   text-yellow-100 uppercase tracking-wider">
-            "KOPERASI KUAT ANGGOTA SEJAHTERA"
-        </p>
+                "KOPERASI KUAT ANGGOTA SEJAHTERA"
+            </p>
 
-        <a href="/login" class="inline-block mt-8 sm:mt-12 
+            <a href="/login" class="inline-block mt-8 sm:mt-12 
                                 bg-white text-kemenag-green 
                                 font-bold py-3 px-8 sm:py-4 sm:px-12 
                                 rounded-full text-lg sm:text-xl 
                                 shadow-2xl 
                                 transition-all duration-500 
                                 hover:bg-gray-100 
-                                hover:-translate-y-1" 
-           data-aos="zoom-in" data-aos-delay="400">
-            <i class="fas fa-sign-in-alt mr-2"></i>
-            Masuk
-        </a>
+                                hover:-translate-y-1" data-aos="zoom-in" data-aos-delay="400">
+                <i class="fas fa-sign-in-alt mr-2"></i>
+                Masuk
+            </a>
 
-    </div>
-</section>
+        </div>
+    </section>
 
-   <section id="layanan" class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10 md:py-20">
-    <div class="text-center mb-8 md:mb-16">
-        <h2 class="text-[10px] md:text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-1"
-            data-aos="fade-down">Pilar Utama Effinancient</h2>
-        <p class="text-xl md:text-4xl font-extrabold text-gray-800 px-2" data-aos="fade-down" data-aos-delay="100">
-            Layanan Syariah
-        </p>
-    </div>
-
-    <div class="grid grid-cols-3 md:grid-cols-3 gap-2 sm:gap-6 md:gap-8">
-        
-        <div class="card-pokok p-3 md:p-8 rounded-xl md:rounded-2xl shadow-md md:shadow-xl transition duration-500 transform hover:scale-[1.05]"
-            data-aos="fade-up">
-            <div class="text-2xl md:text-5xl icon-pokok mb-2 md:mb-4 text-center md:text-left">
-                <i class="fas fa-piggy-bank"></i>
-            </div>
-            <h3 class="text-[11px] md:text-2xl font-bold mb-1 md:mb-3 text-gray-800 text-center md:text-left leading-tight">Simpanan Pokok</h3>
-            <p class="hidden md:block text-sm md:text-base text-gray-700 leading-relaxed">
-                Simpanan awal keanggotaan sebagai dasar kepesertaan koperasi.
+    <section id="layanan" class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10 md:py-20">
+        <div class="text-center mb-8 md:mb-16">
+            <h2 class="text-[10px] md:text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-1"
+                data-aos="fade-down">Pilar Utama </h2>
+            <p class="text-xl md:text-4xl font-extrabold text-gray-800 px-2" data-aos="fade-down" data-aos-delay="100">
+                Layanan KPRI BAKTI MULIA
             </p>
         </div>
 
-        <div class="card-wajib p-3 md:p-8 rounded-xl md:rounded-2xl shadow-md md:shadow-xl transition duration-500 transform hover:scale-[1.05]"
-            data-aos="fade-up" data-aos-delay="100">
-            <div class="text-2xl md:text-5xl icon-wajib mb-2 md:mb-4 text-center md:text-left">
-                <i class="fas fa-coins"></i>
+        <div class="grid grid-cols-3 md:grid-cols-3 gap-2 sm:gap-6 md:gap-8">
+
+            <div class="card-pokok p-3 md:p-8 rounded-xl md:rounded-2xl shadow-md md:shadow-xl transition duration-500 transform hover:scale-[1.05]"
+                data-aos="fade-up">
+                <div class="text-2xl md:text-5xl icon-pokok mb-2 md:mb-4 text-center md:text-left">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <h3
+                    class="text-[11px] md:text-2xl font-bold mb-1 md:mb-3 text-gray-800 text-center md:text-left leading-tight">
+                    Simpanan Pokok</h3>
+                <p class="hidden md:block text-sm md:text-base text-gray-700 leading-relaxed">
+                    Simpanan awal keanggotaan sebagai dasar kepesertaan koperasi.
+                </p>
             </div>
-            <h3 class="text-[11px] md:text-2xl font-bold mb-1 md:mb-3 text-gray-800 text-center md:text-left leading-tight">Simpanan Wajib</h3>
-            <p class="hidden md:block text-sm md:text-base text-gray-700 leading-relaxed">
-                Setoran rutin bulanan anggota untuk memperkuat koperasi.
-            </p>
+
+            <div class="card-wajib p-3 md:p-8 rounded-xl md:rounded-2xl shadow-md md:shadow-xl transition duration-500 transform hover:scale-[1.05]"
+                data-aos="fade-up" data-aos-delay="100">
+                <div class="text-2xl md:text-5xl icon-wajib mb-2 md:mb-4 text-center md:text-left">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h3
+                    class="text-[11px] md:text-2xl font-bold mb-1 md:mb-3 text-gray-800 text-center md:text-left leading-tight">
+                    Simpanan Wajib</h3>
+                <p class="hidden md:block text-sm md:text-base text-gray-700 leading-relaxed">
+                    Setoran rutin bulanan anggota untuk memperkuat koperasi.
+                </p>
+            </div>
+
+            <div class="card-qurban p-3 md:p-8 rounded-xl md:rounded-2xl shadow-md md:shadow-xl transition duration-500 transform hover:scale-[1.05]"
+                data-aos="fade-up" data-aos-delay="200">
+                <div class="text-2xl md:text-5xl icon-qurban mb-2 md:mb-4 text-center md:text-left">
+                    <i class="fas fa-mosque"></i>
+                </div>
+                <h3
+                    class="text-[11px] md:text-2xl font-bold mb-1 md:mb-3 text-gray-800 text-center md:text-left leading-tight">
+                    Simpanan Hari Raya</h3>
+                <p class="hidden md:block text-sm md:text-base text-gray-700 leading-relaxed">
+                    Tabungan khusus untuk persiapan ibadah
+                </p>
+            </div>
+
         </div>
+    </section>
 
-        <div class="card-qurban p-3 md:p-8 rounded-xl md:rounded-2xl shadow-md md:shadow-xl transition duration-500 transform hover:scale-[1.05]"
-            data-aos="fade-up" data-aos-delay="200">
-            <div class="text-2xl md:text-5xl icon-qurban mb-2 md:mb-4 text-center md:text-left">
-                <i class="fas fa-mosque"></i>
-            </div>
-            <h3 class="text-[11px] md:text-2xl font-bold mb-1 md:mb-3 text-gray-800 text-center md:text-left leading-tight">Simpanan Hari Raya</h3>
-            <p class="hidden md:block text-sm md:text-base text-gray-700 leading-relaxed">
-                Tabungan khusus untuk persiapan ibadah 
+    <section id="angka" class="bg-gray-100 py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-[10px] md:text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-2 text-center"
+                data-aos="zoom-in">Dampak Nyata</h2>
+            <p class="text-xl md:text-4xl font-extrabold text-gray-800 mb-8 md:mb-12 text-center" data-aos="zoom-in"
+                data-aos-delay="100">
+                KPRI BAKTI MULIA Tumbuh Bersama Anggota
             </p>
-        </div>
 
-    </div>
-</section>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 text-center">
 
-   <section id="angka" class="bg-gray-100 py-12 md:py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-[10px] md:text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-2 text-center"
-            data-aos="zoom-in">Dampak Nyata</h2>
-        <p class="text-xl md:text-4xl font-extrabold text-gray-800 mb-8 md:mb-12 text-center" data-aos="zoom-in" data-aos-delay="100">
-            Effinancient Tumbuh Bersama Anggota
-        </p>
+                <div data-aos="flip-up">
+                    <p class="text-3xl md:text-6xl font-extrabold text-kemenag-green mb-1 md:mb-2">
+                        {{ $jumlah_anggota }}<span class="text-xl md:text-3xl">+</span>
+                    </p>
+                    <p
+                        class="text-[10px] md:text-base text-gray-600 font-medium border-t pt-2 border-kemenag-green/50 px-2 leading-tight">
+                        Anggota Aktif Terdaftar
+                    </p>
+                </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 text-center">
-            
-            <div data-aos="flip-up">
-                <p class="text-3xl md:text-6xl font-extrabold text-kemenag-green mb-1 md:mb-2">
-                    {{ $jumlah_anggota }}<span class="text-xl md:text-3xl">+</span>
-                </p>
-                <p class="text-[10px] md:text-base text-gray-600 font-medium border-t pt-2 border-kemenag-green/50 px-2 leading-tight">
-                    Anggota Aktif Terdaftar
-                </p>
-            </div>
-
-            <div data-aos="flip-up" data-aos-delay="100">
-                <p class="text-3xl md:text-6xl font-extrabold text-kemenag-green mb-1 md:mb-2">
-                    95<span class="text-xl md:text-3xl">%</span>
-                </p>
-                <p class="text-[10px] md:text-base text-gray-600 font-medium border-t pt-2 border-kemenag-green/50 px-2 leading-tight">
-                    Tingkat Kepuasan Layanan
-                </p>
-            </div>
-                 @php
+                <div data-aos="flip-up" data-aos-delay="100">
+                    <p class="text-3xl md:text-6xl font-extrabold text-kemenag-green mb-1 md:mb-2">
+                        95<span class="text-xl md:text-3xl">%</span>
+                    </p>
+                    <p
+                        class="text-[10px] md:text-base text-gray-600 font-medium border-t pt-2 border-kemenag-green/50 px-2 leading-tight">
+                        Tingkat Kepuasan Layanan
+                    </p>
+                </div>
+                @php
                     $nominal = $simpanan;
 
                     if ($nominal >= 1000000000000) {
@@ -457,28 +476,30 @@
                         $satuan = '';
                     }
                 @endphp
-                    <div data-aos="flip-up" data-aos-delay="200">
-                        <p class="text-3xl md:text-6xl font-extrabold text-kemenag-green mb-1 md:mb-2">
-                            {{ $hasil }}
-                            <span class="text-xl md:text-3xl">{{ $satuan }}</span>
-                        </p>
+                <div data-aos="flip-up" data-aos-delay="200">
+                    <p class="text-3xl md:text-6xl font-extrabold text-kemenag-green mb-1 md:mb-2">
+                        {{ $hasil }}
+                        <span class="text-xl md:text-3xl">{{ $satuan }}</span>
+                    </p>
 
-                        <p class="text-[10px] md:text-base text-gray-600 font-medium border-t pt-2 border-kemenag-green/50 px-2 leading-tight">
-                            Total Aset Koperasi
-                        </p>
-                    </div>
-                        <div data-aos="flip-up" data-aos-delay="300">
-                            <p class="text-3xl md:text-6xl font-extrabold text-kemenag-green mb-1 md:mb-2">
-                                100<span class="text-xl md:text-3xl">%</span>
-                            </p>
-                            <p class="text-[10px] md:text-base text-gray-600 font-medium border-t pt-2 border-kemenag-green/50 px-2 leading-tight">
-                                RAT Tepat Waktu
-                            </p>
-                        </div>
-                    </div>
+                    <p
+                        class="text-[10px] md:text-base text-gray-600 font-medium border-t pt-2 border-kemenag-green/50 px-2 leading-tight">
+                        Total Aset Koperasi
+                    </p>
                 </div>
-            </section>
-        <section class="py-12 md:py-20 bg-kemenag-gl overflow-hidden">
+                <div data-aos="flip-up" data-aos-delay="300">
+                    <p class="text-3xl md:text-6xl font-extrabold text-kemenag-green mb-1 md:mb-2">
+                        100<span class="text-xl md:text-3xl">%</span>
+                    </p>
+                    <p
+                        class="text-[10px] md:text-base text-gray-600 font-medium border-t pt-2 border-kemenag-green/50 px-2 leading-tight">
+                        RAT Tepat Waktu
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-12 md:py-20 bg-kemenag-gl overflow-hidden">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
 
             <div class="text-center mb-10 md:mb-14">
@@ -490,7 +511,8 @@
                 </p>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6 md:mb-10 border-l-8 border-kemenag-green" data-aos="fade-right">
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6 md:mb-10 border-l-8 border-kemenag-green"
+                data-aos="fade-right">
                 <div class="flex items-center mb-3 md:mb-4">
                     <i class="fas fa-eye text-2xl md:text-3xl text-kemenag-green mr-3"></i>
                     <h3 class="text-xl md:text-2xl font-extrabold text-kemenag-green">Visi</h3>
@@ -500,7 +522,8 @@
                 </p>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border-l-8 border-kemenag-orange" data-aos="fade-left">
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border-l-8 border-kemenag-orange"
+                data-aos="fade-left">
                 <div class="flex items-center mb-4 md:mb-6">
                     <i class="fas fa-bullseye text-2xl md:text-3xl text-kemenag-orange mr-3"></i>
                     <h3 class="text-xl md:text-2xl font-extrabold text-kemenag-orange">Misi</h3>
@@ -515,306 +538,339 @@
         </div>
     </section>
 
-   <section id="berita" class="bg-gray-100 py-10 md:py-20">
-    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <section id="berita" class="bg-gray-100 py-10 md:py-20">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
 
-        {{-- Header --}}
-        <div class="text-center mb-6 md:mb-12" data-aos="fade-down">
-            <h2 class="text-[10px] md:text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-1">
-                Informasi Terbaru
-            </h2>
-            <p class="text-xl md:text-4xl font-extrabold text-gray-800">
-                Berita Koperasi
-            </p>
-        </div>
+            {{-- Header --}}
+            <div class="text-center mb-6 md:mb-12" data-aos="fade-down">
+                <h2 class="text-[10px] md:text-sm font-semibold uppercase text-kemenag-green tracking-wider mb-1">
+                    Informasi Terbaru
+                </h2>
+                <p class="text-xl md:text-4xl font-extrabold text-gray-800">
+                    Berita Koperasi
+                </p>
+            </div>
 
-        {{-- Grid Berita: Langsung 3 kolom di HP --}}
-        <div class="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-8">
-            @forelse($artikels as $a)
-                <div class="bg-white rounded-lg md:rounded-xl shadow-sm md:shadow-lg overflow-hidden transition hover:shadow-xl"
-                    data-aos="fade-up">
-                   
-                   {{-- Gambar: Dibuat kotak (square) di HP agar rapi --}}
-                   <div class="aspect-square md:aspect-video overflow-hidden">
-                        @if($a->gambar)
-                            <img src="{{ asset('img/berita/' . $a->gambar) }}" 
-                                class="h-full w-full object-cover" 
-                                alt="{{ $a->judul }}">
-                        @else
-                            <div class="h-full bg-emerald-700 flex items-center justify-center text-white">
-                                <i class="fas fa-image text-xl opacity-30"></i>
-                            </div>
-                        @endif
-                   </div>
+            {{-- Grid Berita: Langsung 3 kolom di HP --}}
+            <div class="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-8">
+                @forelse($artikels as $a)
+                    <div class="bg-white rounded-lg md:rounded-xl shadow-sm md:shadow-lg overflow-hidden transition hover:shadow-xl"
+                        data-aos="fade-up">
 
-                    <div class="p-2 md:p-6">
-                        {{-- Kategori: Sangat kecil di HP --}}
-                        <span class="hidden md:inline-block text-[10px] md:text-xs font-bold uppercase text-kemenag-green mb-1">
-                            {{ $a->kategori ?? 'Berita' }}
-                        </span>
+                        {{-- Gambar: Dibuat kotak (square) di HP agar rapi --}}
+                        <div class="aspect-square md:aspect-video overflow-hidden">
+                            @if($a->gambar)
+                                <img src="{{ asset('img/berita/' . $a->gambar) }}" class="h-full w-full object-cover"
+                                    alt="{{ $a->judul }}">
+                            @else
+                                <div class="h-full bg-emerald-700 flex items-center justify-center text-white">
+                                    <i class="fas fa-image text-xl opacity-30"></i>
+                                </div>
+                            @endif
+                        </div>
 
-                        {{-- Judul: Ukuran font sangat kecil di HP (text-[10px]) --}}
-                        <h3 class="text-[10px] md:text-xl font-bold text-gray-800 leading-tight line-clamp-2 md:line-clamp-none min-h-[25px] md:min-h-0">
-                            {{ $a->judul }}
-                        </h3>
-
-                        {{-- Deskripsi: DIHILANGKAN di HP agar muat 3 berjejer --}}
-                        <p class="hidden md:block text-gray-600 text-sm mt-2 line-clamp-3">
-                            {{ Str::limit(strip_tags($a->isi), 100) }}
-                        </p>
-
-                        {{-- Footer: Disederhanakan di HP --}}
-                        <div class="mt-2 md:mt-4 border-t pt-2 flex flex-col md:flex-row justify-between items-start md:items-center">
-                            <span class="text-[8px] md:text-xs text-gray-400">
-                                {{ \Carbon\Carbon::parse($a->tanggal)->translatedFormat('d/m/y') }}
+                        <div class="p-2 md:p-6">
+                            {{-- Kategori: Sangat kecil di HP --}}
+                            <span
+                                class="hidden md:inline-block text-[10px] md:text-xs font-bold uppercase text-kemenag-green mb-1">
+                                {{ $a->kategori ?? 'Berita' }}
                             </span>
-                            <button onclick="openModalBerita(
-                                '{{ addslashes($a->judul) }}',
-                                `{!! addslashes($a->isi) !!}`,
-                                '{{ $a->gambar ? asset('img/berita/'.$a->gambar) : '' }}'
-                            )" 
-                            class="text-emerald-600 font-bold text-[9px] md:text-sm mt-1 md:mt-0">
-                                Baca <i class="fas fa-chevron-right text-[7px]"></i>
-                            </button>
+
+                            {{-- Judul: Ukuran font sangat kecil di HP (text-[10px]) --}}
+                            <h3
+                                class="text-[10px] md:text-xl font-bold text-gray-800 leading-tight line-clamp-2 md:line-clamp-none min-h-[25px] md:min-h-0">
+                                {{ $a->judul }}
+                            </h3>
+
+                            {{-- Deskripsi: DIHILANGKAN di HP agar muat 3 berjejer --}}
+                            <p class="hidden md:block text-gray-600 text-sm mt-2 line-clamp-3">
+                                {{ Str::limit(strip_tags($a->isi), 100) }}
+                            </p>
+
+                            {{-- Footer: Disederhanakan di HP --}}
+                            <div
+                                class="mt-2 md:mt-4 border-t pt-2 flex flex-col md:flex-row justify-between items-start md:items-center">
+                                <span class="text-[8px] md:text-xs text-gray-400">
+                                    {{ \Carbon\Carbon::parse($a->tanggal)->translatedFormat('d/m/y') }}
+                                </span>
+                                <button onclick="openModalBerita(
+                                    '{{ addslashes($a->judul) }}',
+                                    `{!! addslashes($a->isi) !!}`,
+                                    '{{ $a->gambar ? asset('img/berita/' . $a->gambar) : '' }}'
+                                )" class="text-emerald-600 font-bold text-[9px] md:text-sm mt-1 md:mt-0">
+                                    Baca <i class="fas fa-chevron-right text-[7px]"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @empty
-                <div class="col-span-3 text-center py-10 text-gray-500 text-xs">
-                    Belum ada berita
-                </div>
-            @endforelse
-        </div>
+                @empty
+                    <div class="col-span-3 text-center py-10 text-gray-500 text-xs">
+                        Belum ada berita
+                    </div>
+                @endforelse
+            </div>
 
-        {{-- Tombol Selengkapnya --}}
-        <div class="text-center mt-8 md:mt-12">
-            <a href="{{ url('/berita_selengkapnya') }}"
-            class="inline-block bg-kemenag-green text-white text-[10px] md:text-base font-bold py-2 px-6 md:py-3 md:px-8 rounded-full shadow-md">
-                Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
-            </a>
+            {{-- Tombol Selengkapnya --}}
+            <div class="text-center mt-8 md:mt-12">
+                <a href="{{ url('/berita_selengkapnya') }}"
+                    class="inline-block bg-kemenag-green text-white text-[10px] md:text-base font-bold py-2 px-6 md:py-3 md:px-8 rounded-full shadow-md">
+                    Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     {{-- modal berita --}}
-    <div id="modalLayanan" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeModalLayanan()"></div>
+    <div id="modalLayanan" class="fixed inset-0 z-[100] hidden overflow-y-auto" aria-labelledby="modal-title"
+        role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+                onclick="closeModalLayanan()"></div>
 
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full border border-white/20">
-                    
-                    <div class="bg-emerald-600 px-6 py-4 flex justify-between items-center">
-                        <h3 class="text-xl font-bold text-white" id="modal-title">Detail Layanan</h3>
-                        <button onclick="closeModalLayanan()" class="text-white/80 hover:text-white transition text-2xl">&times;</button>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div
+                class="inline-block align-bottom bg-white rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full border border-white/20">
+
+                <div class="bg-emerald-600 px-6 py-4 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-white" id="modal-title">Detail Layanan</h3>
+                    <button onclick="closeModalLayanan()"
+                        class="text-white/80 hover:text-white transition text-2xl">&times;</button>
+                </div>
+
+                <div class="px-8 py-8 max-h-[70vh] overflow-y-auto">
+                    <div id="modal-isi-full"
+                        class="prose prose-emerald max-w-none text-gray-700 text-lg leading-relaxed mb-8">
                     </div>
 
-                    <div class="px-8 py-8 max-h-[70vh] overflow-y-auto">
-                        <div id="modal-isi-full" class="prose prose-emerald max-w-none text-gray-700 text-lg leading-relaxed mb-8">
-                            </div>
-
-                        <div id="modal-lampiran" class="border-t pt-8">
-                            </div>
+                    <div id="modal-lampiran" class="border-t pt-8">
                     </div>
+                </div>
 
-                    <div class="bg-gray-50 px-8 py-4 flex justify-end">
-                        <button onclick="closeModalLayanan()" class="px-6 py-2 bg-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-300 transition">
-                            Tutup
-                        </button>
-                    </div>
+                <div class="bg-gray-50 px-8 py-4 flex justify-end">
+                    <button onclick="closeModalLayanan()"
+                        class="px-6 py-2 bg-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-300 transition">
+                        Tutup
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
 
 
 
     <!-- ================== STANDAR LAYANAN (DI ATAS FOOTER) ================== -->
-   <section id="informasi_2" class="bg-gray-50 py-10 md:py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="informasi_2" class="bg-gray-50 py-10 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="bg-kemenag-green rounded-2xl px-6 py-8 md:px-8 md:py-10 mb-6 md:mb-8 shadow-lg">
-            <h2 class="text-2xl md:text-4xl font-extrabold mb-3 text-white leading-tight">
-                Informasi <span class="text-kemenag-yellow">Layanan Koperasi</span>
-            </h2>
-            <p class="text-white/80 text-sm md:text-base max-w-2xl">
-                Pilih kategori layanan untuk melihat detail informasi dan mengunduh dokumen terkait.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
-            
-            <aside class="lg:col-span-1 h-fit">
-                <p class="text-[10px] md:text-xs font-bold text-emerald-600 uppercase tracking-widest mb-3 px-1">Pilih Layanan</p>
-                
-                <div class="flex lg:flex-col overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 gap-2 scrollbar-hide">
-                    @foreach($jenis_layanan as $index => $l)
-                        <button 
-                            onclick="switchLayanan('layanan-{{ $l->id }}')"
-                            class="ppid-btn flex-none w-auto lg:w-full text-left px-4 py-2 md:py-3 rounded-xl transition-all duration-300 flex items-center justify-between group whitespace-nowrap {{ $index == 0 ? 'active' : '' }}"
-                            id="btn-layanan-{{ $l->id }}">
-                            <span class="font-medium text-sm md:text-base">{{ $l->jenis_layanan }}</span>
-                            <i class="fas fa-chevron-right text-[10px] hidden lg:block opacity-0 group-hover:opacity-100 transition-all"></i>
-                        </button>
-                    @endforeach
-                </div>
-            </aside>
-
-            <div class="lg:col-span-3 bg-white rounded-2xl shadow-xl p-6 md:p-12 border border-emerald-50 min-h-[300px] md:min-h-[500px]">
-                @foreach($jenis_layanan as $index => $l)
-                    <div id="layanan-{{ $l->id }}" 
-                         class="layanan-content transition-all duration-500 {{ $index == 0 ? '' : 'hidden opacity-0 translate-y-4' }}">
-                        
-                        <h3 class="text-xl md:text-3xl font-black text-emerald-900 mb-4 md:mb-6 border-b pb-4">{{ $l->jenis_layanan }}</h3>
-                        
-                        <div class="prose prose-sm md:prose-lg prose-emerald max-w-none text-gray-600 leading-relaxed mb-8">
-                            {!! $l->isi !!}
-                        </div>
-                        
-                      <div class="mb-6">
-                        <a href="{!! $l->link !!}" target="_blank" 
-                           class="inline-flex items-center px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-md transition-all shadow-sm hover:shadow">
-                            <span>Buka Link</span>
-                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                            </svg>
-                        </a>
-                    </div>
-
-                        @if($l->gambar)
-                            @php
-                                $ext = strtolower(pathinfo($l->gambar, PATHINFO_EXTENSION));
-                                $filePath = asset('img/layanan/' . $l->gambar);
-                                $isImage = in_array($ext, ['jpg','jpeg','png','webp','gif']);
-                                $isPDF = ($ext === 'pdf');
-                            @endphp
-
-                            <div class="mt-8 border-t pt-6">
-                                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 italic">Lampiran Dokumen:</h4>
-
-                                @if($isImage)
-                                    <div class="rounded-xl border-2 border-emerald-100 overflow-hidden shadow-md">
-                                        <img src="{{ $filePath }}" class="w-full h-auto">
-                                        <div class="p-3 bg-gray-50 flex gap-2">
-                                            <a href="{{ $filePath }}" target="_blank" class="flex-1 text-center bg-white text-emerald-700 py-2 rounded-lg font-bold text-xs border border-emerald-200">Buka</a>
-                                            <a href="{{ $filePath }}" download class="flex-1 text-center bg-emerald-600 text-white py-2 rounded-lg font-bold text-xs">Simpan</a>
-                                        </div>
-                                    </div>
-
-                                @elseif($isPDF)
-                                    <div class="rounded-xl border border-gray-200 overflow-hidden shadow-lg bg-gray-50">
-                                        <div class="hidden md:block">
-                                            <embed src="{{ $filePath }}#toolbar=0" type="application/pdf" width="100%" height="400px" />
-                                        </div>
-                                        
-                                        <div class="p-4 md:p-6 bg-white text-center">
-                                            <div class="flex items-center justify-center gap-3 mb-4 md:hidden">
-                                                <i class="fas fa-file-pdf text-4xl text-red-600"></i>
-                                                <span class="text-sm font-bold text-gray-700">Dokumen PDF Tersedia</span>
-                                            </div>
-                                            <a href="{{ $filePath }}" download class="w-full md:w-auto inline-flex justify-center items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-md">
-                                                <i class="fas fa-download"></i> Unduh Dokumen (PDF)
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                @else
-                                    <div class="rounded-xl border-2 border-dashed border-blue-100 p-4 md:p-6 bg-blue-50 flex flex-col md:flex-row items-center justify-between gap-4">
-                                        <div class="flex items-center gap-3">
-                                            <i class="fas fa-file-word text-3xl md:text-4xl text-blue-600"></i>
-                                            <div class="text-left">
-                                                <p class="font-bold text-gray-800 text-sm md:text-base">File Dokumen ({{ strtoupper($ext) }})</p>
-                                                <p class="text-[10px] md:text-sm text-gray-500">Klik untuk mengunduh berkas.</p>
-                                            </div>
-                                        </div>
-                                        <a href="{{ $filePath }}" download class="w-full md:w-auto text-center px-6 py-2 bg-blue-600 text-white font-bold rounded-lg text-sm">Download</a>
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-/* CSS Tambahan agar scrollbar di menu mobile tidak muncul (opsional) */
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-</style>
-
-
-   <footer id="kontak" class="bg-[#06291d] pt-12 md:pt-16 pb-6 md:pb-8 text-white">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-
-            <div class="space-y-4 md:space-y-6">
-                <h3 class="text-2xl md:text-3xl font-black tracking-tighter">
-                    Effin<span class="text-emerald-500">ancient</span>
-                </h3>
-                <p class="text-slate-400 text-xs md:text-sm leading-relaxed max-w-sm">
-                    Koperasi Pegawai Kemenag Kota Yogyakarta. Berkah untuk Anggota, Maju Bersama melalui layanan
-                    digital terpercaya.
+            <div class="bg-kemenag-green rounded-2xl px-6 py-8 md:px-8 md:py-10 mb-6 md:mb-8 shadow-lg">
+                <h2 class="text-2xl md:text-4xl font-extrabold mb-3 text-white leading-tight">
+                    Informasi <span class="text-kemenag-yellow">Layanan Koperasi</span>
+                </h2>
+                <p class="text-white/80 text-sm md:text-base max-w-2xl">
+                    Pilih kategori layanan untuk melihat detail informasi dan mengunduh dokumen terkait.
                 </p>
             </div>
 
-            <div>
-                <h4 class="text-sm md:text-lg font-bold mb-3 md:mb-5 text-emerald-500 uppercase tracking-widest">Navigasi</h4>
-                <ul class="space-y-2 md:space-y-3">
-                    <li><a href="#" class="text-slate-400 hover:text-white text-sm md:text-base transition">Tentang Kami</a></li>
-                    <li><a href="#" class="text-slate-400 hover:text-white text-sm md:text-base transition">Laporan SHU</a></li>
-                    <li><a href="#" class="text-slate-400 hover:text-white text-sm md:text-base transition">Kebijakan Privasi</a></li>
-                </ul>
-            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
 
-            <div>
-                <h4 class="text-sm md:text-lg font-bold mb-3 md:mb-5 text-emerald-500 uppercase tracking-widest">Hubungi Kami</h4>
-                <ul class="space-y-3 md:space-y-4">
-                    <li class="flex items-start gap-3">
-                        <i class="fas fa-map-marker-alt text-emerald-500 mt-1"></i>
-                        <span class="text-slate-400 text-xs md:text-sm leading-relaxed">
-                            Jl. Ki Mangun Sarkoro No.43 A, Gunungketur, Pakualaman, Kota Yogyakarta
-                        </span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <i class="fas fa-envelope text-emerald-500"></i>
-                        <span class="text-slate-400 text-xs md:text-sm">kpri.baktimulia@gmail.com</span>
-                    </li>
-                </ul>
-            </div>
+                <aside class="lg:col-span-1 h-fit">
+                    <p class="text-[10px] md:text-xs font-bold text-emerald-600 uppercase tracking-widest mb-3 px-1">
+                        Pilih Layanan</p>
 
-            <div>
-                <h4 class="text-sm md:text-lg font-bold mb-3 md:mb-5 text-emerald-500 uppercase tracking-widest">Ikuti Kami</h4>
-                <div class="flex space-x-3">
-                    <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 transition">
-                        <i class="fab fa-facebook-f text-sm"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 transition">
-                        <i class="fab fa-instagram text-sm"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 transition">
-                        <i class="fab fa-youtube text-sm"></i>
-                    </a>
+                    <div class="flex lg:flex-col overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 gap-2 scrollbar-hide">
+                        @foreach($jenis_layanan as $index => $l)
+                            <button onclick="switchLayanan('layanan-{{ $l->id }}')"
+                                class="ppid-btn flex-none w-auto lg:w-full text-left px-4 py-2 md:py-3 rounded-xl transition-all duration-300 flex items-center justify-between group whitespace-nowrap {{ $index == 0 ? 'active' : '' }}"
+                                id="btn-layanan-{{ $l->id }}">
+                                <span class="font-medium text-sm md:text-base">{{ $l->jenis_layanan }}</span>
+                                <i
+                                    class="fas fa-chevron-right text-[10px] hidden lg:block opacity-0 group-hover:opacity-100 transition-all"></i>
+                            </button>
+                        @endforeach
+                    </div>
+                </aside>
+
+                <div
+                    class="lg:col-span-3 bg-white rounded-2xl shadow-xl p-6 md:p-12 border border-emerald-50 min-h-[300px] md:min-h-[500px]">
+                    @foreach($jenis_layanan as $index => $l)
+                        <div id="layanan-{{ $l->id }}"
+                            class="layanan-content transition-all duration-500 {{ $index == 0 ? '' : 'hidden opacity-0 translate-y-4' }}">
+
+                            <h3 class="text-xl md:text-3xl font-black text-emerald-900 mb-4 md:mb-6 border-b pb-4">
+                                {{ $l->jenis_layanan }}</h3>
+
+                            <div
+                                class="prose prose-sm md:prose-lg prose-emerald max-w-none text-gray-600 leading-relaxed mb-8">
+                                {!! $l->isi !!}
+                            </div>
+
+                            <div class="mb-6">
+                                <a href="{!! $l->link !!}" target="_blank"
+                                    class="inline-flex items-center px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-md transition-all shadow-sm hover:shadow">
+                                    <span>Buka Link</span>
+                                    <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
+                                        </path>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            @if($l->gambar)
+                                @php
+                                    $ext = strtolower(pathinfo($l->gambar, PATHINFO_EXTENSION));
+                                    $filePath = asset('img/layanan/' . $l->gambar);
+                                    $isImage = in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif']);
+                                    $isPDF = ($ext === 'pdf');
+                                @endphp
+
+                                <div class="mt-8 border-t pt-6">
+                                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 italic">Lampiran
+                                        Dokumen:</h4>
+
+                                    @if($isImage)
+                                        <div class="rounded-xl border-2 border-emerald-100 overflow-hidden shadow-md">
+                                            <img src="{{ $filePath }}" class="w-full h-auto">
+                                            <div class="p-3 bg-gray-50 flex gap-2">
+                                                <a href="{{ $filePath }}" target="_blank"
+                                                    class="flex-1 text-center bg-white text-emerald-700 py-2 rounded-lg font-bold text-xs border border-emerald-200">Buka</a>
+                                                <a href="{{ $filePath }}" download
+                                                    class="flex-1 text-center bg-emerald-600 text-white py-2 rounded-lg font-bold text-xs">Simpan</a>
+                                            </div>
+                                        </div>
+
+                                    @elseif($isPDF)
+                                        <div class="rounded-xl border border-gray-200 overflow-hidden shadow-lg bg-gray-50">
+                                            <div class="hidden md:block">
+                                                <embed src="{{ $filePath }}#toolbar=0" type="application/pdf" width="100%"
+                                                    height="400px" />
+                                            </div>
+
+                                            <div class="p-4 md:p-6 bg-white text-center">
+                                                <div class="flex items-center justify-center gap-3 mb-4 md:hidden">
+                                                    <i class="fas fa-file-pdf text-4xl text-red-600"></i>
+                                                    <span class="text-sm font-bold text-gray-700">Dokumen PDF Tersedia</span>
+                                                </div>
+                                                <a href="{{ $filePath }}" download
+                                                    class="w-full md:w-auto inline-flex justify-center items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-md">
+                                                    <i class="fas fa-download"></i> Unduh Dokumen (PDF)
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    @else
+                                        <div
+                                            class="rounded-xl border-2 border-dashed border-blue-100 p-4 md:p-6 bg-blue-50 flex flex-col md:flex-row items-center justify-between gap-4">
+                                            <div class="flex items-center gap-3">
+                                                <i class="fas fa-file-word text-3xl md:text-4xl text-blue-600"></i>
+                                                <div class="text-left">
+                                                    <p class="font-bold text-gray-800 text-sm md:text-base">File Dokumen
+                                                        ({{ strtoupper($ext) }})</p>
+                                                    <p class="text-[10px] md:text-sm text-gray-500">Klik untuk mengunduh berkas.</p>
+                                                </div>
+                                            </div>
+                                            <a href="{{ $filePath }}" download
+                                                class="w-full md:w-auto text-center px-6 py-2 bg-blue-600 text-white font-bold rounded-lg text-sm">Download</a>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-center md:text-left">
-            <p class="text-slate-500 text-[10px] md:text-xs tracking-widest uppercase">
-                &copy; 2026 <span class="text-white font-bold">Effinancient</span>. All rights reserved.
-            </p>
-            <p class="text-slate-600 text-[10px] md:text-[11px]">
-                Crafted with <span class="text-red-500">♥</span> for KPRI Bakti Mulia
-            </p>
+    <style>
+        /* CSS Tambahan agar scrollbar di menu mobile tidak muncul (opsional) */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+
+    <footer id="kontak" class="bg-[#06291d] pt-12 md:pt-16 pb-6 md:pb-8 text-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+
+                <div class="space-y-4 md:space-y-6">
+                    <h3 class="text-2xl md:text-3xl font-black tracking-tighter">
+                        Effin<span class="text-emerald-500">ancient</span>
+                    </h3>
+                    <p class="text-slate-400 text-xs md:text-sm leading-relaxed max-w-sm">
+                        Koperasi Pegawai Kemenag Kota Yogyakarta. Berkah untuk Anggota, Maju Bersama melalui layanan
+                        digital terpercaya.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm md:text-lg font-bold mb-3 md:mb-5 text-emerald-500 uppercase tracking-widest">
+                        Navigasi</h4>
+                    <ul class="space-y-2 md:space-y-3">
+                        <li><a href="#" class="text-slate-400 hover:text-white text-sm md:text-base transition">Tentang
+                                Kami</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white text-sm md:text-base transition">Laporan
+                                SHU</a></li>
+                        <li><a href="#"
+                                class="text-slate-400 hover:text-white text-sm md:text-base transition">Kebijakan
+                                Privasi</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm md:text-lg font-bold mb-3 md:mb-5 text-emerald-500 uppercase tracking-widest">
+                        Hubungi Kami</h4>
+                    <ul class="space-y-3 md:space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt text-emerald-500 mt-1"></i>
+                            <span class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                                Jl. Ki Mangun Sarkoro No.43 A, Gunungketur, Pakualaman, Kota Yogyakarta
+                            </span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-emerald-500"></i>
+                            <span class="text-slate-400 text-xs md:text-sm">kpri.baktimulia@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm md:text-lg font-bold mb-3 md:mb-5 text-emerald-500 uppercase tracking-widest">
+                        Ikuti Kami</h4>
+                    <div class="flex space-x-3">
+                        <a href="#"
+                            class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 transition">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#"
+                            class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 transition">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#"
+                            class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 transition">
+                            <i class="fab fa-youtube text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-center md:text-left">
+                <p class="text-slate-500 text-[10px] md:text-xs tracking-widest uppercase">
+                    &copy; 2026 <span class="text-white font-bold">Effinancient</span>. All rights reserved.
+                </p>
+                <p class="text-slate-600 text-[10px] md:text-[11px]">
+                    Crafted with <span class="text-red-500">♥</span> for KPRI Bakti Mulia
+                </p>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -1400,31 +1456,31 @@
                 }, 50);
             }, 350);
         }
-        </script>
+    </script>
 
-        {{-- modal berita --}}
-     <script>
-function openModalBerita(judul, isi, gambar) {
+    {{-- modal berita --}}
+    <script>
+        function openModalBerita(judul, isi, gambar) {
 
-    document.getElementById('modal-title').innerText = judul;
-    document.getElementById('modal-isi-full').innerHTML = isi;
+            document.getElementById('modal-title').innerText = judul;
+            document.getElementById('modal-isi-full').innerHTML = isi;
 
-    if (gambar) {
-        document.getElementById('modal-lampiran').innerHTML =
-            `<img src="${gambar}" class="rounded-xl shadow-xl w-full mt-6">`;
-    } else {
-        document.getElementById('modal-lampiran').innerHTML = '';
-    }
+            if (gambar) {
+                document.getElementById('modal-lampiran').innerHTML =
+                    `<img src="${gambar}" class="rounded-xl shadow-xl w-full mt-6">`;
+            } else {
+                document.getElementById('modal-lampiran').innerHTML = '';
+            }
 
-    document.getElementById('modalLayanan').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-}
+            document.getElementById('modalLayanan').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
 
-function closeModalLayanan() {
-    document.getElementById('modalLayanan').classList.add('hidden');
-    document.body.style.overflow = 'auto';
-}
-</script>
+        function closeModalLayanan() {
+            document.getElementById('modalLayanan').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 
 </body>
 
